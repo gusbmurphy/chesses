@@ -3,6 +3,7 @@ package com.gusmurphy.chesses.board;
 import java.util.Objects;
 
 public class BoardCoordinates {
+
     private final File file;
     private final Rank rank;
 
