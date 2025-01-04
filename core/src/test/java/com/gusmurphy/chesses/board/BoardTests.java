@@ -22,4 +22,14 @@ public class BoardTests {
         Assertions.assertEquals(pieceOnBoard.get(), piece);
     }
 
+    @Test
+    void anEmptyOptionalIsReturnedForAnEmptyPosition() {
+        Board board = new Board();
+        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
+
+        Optional<Piece> result = board.getPieceAt(coordinates);
+
+        Assertions.assertFalse(result.isPresent());
+    }
+
 }

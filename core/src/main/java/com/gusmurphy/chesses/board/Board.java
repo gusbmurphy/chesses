@@ -14,7 +14,7 @@ public class Board {
     }
 
     public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
-        return Optional.of(piecesByCoordinates.get(coordinates));
+        return Optional.ofNullable(piecesByCoordinates.get(coordinates));
     }
 
 }
