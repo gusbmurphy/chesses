@@ -22,13 +22,20 @@ public class LinearMovementStrategy implements MovementStrategy {
         ArrayList<BoardCoordinates> moves = new ArrayList<>();
 
         for (Direction direction : directions) {
-            Optional<BoardCoordinates> currentSpot = Optional.of(position);
+            moves.addAll(getMovesFromPositionInDirection(position, direction));
+        }
 
-            for (int distance = 0; distance < maxDistance && currentSpot.isPresent(); distance++) {
-                Optional<BoardCoordinates> move = currentSpot.get().coordinatesToThe(direction);
-                move.ifPresent(moves::add);
-                currentSpot = move;
-            }
+        return moves;
+    }
+
+    private ArrayList<BoardCoordinates> getMovesFromPositionInDirection(BoardCoordinates position, Direction direction) {
+        ArrayList<BoardCoordinates> moves = new ArrayList<>();
+        Optional<BoardCoordinates> currentSpot = Optional.of(position);
+
+        for (int distance = 0; distance < maxDistance && currentSpot.isPresent(); distance++) {
+            Optional<BoardCoordinates> move = currentSpot.get().coordinatesToThe(direction);
+            move.ifPresent(moves::add);
+            currentSpot = move;
         }
 
         return moves;
