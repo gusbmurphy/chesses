@@ -53,6 +53,10 @@ public class LinearMovementStrategy implements MovementStrategy {
                 break;
         }
 
+        if (rankOrdinal + 1 > Rank.values().length) {
+            return Collections.emptyList();
+        }
+
         File file = File.values()[fileOrdinal];
         Rank rank = Rank.values()[rankOrdinal];
 

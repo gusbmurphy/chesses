@@ -5,6 +5,7 @@ import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.File;
 import com.gusmurphy.chesses.board.Rank;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,6 +24,13 @@ public class MovementStrategyTests {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(new BoardCoordinates(File.D, Rank.FOUR));
         Assertions.assertEquals(Collections.singletonList(expected), possibleMoves);
+    }
+
+    @Test
+    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard() {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
+        List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(new BoardCoordinates(File.H, Rank.EIGHT));
+        Assertions.assertEquals(possibleMoves.size(), 0);
     }
 
     private static Stream<Arguments> provideDirectionsForLinear() {
