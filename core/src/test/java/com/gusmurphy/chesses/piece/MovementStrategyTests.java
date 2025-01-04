@@ -5,7 +5,6 @@ import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.File;
 import com.gusmurphy.chesses.board.Rank;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,11 +25,25 @@ public class MovementStrategyTests {
         Assertions.assertEquals(Collections.singletonList(expected), possibleMoves);
     }
 
-    @Test
-    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard() {
-        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
-        List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(new BoardCoordinates(File.H, Rank.EIGHT));
-        Assertions.assertEquals(possibleMoves.size(), 0);
+    @ParameterizedTest
+    @MethodSource("movesOffTheBoard")
+    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
+        List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(from);
+        Assertions.assertEquals(0, possibleMoves.size());
+    }
+
+    private static Stream<Arguments> movesOffTheBoard() {
+        return Stream.of(
+            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.N),
+            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.W),
+            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.N),
+            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.E),
+            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.S),
+            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.E),
+            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.S),
+            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.W)
+        );
     }
 
     private static Stream<Arguments> provideDirectionsForLinear() {

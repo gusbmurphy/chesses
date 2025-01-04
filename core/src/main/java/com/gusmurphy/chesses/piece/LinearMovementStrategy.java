@@ -53,14 +53,14 @@ public class LinearMovementStrategy implements MovementStrategy {
                 break;
         }
 
-        if (rankOrdinal + 1 > Rank.values().length) {
+        try {
+            File file = File.values()[fileOrdinal];
+            Rank rank = Rank.values()[rankOrdinal];
+
+            return Collections.singletonList(new BoardCoordinates(file, rank));
+        } catch (ArrayIndexOutOfBoundsException exception) {
             return Collections.emptyList();
         }
-
-        File file = File.values()[fileOrdinal];
-        Rank rank = Rank.values()[rankOrdinal];
-
-        return Collections.singletonList(new BoardCoordinates(file, rank));
     }
 
 }
