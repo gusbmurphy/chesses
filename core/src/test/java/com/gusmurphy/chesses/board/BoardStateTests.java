@@ -7,27 +7,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-public class BoardTests {
+public class BoardStateTests {
 
     @Test
     void aPieceCanBeAddedToTheBoard() {
         Piece piece = new King();
         BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
-        Board board = new Board();
+        BoardState boardState = new BoardState();
 
-        board.placePieceAt(piece, coordinates);
+        boardState.placePieceAt(piece, coordinates);
 
-        Optional<Piece> pieceOnBoard = board.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
 
         Assertions.assertEquals(pieceOnBoard.get(), piece);
     }
 
     @Test
     void anEmptyOptionalIsReturnedForAnEmptyPosition() {
-        Board board = new Board();
+        BoardState boardState = new BoardState();
         BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
 
-        Optional<Piece> result = board.getPieceAt(coordinates);
+        Optional<Piece> result = boardState.getPieceAt(coordinates);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -36,23 +36,23 @@ public class BoardTests {
     void aPieceCanBeRemoved() {
         Piece piece = new King();
         BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
-        Board board = new Board();
+        BoardState boardState = new BoardState();
 
-        board.placePieceAt(piece, coordinates);
+        boardState.placePieceAt(piece, coordinates);
 
-        Optional<Piece> removedPiece = board.removePieceAt(coordinates);
+        Optional<Piece> removedPiece = boardState.removePieceAt(coordinates);
         Assertions.assertEquals(removedPiece.get(), piece);
 
-        Optional<Piece> pieceOnBoard = board.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
         Assertions.assertFalse(pieceOnBoard.isPresent());
     }
 
     @Test
     void ifThereIsNoPieceToBeRemovedAnEmptyIsReturned() {
-        Board board = new Board();
+        BoardState boardState = new BoardState();
         BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
 
-        Optional<Piece> result = board.removePieceAt(coordinates);
+        Optional<Piece> result = boardState.removePieceAt(coordinates);
 
         Assertions.assertFalse(result.isPresent());
     }
