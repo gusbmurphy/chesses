@@ -1,6 +1,7 @@
 package com.gusmurphy.chesses.board;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.File.*;
 import static com.gusmurphy.chesses.board.Rank.*;
@@ -25,11 +26,16 @@ public enum BoardCoordinates {
     }
 
     public static BoardCoordinates of(File file, Rank rank) {
-        return Arrays
+        Optional<BoardCoordinates> coordinates = Arrays
             .stream(BoardCoordinates.values())
-            .filter(coordinates -> coordinates.file == file && coordinates.rank == rank)
-            .findFirst()
-            .get();
+            .filter(c -> c.file == file && c.rank == rank)
+            .findFirst();
+
+        if (coordinates.isPresent()) {
+            return coordinates.get();
+        }
+
+        throw new IllegalArgumentException("Unknown file/rank combination: " + file + ", " + rank);
     }
 
     public File file() {
