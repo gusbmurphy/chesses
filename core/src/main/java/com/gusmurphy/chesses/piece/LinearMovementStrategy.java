@@ -57,7 +57,7 @@ public class LinearMovementStrategy implements MovementStrategy {
             File file = File.values()[fileOrdinal];
             Rank rank = Rank.values()[rankOrdinal];
 
-            return Collections.singletonList(new BoardCoordinates(file, rank));
+            return Collections.singletonList(BoardCoordinates.of(file, rank));
         } catch (ArrayIndexOutOfBoundsException exception) {
             return Collections.emptyList();
         }

@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static com.gusmurphy.chesses.board.BoardCoordinates.*;
+
 public class BoardStateTests {
 
     @Test
     void aPieceCanBeAddedToTheBoard() {
         Piece piece = new King();
-        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
+        BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
 
         boardState.placePieceAt(piece, coordinates);
@@ -25,9 +27,8 @@ public class BoardStateTests {
     @Test
     void anEmptyOptionalIsReturnedForAnEmptyPosition() {
         BoardState boardState = new BoardState();
-        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
 
-        Optional<Piece> result = boardState.getPieceAt(coordinates);
+        Optional<Piece> result = boardState.getPieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -35,7 +36,7 @@ public class BoardStateTests {
     @Test
     void aPieceCanBeRemoved() {
         Piece piece = new King();
-        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
+        BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
 
         boardState.placePieceAt(piece, coordinates);
@@ -50,9 +51,8 @@ public class BoardStateTests {
     @Test
     void ifThereIsNoPieceToBeRemovedAnEmptyIsReturned() {
         BoardState boardState = new BoardState();
-        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
 
-        Optional<Piece> result = boardState.removePieceAt(coordinates);
+        Optional<Piece> result = boardState.removePieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
