@@ -16,9 +16,11 @@ public class Player {
 
     public Optional<Piece> selectPieceToMove(BoardState board, BoardCoordinates spot) {
         Optional<Piece> pieceAtSpot = board.getPieceAt(spot);
-        if (pieceAtSpot.get().color() == color) {
-            return Optional.of(pieceAtSpot.get());
+
+        if (pieceAtSpot.isPresent() && pieceAtSpot.get().color() == color) {
+            return pieceAtSpot;
         }
+
         return Optional.empty();
     }
 
