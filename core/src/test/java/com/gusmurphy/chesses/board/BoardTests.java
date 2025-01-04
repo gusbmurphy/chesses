@@ -47,4 +47,14 @@ public class BoardTests {
         Assertions.assertFalse(pieceOnBoard.isPresent());
     }
 
+    @Test
+    void ifThereIsNoPieceToBeRemovedAnEmptyIsReturned() {
+        Board board = new Board();
+        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
+
+        Optional<Piece> result = board.removePieceAt(coordinates);
+
+        Assertions.assertFalse(result.isPresent());
+    }
+
 }

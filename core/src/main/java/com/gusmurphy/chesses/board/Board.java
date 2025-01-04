@@ -19,7 +19,7 @@ public class Board {
 
     public Optional<Piece> removePieceAt(BoardCoordinates coordinates) {
         Piece removedPiece = piecesByCoordinates.remove(coordinates);
-        return Optional.of(removedPiece);
+        return Optional.ofNullable(removedPiece);
     }
 
 }
