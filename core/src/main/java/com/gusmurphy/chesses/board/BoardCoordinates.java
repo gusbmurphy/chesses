@@ -25,27 +25,6 @@ public enum BoardCoordinates {
         this.rank = rank;
     }
 
-    public static BoardCoordinates of(File file, Rank rank) {
-        Optional<BoardCoordinates> coordinates = Arrays
-            .stream(BoardCoordinates.values())
-            .filter(c -> c.file == file && c.rank == rank)
-            .findFirst();
-
-        if (coordinates.isPresent()) {
-            return coordinates.get();
-        }
-
-        throw new IllegalArgumentException("Unknown file/rank combination: " + file + ", " + rank);
-    }
-
-    public File file() {
-        return file;
-    }
-
-    public Rank rank() {
-        return rank;
-    }
-
     public Optional<BoardCoordinates> coordinatesToThe(Direction direction) {
         int shiftedFileOrdinal = file.ordinal() + direction.horizontalValue();
         int shiftedRankOrdinal = rank.ordinal() + direction.verticalValue();
