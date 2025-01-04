@@ -32,4 +32,19 @@ public class BoardTests {
         Assertions.assertFalse(result.isPresent());
     }
 
+    @Test
+    void aPieceCanBeRemoved() {
+        Piece piece = new King();
+        BoardCoordinates coordinates = new BoardCoordinates(File.B, Rank.FIVE);
+        Board board = new Board();
+
+        board.placePieceAt(piece, coordinates);
+
+        Optional<Piece> removedPiece = board.removePieceAt(coordinates);
+        Assertions.assertEquals(removedPiece.get(), piece);
+
+        Optional<Piece> pieceOnBoard = board.getPieceAt(coordinates);
+        Assertions.assertFalse(pieceOnBoard.isPresent());
+    }
+
 }

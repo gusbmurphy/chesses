@@ -17,4 +17,9 @@ public class Board {
         return Optional.ofNullable(piecesByCoordinates.get(coordinates));
     }
 
+    public Optional<Piece> removePieceAt(BoardCoordinates coordinates) {
+        Piece removedPiece = piecesByCoordinates.remove(coordinates);
+        return Optional.of(removedPiece);
+    }
+
 }
