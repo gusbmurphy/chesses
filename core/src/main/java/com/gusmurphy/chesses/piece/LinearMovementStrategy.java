@@ -20,7 +20,7 @@ public class LinearMovementStrategy implements MovementStrategy {
 
     @Override
     public List<BoardCoordinates> possibleMovesFrom(BoardCoordinates position) {
-        return Collections.singletonList(new BoardCoordinates(File.D, Rank.THREE));
+        return Collections.singletonList(new BoardCoordinates(File.D, Rank.FIVE));
     }
 
 }
