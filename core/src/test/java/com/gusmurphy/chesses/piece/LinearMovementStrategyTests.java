@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LinearMovementStrategyTests {
 
     @ParameterizedTest
-    @MethodSource("provideDirectionsForLinear")
+    @MethodSource("singleSpotMoves")
     void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
         Direction direction, BoardCoordinates expected
     ) {
@@ -28,7 +28,7 @@ public class LinearMovementStrategyTests {
         assertEquals(Collections.singletonList(expected), possibleMoves);
     }
 
-    private static Stream<Arguments> provideDirectionsForLinear() {
+    private static Stream<Arguments> singleSpotMoves() {
         return Stream.of(
             Arguments.of(Direction.N, D5),
             Arguments.of(Direction.NE, E5),
