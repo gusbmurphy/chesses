@@ -2,16 +2,19 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.BoardCoordinates;
 import com.gusmurphy.chesses.board.Direction;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.board.BoardCoordinates.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LinearMovementStrategyTests {
 
@@ -22,7 +25,7 @@ public class LinearMovementStrategyTests {
     ) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(D4);
-        Assertions.assertEquals(Collections.singletonList(expected), possibleMoves);
+        assertEquals(Collections.singletonList(expected), possibleMoves);
     }
 
     private static Stream<Arguments> provideDirectionsForLinear() {
@@ -43,7 +46,7 @@ public class LinearMovementStrategyTests {
     void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(from);
-        Assertions.assertEquals(0, possibleMoves.size());
+        assertEquals(0, possibleMoves.size());
     }
 
     private static Stream<Arguments> movesOffTheBoard() {
@@ -57,6 +60,14 @@ public class LinearMovementStrategyTests {
             Arguments.of(A1, Direction.S),
             Arguments.of(A1, Direction.W)
         );
+    }
+
+    @Test
+    void weCouldAlsoMoveTwoSpotsInOneDirection() {
+        MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 2);
+        List<BoardCoordinates> possibleMoves = strategy.possibleMovesFrom(B2);
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B4)));
     }
 
 }
