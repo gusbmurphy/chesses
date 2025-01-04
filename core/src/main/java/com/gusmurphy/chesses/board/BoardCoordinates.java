@@ -46,6 +46,16 @@ public enum BoardCoordinates {
         return rank;
     }
 
+    public Optional<BoardCoordinates> coordinatesToThe(Direction direction) {
+        int shiftedFileOrdinal = file.ordinal() + direction.horizontalValue();
+        int shiftedRankOrdinal = rank.ordinal() + direction.verticalValue();
+
+        return Arrays
+            .stream(BoardCoordinates.values())
+            .filter(c -> c.file.ordinal() == shiftedFileOrdinal && c.rank.ordinal() == shiftedRankOrdinal)
+            .findFirst();
+    }
+
     @Override
     public String toString() {
         return file.toString().substring(0, 1).toLowerCase() + (rank.ordinal() + 1);

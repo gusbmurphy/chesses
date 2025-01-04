@@ -2,11 +2,10 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.BoardCoordinates;
 import com.gusmurphy.chesses.board.Direction;
-import com.gusmurphy.chesses.board.File;
-import com.gusmurphy.chesses.board.Rank;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class LinearMovementStrategy implements MovementStrategy {
 
@@ -18,49 +17,9 @@ public class LinearMovementStrategy implements MovementStrategy {
 
     @Override
     public List<BoardCoordinates> possibleMovesFrom(BoardCoordinates position) {
-        int fileOrdinal = position.file().ordinal();
-        int rankOrdinal = position.rank().ordinal();
         Direction direction = directions.getFirst();
-
-        switch (direction) {
-            case N:
-                rankOrdinal++;
-                break;
-            case NE:
-                rankOrdinal++;
-                fileOrdinal++;
-                break;
-            case E:
-                fileOrdinal++;
-                break;
-            case SE:
-                fileOrdinal++;
-                rankOrdinal--;
-                break;
-            case S:
-                rankOrdinal--;
-                break;
-            case SW:
-                fileOrdinal--;
-                rankOrdinal--;
-                break;
-            case W:
-                fileOrdinal--;
-                break;
-            case NW:
-                rankOrdinal++;
-                fileOrdinal--;
-                break;
-        }
-
-        try {
-            File file = File.values()[fileOrdinal];
-            Rank rank = Rank.values()[rankOrdinal];
-
-            return Collections.singletonList(BoardCoordinates.of(file, rank));
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            return Collections.emptyList();
-        }
+        Optional<BoardCoordinates> move = position.coordinatesToThe(direction);
+        return move.map(Collections::singletonList).orElse(Collections.emptyList());
     }
 
 }
