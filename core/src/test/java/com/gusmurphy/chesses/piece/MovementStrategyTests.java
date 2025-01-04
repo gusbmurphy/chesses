@@ -25,27 +25,6 @@ public class MovementStrategyTests {
         Assertions.assertEquals(Collections.singletonList(expected), possibleMoves);
     }
 
-    @ParameterizedTest
-    @MethodSource("movesOffTheBoard")
-    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
-        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
-        List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(from);
-        Assertions.assertEquals(0, possibleMoves.size());
-    }
-
-    private static Stream<Arguments> movesOffTheBoard() {
-        return Stream.of(
-            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.N),
-            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.W),
-            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.N),
-            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.E),
-            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.S),
-            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.E),
-            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.S),
-            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.W)
-        );
-    }
-
     private static Stream<Arguments> provideDirectionsForLinear() {
         return Stream.of(
             Arguments.of(
@@ -80,6 +59,27 @@ public class MovementStrategyTests {
                 Direction.NW,
                 new BoardCoordinates(File.C, Rank.FIVE)
             )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("movesOffTheBoard")
+    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
+        List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(from);
+        Assertions.assertEquals(0, possibleMoves.size());
+    }
+
+    private static Stream<Arguments> movesOffTheBoard() {
+        return Stream.of(
+            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.N),
+            Arguments.of(new BoardCoordinates(File.A, Rank.EIGHT), Direction.W),
+            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.N),
+            Arguments.of(new BoardCoordinates(File.H, Rank.EIGHT), Direction.E),
+            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.S),
+            Arguments.of(new BoardCoordinates(File.H, Rank.ONE), Direction.E),
+            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.S),
+            Arguments.of(new BoardCoordinates(File.A, Rank.ONE), Direction.W)
         );
     }
 
