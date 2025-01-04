@@ -70,4 +70,12 @@ public class LinearMovementStrategyTests {
         assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B4)));
     }
 
+    @Test
+    void andEvenInMultipleDirections() {
+        MovementStrategy strategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.S), 1);
+        List<BoardCoordinates> possibleMoves = strategy.possibleMovesFrom(B2);
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B1)));
+    }
+
 }
