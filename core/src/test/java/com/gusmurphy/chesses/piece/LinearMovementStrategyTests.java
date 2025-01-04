@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class MovementStrategyTests {
+public class LinearMovementStrategyTests {
 
     @ParameterizedTest
     @MethodSource("provideDirectionsForLinear")
