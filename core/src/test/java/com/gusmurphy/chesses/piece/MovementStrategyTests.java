@@ -22,7 +22,7 @@ public class MovementStrategyTests {
     ) {
         MovementStrategy linear = new LinearMovementStrategy(directions, distance);
         List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(new BoardCoordinates(File.D, Rank.FOUR));
-        Assertions.assertEquals(possibleMoves, expected);
+        Assertions.assertEquals(expected, possibleMoves);
     }
 
     private static Stream<Arguments> provideDirectionsAndDistanceForLinear() {
