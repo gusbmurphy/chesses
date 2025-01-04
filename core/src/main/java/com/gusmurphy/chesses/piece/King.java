@@ -4,12 +4,19 @@ import com.gusmurphy.chesses.player.PlayerColor;
 
 public class King implements Piece {
 
-    public King() {
+    private final PlayerColor color;
 
+    public King() {
+        color = PlayerColor.WHITE;
     }
 
     public King(PlayerColor color) {
+        this.color = color;
+    }
 
+    @Override
+    public PlayerColor color() {
+        return color;
     }
 
 }
