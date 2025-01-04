@@ -11,16 +11,52 @@ import java.util.List;
 public class LinearMovementStrategy implements MovementStrategy {
 
     private final List<Direction> directions;
-    private final int maxDistance;
 
     public LinearMovementStrategy(List<Direction> directions, int maxDistance) {
         this.directions = directions;
-        this.maxDistance = maxDistance;
     }
 
     @Override
     public List<BoardCoordinates> possibleMovesFrom(BoardCoordinates position) {
-        return Collections.singletonList(new BoardCoordinates(File.D, Rank.FIVE));
+        int fileOrdinal = position.file().ordinal();
+        int rankOrdinal = position.rank().ordinal();
+        Direction direction = directions.getFirst();
+
+        switch (direction) {
+            case N:
+                rankOrdinal++;
+                break;
+            case NE:
+                rankOrdinal++;
+                fileOrdinal++;
+                break;
+            case E:
+                fileOrdinal++;
+                break;
+            case SE:
+                fileOrdinal++;
+                rankOrdinal--;
+                break;
+            case S:
+                rankOrdinal--;
+                break;
+            case SW:
+                fileOrdinal--;
+                rankOrdinal--;
+                break;
+            case W:
+                fileOrdinal--;
+                break;
+            case NW:
+                rankOrdinal++;
+                fileOrdinal--;
+                break;
+        }
+
+        File file = File.values()[fileOrdinal];
+        Rank rank = Rank.values()[rankOrdinal];
+
+        return Collections.singletonList(new BoardCoordinates(file, rank));
     }
 
 }

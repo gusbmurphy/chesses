@@ -16,21 +16,48 @@ import java.util.stream.Stream;
 public class MovementStrategyTests {
 
     @ParameterizedTest
-    @MethodSource("provideDirectionsAndDistanceForLinear")
-    void aLinearMovementStrategyLimitsMovementToItsDirectionAndDistance(
-        List<Direction> directions, int distance, List<BoardCoordinates> expected
+    @MethodSource("provideDirectionsForLinear")
+    void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
+        Direction direction, BoardCoordinates expected
     ) {
-        MovementStrategy linear = new LinearMovementStrategy(directions, distance);
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         List<BoardCoordinates> possibleMoves = linear.possibleMovesFrom(new BoardCoordinates(File.D, Rank.FOUR));
-        Assertions.assertEquals(expected, possibleMoves);
+        Assertions.assertEquals(Collections.singletonList(expected), possibleMoves);
     }
 
-    private static Stream<Arguments> provideDirectionsAndDistanceForLinear() {
+    private static Stream<Arguments> provideDirectionsForLinear() {
         return Stream.of(
             Arguments.of(
-                Collections.singletonList(Direction.N),
-                1,
-                Collections.singletonList(new BoardCoordinates(File.D, Rank.FIVE))
+                Direction.N,
+                new BoardCoordinates(File.D, Rank.FIVE)
+            ),
+            Arguments.of(
+                Direction.NE,
+                new BoardCoordinates(File.E, Rank.FIVE)
+            ),
+            Arguments.of(
+                Direction.E,
+                new BoardCoordinates(File.E, Rank.FOUR)
+            ),
+            Arguments.of(
+                Direction.SE,
+                new BoardCoordinates(File.E, Rank.THREE)
+            ),
+            Arguments.of(
+                Direction.S,
+                new BoardCoordinates(File.D, Rank.THREE)
+            ),
+            Arguments.of(
+                Direction.SW,
+                new BoardCoordinates(File.C, Rank.THREE)
+            ),
+            Arguments.of(
+                Direction.W,
+                new BoardCoordinates(File.C, Rank.FOUR)
+            ),
+            Arguments.of(
+                Direction.NW,
+                new BoardCoordinates(File.C, Rank.FIVE)
             )
         );
     }
