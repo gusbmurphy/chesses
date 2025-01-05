@@ -9,10 +9,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Main extends ApplicationAdapter {
 
+    private FitViewport viewport;
     private SpriteBatch spriteBatch;
     private Texture lightSquareTexture;
     private Texture darkSquareTexture;
-    private FitViewport viewport;
+
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     static private final float SQUARE_SIZE = 0.5f;
 
