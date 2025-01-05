@@ -3,6 +3,7 @@ package com.gusmurphy.chesses;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -13,6 +14,8 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch spriteBatch;
     private Texture lightSquareTexture;
     private Texture darkSquareTexture;
+    private Texture kingTexture;
+    private Sprite kingSprite;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     static private final float SQUARE_SIZE = 0.5f;
@@ -21,6 +24,9 @@ public class Main extends ApplicationAdapter {
     public void create() {
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
+        kingTexture = new Texture("b_king.png");
+        kingSprite = new Sprite(kingTexture);
+        kingSprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
         spriteBatch = new SpriteBatch();
         viewport = new FitViewport(8, 5);
     }
@@ -33,6 +39,7 @@ public class Main extends ApplicationAdapter {
         spriteBatch.begin();
 
         drawBoard();
+        kingSprite.draw(spriteBatch);
 
         spriteBatch.end();
     }
