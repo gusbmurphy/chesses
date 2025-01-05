@@ -17,22 +17,18 @@ public class MatchScreen implements Screen {
     private final SpriteBatch spriteBatch;
     private final FitViewport viewport;
 
-    private final Texture lightSquareTexture;
-    private final Texture darkSquareTexture;
     private final Sprite kingSprite;
     private final Rectangle kingRectangle;
     private boolean draggingKing = false;
     private final Vector2 cursorPosition;
 
-    static public final int BOARD_WIDTH_IN_SQUARES = 8;
+    private final BoardScreenRepresentation board;
+
     static public final float SQUARE_SIZE = 0.5f;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         viewport = game.getViewport();
-
-        lightSquareTexture = new Texture("light_square.png");
-        darkSquareTexture = new Texture("dark_square.png");
 
         Texture kingTexture = new Texture("b_king.png");
         kingSprite = new Sprite(kingTexture);
@@ -40,6 +36,8 @@ public class MatchScreen implements Screen {
         kingRectangle = new Rectangle();
 
         cursorPosition = new Vector2();
+
+        board = new BoardScreenRepresentation(this, SQUARE_SIZE);
     }
 
     @Override
@@ -72,11 +70,19 @@ public class MatchScreen implements Screen {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
-        BoardScreenRepresentation.draw(darkSquareTexture, lightSquareTexture, spriteBatch, viewport);
+        board.draw();
         kingSprite.draw(spriteBatch);
         kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
 
         spriteBatch.end();
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public FitViewport getViewport() {
+        return viewport;
     }
 
     @Override
