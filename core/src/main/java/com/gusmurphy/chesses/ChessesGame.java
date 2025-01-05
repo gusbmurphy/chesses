@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class Main extends Game {
+public class ChessesGame extends Game {
 
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
