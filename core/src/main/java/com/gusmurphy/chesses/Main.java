@@ -20,7 +20,7 @@ public class Main extends ApplicationAdapter {
     private Sprite kingSprite;
     private Rectangle kingRectangle;
     private boolean draggingKing = false;
-    private Vector2 touchPosition;
+    private Vector2 cursorPosition;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     static private final float SQUARE_SIZE = 0.5f;
@@ -35,7 +35,7 @@ public class Main extends ApplicationAdapter {
         kingSprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
         kingRectangle = new Rectangle();
 
-        touchPosition = new Vector2();
+        cursorPosition = new Vector2();
 
         spriteBatch = new SpriteBatch();
         viewport = new FitViewport(8, 5);
@@ -43,17 +43,23 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if (Gdx.input.isTouched()) {
-            touchPosition.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPosition);
+        cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(cursorPosition);
 
-            if (kingRectangle.contains(touchPosition)) {
-                draggingKing = true;
+        if (Gdx.input.justTouched()) {
+            if (!draggingKing) {
+                if (kingRectangle.contains(cursorPosition)) {
+                    draggingKing = true;
+                }
+            } else {
+                draggingKing = false;
             }
         }
 
         if (draggingKing) {
-            kingSprite.setPosition(touchPosition.x, touchPosition.y);
+            kingSprite.setPosition(
+                cursorPosition.x - kingSprite.getWidth() / 2, cursorPosition.y - kingSprite.getHeight() / 2
+            );
         }
 
         drawScreen();
