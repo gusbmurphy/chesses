@@ -7,7 +7,7 @@ import com.gusmurphy.chesses.MatchScreen;
 
 public class BoardScreenRepresentation {
 
-    public static void drawBoard(Texture darkSquareTexture, Texture lightSquareTexture, SpriteBatch spriteBatch, FitViewport viewport) {
+    public static void draw(Texture darkSquareTexture, Texture lightSquareTexture, SpriteBatch spriteBatch, FitViewport viewport) {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
         float boardWidth = MatchScreen.BOARD_WIDTH_IN_SQUARES * MatchScreen.SQUARE_SIZE;
