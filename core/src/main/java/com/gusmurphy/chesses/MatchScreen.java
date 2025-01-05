@@ -3,26 +3,22 @@ package com.gusmurphy.chesses;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
+import com.gusmurphy.chesses.piece.KingOnScreen;
 
 public class MatchScreen implements Screen {
 
     private final SpriteBatch spriteBatch;
     private final FitViewport viewport;
 
-    private final Sprite kingSprite;
-    private final Rectangle kingRectangle;
-    private boolean draggingKing = false;
     private final Vector2 cursorPosition;
 
     private final BoardOnScreen board;
+    private final KingOnScreen king;
 
     static final float SQUARE_SIZE = 0.5f;
 
@@ -30,13 +26,9 @@ public class MatchScreen implements Screen {
         spriteBatch = game.getSpriteBatch();
         viewport = game.getViewport();
 
-        Texture kingTexture = new Texture("b_king.png");
-        kingSprite = new Sprite(kingTexture);
-        kingSprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
-        kingRectangle = new Rectangle();
-
         cursorPosition = new Vector2();
 
+        king = new KingOnScreen(spriteBatch, SQUARE_SIZE);
         board = new BoardOnScreen(this, SQUARE_SIZE);
     }
 
@@ -45,21 +37,7 @@ public class MatchScreen implements Screen {
         cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(cursorPosition);
 
-        if (Gdx.input.justTouched()) {
-            if (!draggingKing) {
-                if (kingRectangle.contains(cursorPosition)) {
-                    draggingKing = true;
-                }
-            } else {
-                draggingKing = false;
-            }
-        }
-
-        if (draggingKing) {
-            kingSprite.setPosition(
-                cursorPosition.x - kingSprite.getWidth() / 2, cursorPosition.y - kingSprite.getHeight() / 2
-            );
-        }
+        king.drag(cursorPosition);
 
         drawScreen();
     }
@@ -71,8 +49,7 @@ public class MatchScreen implements Screen {
         spriteBatch.begin();
 
         board.draw();
-        kingSprite.draw(spriteBatch);
-        kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
+        king.draw();
 
         spriteBatch.end();
     }
