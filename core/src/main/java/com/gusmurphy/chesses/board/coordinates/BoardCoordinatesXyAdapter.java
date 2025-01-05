@@ -1,11 +1,11 @@
 package com.gusmurphy.chesses.board.coordinates;
 
-public class BoardCoordinatesXYAdapter {
+public class BoardCoordinatesXyAdapter {
 
     private final int x;
     private final int y;
 
-    public BoardCoordinatesXYAdapter(BoardCoordinates coordinates) {
+    public BoardCoordinatesXyAdapter(BoardCoordinates coordinates) {
         this.x = coordinates.file.ordinal();
         this.y = coordinates.rank.ordinal();
     }
