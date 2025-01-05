@@ -14,17 +14,13 @@ public class KingOnScreen {
     private final Rectangle kingRectangle;
     private boolean draggingKing = false;
 
-    public KingOnScreen(SpriteBatch spriteBatch, Float squareSize) {
+    public KingOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
 
         Texture kingTexture = new Texture("b_king.png");
         kingSprite = new Sprite(kingTexture);
         kingSprite.setSize(squareSize, squareSize);
         kingRectangle = new Rectangle();
-    }
-
-    public KingOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
-        this(spriteBatch, squareSize);
         kingSprite.setCenter(initialPosition.x, initialPosition.y);
     }
 
