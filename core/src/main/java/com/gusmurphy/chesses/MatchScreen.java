@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gusmurphy.chesses.board.BoardScreenRepresentation;
+import com.gusmurphy.chesses.board.BoardOnScreen;
 
 public class MatchScreen implements Screen {
 
@@ -22,7 +22,7 @@ public class MatchScreen implements Screen {
     private boolean draggingKing = false;
     private final Vector2 cursorPosition;
 
-    private final BoardScreenRepresentation board;
+    private final BoardOnScreen board;
 
     static public final float SQUARE_SIZE = 0.5f;
 
@@ -37,7 +37,7 @@ public class MatchScreen implements Screen {
 
         cursorPosition = new Vector2();
 
-        board = new BoardScreenRepresentation(this, SQUARE_SIZE);
+        board = new BoardOnScreen(this, SQUARE_SIZE);
     }
 
     @Override

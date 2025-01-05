@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.MatchScreen;
 
-public class BoardScreenRepresentation {
+public class BoardOnScreen {
 
     private final SpriteBatch spriteBatch;
     private final Viewport viewport;
@@ -15,7 +15,7 @@ public class BoardScreenRepresentation {
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
 
-    public BoardScreenRepresentation(final MatchScreen screen, float squareSize) {
+    public BoardOnScreen(final MatchScreen screen, float squareSize) {
         this.spriteBatch = screen.getSpriteBatch();
         this.viewport = screen.getViewport();
 
