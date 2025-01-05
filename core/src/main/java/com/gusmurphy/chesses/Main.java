@@ -14,7 +14,7 @@ public class Main extends ApplicationAdapter {
     private Texture lightSquareTexture;
     private Texture darkSquareTexture;
     private FitViewport viewport;
-    static private final int BOARD_SIZE = 8;
+    static private final int BOARD_WIDTH_IN_SQUARES = 8;
     static private final float SQUARE_SIZE = 0.5f;
 
     @Override
@@ -38,19 +38,19 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawBoard() {
-        for (int x = 0; x < BOARD_SIZE; x++) {
-            for (int y = 0; y < BOARD_SIZE; y++) {
-                drawSquareAt(x, y);
+        float worldWidth = viewport.getWorldWidth();
+        float worldHeight = viewport.getWorldHeight();
+        float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
+
+        for (int x = 0; x < BOARD_WIDTH_IN_SQUARES; x++) {
+            for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
+                boolean isDark = (x % 2) == (y % 2);
+                Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
+                float xPosition = x * SQUARE_SIZE + worldWidth / 2 - boardWidth / 2;
+                float yPosition = y * SQUARE_SIZE + worldHeight / 2 - boardWidth / 2;
+                spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
             }
         }
-    }
-
-    private void drawSquareAt(int x, int y) {
-        boolean isDark = (x % 2) == (y % 2);
-        Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-        float xPosition = x * SQUARE_SIZE;
-        float yPosition = y * SQUARE_SIZE;
-        spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
     }
 
     @Override
