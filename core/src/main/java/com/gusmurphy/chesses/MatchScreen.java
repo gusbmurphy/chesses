@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.gusmurphy.chesses.board.BoardScreenRepresentation;
 
 public class MatchScreen implements Screen {
 
@@ -23,8 +24,8 @@ public class MatchScreen implements Screen {
     private boolean draggingKing = false;
     private final Vector2 cursorPosition;
 
-    static private final int BOARD_WIDTH_IN_SQUARES = 8;
-    static private final float SQUARE_SIZE = 0.5f;
+    static public final int BOARD_WIDTH_IN_SQUARES = 8;
+    static public final float SQUARE_SIZE = 0.5f;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
@@ -71,27 +72,11 @@ public class MatchScreen implements Screen {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
-        drawBoard(darkSquareTexture, lightSquareTexture, spriteBatch, viewport);
+        BoardScreenRepresentation.drawBoard(darkSquareTexture, lightSquareTexture, spriteBatch, viewport);
         kingSprite.draw(spriteBatch);
         kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
 
         spriteBatch.end();
-    }
-
-    private static void drawBoard(Texture darkSquareTexture, Texture lightSquareTexture, SpriteBatch spriteBatch, FitViewport viewport) {
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
-        float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
-
-        for (int x = 0; x < BOARD_WIDTH_IN_SQUARES; x++) {
-            for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
-                boolean isDark = (x % 2) == (y % 2);
-                Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-                float xPosition = x * SQUARE_SIZE + worldWidth / 2 - boardWidth / 2;
-                float yPosition = y * SQUARE_SIZE + worldHeight / 2 - boardWidth / 2;
-                spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
-            }
-        }
     }
 
     @Override
