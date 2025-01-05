@@ -5,6 +5,8 @@ import com.gusmurphy.chesses.piece.Piece;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.BoardCoordinates.*;
@@ -55,6 +57,22 @@ public class BoardStateTests {
         Optional<Piece> result = boardState.removePieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
+    }
+
+    @Test
+    void allPiecesOnTheBoardCanBeRetrieved() {
+        BoardState board = new BoardState();
+
+        Piece pieceA = new King();
+        Piece pieceB = new King();
+        Piece pieceC = new King();
+        board.placePieceAt(pieceA, A3);
+        board.placePieceAt(pieceB, H4);
+        board.placePieceAt(pieceC, H8);
+
+        List<PieceAndCoordinates> result = board.getAllPieces();
+
+        Assertions.assertEquals(result.size(), 3);
     }
 
 }
