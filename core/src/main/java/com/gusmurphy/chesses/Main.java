@@ -32,17 +32,25 @@ public class Main extends ApplicationAdapter {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
-        for (int x = 0; x < BOARD_SIZE; x++) {
-            for (int y = 0; y < BOARD_SIZE; y++) {
-                boolean isDark = (x % 2) == (y % 2);
-                Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-                float xPosition = x * SQUARE_SIZE;
-                float yPosition = y * SQUARE_SIZE;
-                spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
-            }
-        }
+        drawBoard();
 
         spriteBatch.end();
+    }
+
+    private void drawBoard() {
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            for (int y = 0; y < BOARD_SIZE; y++) {
+                drawSquareAt(x, y);
+            }
+        }
+    }
+
+    private void drawSquareAt(int x, int y) {
+        boolean isDark = (x % 2) == (y % 2);
+        Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
+        float xPosition = x * SQUARE_SIZE;
+        float yPosition = y * SQUARE_SIZE;
+        spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
     }
 
     @Override
