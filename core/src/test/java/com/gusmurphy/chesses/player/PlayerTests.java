@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.board.BoardCoordinates.*;
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 import static com.gusmurphy.chesses.player.PlayerColor.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

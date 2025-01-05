@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.piece;
 
-import com.gusmurphy.chesses.board.BoardCoordinates;
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.Direction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.board.BoardCoordinates.*;
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

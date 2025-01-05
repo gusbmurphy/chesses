@@ -1,5 +1,7 @@
 package com.gusmurphy.chesses.board;
 
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXYAdapter;
 import com.gusmurphy.chesses.piece.Piece;
 
 public class PieceAndCoordinates {
@@ -18,6 +20,10 @@ public class PieceAndCoordinates {
 
     public BoardCoordinates getCoordinates() {
         return coordinates;
+    }
+
+    public BoardCoordinatesXYAdapter getXYCoordinates() {
+        return new BoardCoordinatesXYAdapter(coordinates);
     }
 
 }

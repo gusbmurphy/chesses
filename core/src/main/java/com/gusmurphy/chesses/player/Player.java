@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.player;
 
-import com.gusmurphy.chesses.board.BoardCoordinates;
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.piece.Piece;
 

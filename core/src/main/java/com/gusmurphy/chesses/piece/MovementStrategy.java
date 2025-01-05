@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.piece;
 
-import com.gusmurphy.chesses.board.BoardCoordinates;
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 
 import java.util.List;
 

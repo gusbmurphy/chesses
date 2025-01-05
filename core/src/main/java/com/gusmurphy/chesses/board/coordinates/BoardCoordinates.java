@@ -1,4 +1,8 @@
-package com.gusmurphy.chesses.board;
+package com.gusmurphy.chesses.board.coordinates;
+
+import com.gusmurphy.chesses.board.Direction;
+import com.gusmurphy.chesses.board.File;
+import com.gusmurphy.chesses.board.Rank;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -17,8 +21,8 @@ public enum BoardCoordinates {
     G1(G, ONE), G2(G, TWO), G3(G, THREE), G4(G, FOUR), G5(G, FIVE), G6(G, SIX), G7(G, SEVEN), G8(G, EIGHT),
     H1(H, ONE), H2(H, TWO), H3(H, THREE), H4(H, FOUR), H5(H, FIVE), H6(H, SIX), H7(H, SEVEN), H8(H, EIGHT);
 
-    private final File file;
-    private final Rank rank;
+    final File file;
+    final Rank rank;
 
     BoardCoordinates(File file, Rank rank) {
         this.file = file;

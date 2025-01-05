@@ -1,15 +1,15 @@
 package com.gusmurphy.chesses.board;
 
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.King;
 import com.gusmurphy.chesses.piece.Piece;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.board.BoardCoordinates.*;
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
 public class BoardStateTests {
 
