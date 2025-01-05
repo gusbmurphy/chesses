@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
 import com.gusmurphy.chesses.piece.KingOnScreen;
 
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
+
 public class MatchScreen implements Screen {
 
     private final SpriteBatch spriteBatch;
@@ -28,8 +30,8 @@ public class MatchScreen implements Screen {
 
         cursorPosition = new Vector2();
 
-        king = new KingOnScreen(spriteBatch, SQUARE_SIZE);
         board = new BoardOnScreen(this, SQUARE_SIZE);
+        king = new KingOnScreen(spriteBatch, SQUARE_SIZE, board.getScreenPositionForCenterOf(A4));
     }
 
     @Override

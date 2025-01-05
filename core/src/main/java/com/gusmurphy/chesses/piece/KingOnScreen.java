@@ -23,6 +23,11 @@ public class KingOnScreen {
         kingRectangle = new Rectangle();
     }
 
+    public KingOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
+        this(spriteBatch, squareSize);
+        kingSprite.setCenter(initialPosition.x, initialPosition.y);
+    }
+
     public void drag(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
             if (!draggingKing) {
