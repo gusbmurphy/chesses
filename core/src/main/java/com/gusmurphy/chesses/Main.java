@@ -33,6 +33,10 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
+        drawScreen();
+    }
+
+    private void drawScreen() {
         ScreenUtils.clear(Color.WHITE);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
