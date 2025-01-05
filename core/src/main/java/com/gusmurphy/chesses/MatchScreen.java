@@ -71,14 +71,14 @@ public class MatchScreen implements Screen {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
-        drawBoard();
+        drawBoard(darkSquareTexture, lightSquareTexture, spriteBatch, viewport);
         kingSprite.draw(spriteBatch);
         kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
 
         spriteBatch.end();
     }
 
-    private void drawBoard() {
+    private static void drawBoard(Texture darkSquareTexture, Texture lightSquareTexture, SpriteBatch spriteBatch, FitViewport viewport) {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
         float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
