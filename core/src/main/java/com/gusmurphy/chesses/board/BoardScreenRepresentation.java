@@ -7,18 +7,30 @@ import com.gusmurphy.chesses.MatchScreen;
 
 public class BoardScreenRepresentation {
 
+    private static Texture darkSquareTexture;
+    private static Texture lightSquareTexture;
+    private static SpriteBatch spriteBatch;
+    private static float squareSize;
+    private static int boardWidthInSquares;
+
     public static void draw(Texture darkSquareTexture, Texture lightSquareTexture, SpriteBatch spriteBatch, FitViewport viewport) {
+        BoardScreenRepresentation.spriteBatch = spriteBatch;
+        BoardScreenRepresentation.darkSquareTexture = darkSquareTexture;
+        BoardScreenRepresentation.lightSquareTexture = lightSquareTexture;
+        squareSize = MatchScreen.SQUARE_SIZE;
+        boardWidthInSquares = MatchScreen.BOARD_WIDTH_IN_SQUARES;
+
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
-        float boardWidth = MatchScreen.BOARD_WIDTH_IN_SQUARES * MatchScreen.SQUARE_SIZE;
+        float boardWidth = boardWidthInSquares * squareSize;
 
-        for (int x = 0; x < MatchScreen.BOARD_WIDTH_IN_SQUARES; x++) {
-            for (int y = 0; y < MatchScreen.BOARD_WIDTH_IN_SQUARES; y++) {
+        for (int x = 0; x < boardWidthInSquares; x++) {
+            for (int y = 0; y < boardWidthInSquares; y++) {
                 boolean isDark = (x % 2) == (y % 2);
-                Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-                float xPosition = x * MatchScreen.SQUARE_SIZE + worldWidth / 2 - boardWidth / 2;
-                float yPosition = y * MatchScreen.SQUARE_SIZE + worldHeight / 2 - boardWidth / 2;
-                spriteBatch.draw(texture, xPosition, yPosition, MatchScreen.SQUARE_SIZE, MatchScreen.SQUARE_SIZE);
+                Texture texture = isDark ? BoardScreenRepresentation.darkSquareTexture : BoardScreenRepresentation.lightSquareTexture;
+                float xPosition = x * squareSize + worldWidth / 2 - boardWidth / 2;
+                float yPosition = y * squareSize + worldHeight / 2 - boardWidth / 2;
+                BoardScreenRepresentation.spriteBatch.draw(texture, xPosition, yPosition, squareSize, squareSize);
             }
         }
     }
