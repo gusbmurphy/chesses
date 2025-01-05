@@ -12,6 +12,7 @@ public class KingOnScreen {
     private final SpriteBatch spriteBatch;
     private final Sprite kingSprite;
     private final Rectangle kingRectangle;
+    private final Vector2 effectivePosition;
     private boolean draggingKing = false;
 
     public KingOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
@@ -21,6 +22,7 @@ public class KingOnScreen {
         kingSprite = new Sprite(kingTexture);
         kingSprite.setSize(squareSize, squareSize);
         kingRectangle = new Rectangle();
+        effectivePosition = initialPosition;
         kingSprite.setCenter(initialPosition.x, initialPosition.y);
     }
 
@@ -32,6 +34,7 @@ public class KingOnScreen {
                 }
             } else {
                 draggingKing = false;
+                kingSprite.setCenter(effectivePosition.x, effectivePosition.y);
             }
         }
 
