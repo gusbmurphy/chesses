@@ -24,7 +24,7 @@ public class MatchScreen implements Screen {
 
     private final BoardOnScreen board;
 
-    static public final float SQUARE_SIZE = 0.5f;
+    static final float SQUARE_SIZE = 0.5f;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
