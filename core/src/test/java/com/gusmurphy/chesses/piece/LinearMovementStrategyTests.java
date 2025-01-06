@@ -78,4 +78,10 @@ public class LinearMovementStrategyTests {
         assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B1)));
     }
 
+    @Test
+    void theLinearStrategyIsLinear() {
+        MovementStrategy strategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.S), 1);
+        assertTrue(strategy.isLinear());
+    }
+
 }

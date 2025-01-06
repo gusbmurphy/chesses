@@ -28,6 +28,11 @@ public class LinearMovementStrategy implements MovementStrategy {
         return moves;
     }
 
+    @Override
+    public boolean isLinear() {
+        return true;
+    }
+
     private ArrayList<BoardCoordinates> getMovesFromPositionInDirection(BoardCoordinates position, Direction direction) {
         ArrayList<BoardCoordinates> moves = new ArrayList<>();
         Optional<BoardCoordinates> currentSpot = Optional.of(position);
