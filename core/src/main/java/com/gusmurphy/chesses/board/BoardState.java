@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.piece.King;
+import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,18 +10,18 @@ import java.util.Optional;
 
 public class BoardState {
 
-    private final HashMap<BoardCoordinates, King> piecesByCoordinates = new HashMap<>();
+    private final HashMap<BoardCoordinates, Piece> piecesByCoordinates = new HashMap<>();
 
-    public void placePieceAt(King piece, BoardCoordinates coordinates) {
+    public void placePieceAt(Piece piece, BoardCoordinates coordinates) {
         piecesByCoordinates.put(coordinates, piece);
     }
 
-    public Optional<King> getPieceAt(BoardCoordinates coordinates) {
+    public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
         return Optional.ofNullable(piecesByCoordinates.get(coordinates));
     }
 
-    public Optional<King> removePieceAt(BoardCoordinates coordinates) {
-        King removedPiece = piecesByCoordinates.remove(coordinates);
+    public Optional<Piece> removePieceAt(BoardCoordinates coordinates) {
+        Piece removedPiece = piecesByCoordinates.remove(coordinates);
         return Optional.ofNullable(removedPiece);
     }
 

@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.piece.King;
+import com.gusmurphy.chesses.piece.Piece;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +14,13 @@ public class BoardStateTests {
 
     @Test
     void aPieceCanBeAddedToTheBoard() {
-        King piece = new King();
+        Piece piece = new Piece();
         BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
 
         boardState.placePieceAt(piece, coordinates);
 
-        Optional<King> pieceOnBoard = boardState.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
 
         Assertions.assertEquals(pieceOnBoard.get(), piece);
     }
@@ -29,23 +29,23 @@ public class BoardStateTests {
     void anEmptyOptionalIsReturnedForAnEmptyPosition() {
         BoardState boardState = new BoardState();
 
-        Optional<King> result = boardState.getPieceAt(B5);
+        Optional<Piece> result = boardState.getPieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
 
     @Test
     void aPieceCanBeRemoved() {
-        King piece = new King();
+        Piece piece = new Piece();
         BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
 
         boardState.placePieceAt(piece, coordinates);
 
-        Optional<King> removedPiece = boardState.removePieceAt(coordinates);
+        Optional<Piece> removedPiece = boardState.removePieceAt(coordinates);
         Assertions.assertEquals(removedPiece.get(), piece);
 
-        Optional<King> pieceOnBoard = boardState.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
         Assertions.assertFalse(pieceOnBoard.isPresent());
     }
 
@@ -53,7 +53,7 @@ public class BoardStateTests {
     void ifThereIsNoPieceToBeRemovedAnEmptyIsReturned() {
         BoardState boardState = new BoardState();
 
-        Optional<King> result = boardState.removePieceAt(B5);
+        Optional<Piece> result = boardState.removePieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -62,9 +62,9 @@ public class BoardStateTests {
     void allPiecesOnTheBoardCanBeRetrieved() {
         BoardState board = new BoardState();
 
-        King pieceA = new King();
-        King pieceB = new King();
-        King pieceC = new King();
+        Piece pieceA = new Piece();
+        Piece pieceB = new Piece();
+        Piece pieceC = new Piece();
         board.placePieceAt(pieceA, A3);
         board.placePieceAt(pieceB, H4);
         board.placePieceAt(pieceC, H8);

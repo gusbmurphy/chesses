@@ -2,15 +2,15 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.player.PlayerColor;
 
-public class King {
+public class Piece {
 
     private final PlayerColor color;
 
-    public King() {
+    public Piece() {
         color = PlayerColor.WHITE;
     }
 
-    public King(PlayerColor color) {
+    public Piece(PlayerColor color) {
         this.color = color;
     }
 
