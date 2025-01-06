@@ -1,7 +1,9 @@
 package com.gusmurphy.chesses.judge;
 
 import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.piece.MovementStrategy;
 import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
@@ -15,11 +17,31 @@ public class Judge {
     }
 
     public boolean moveIsPossible(Piece piece, BoardCoordinates move) {
-        Optional<BoardCoordinates> piecePosition = boardState.coordinatesForPiece(piece);
+        MovementStrategy movementStrategy = piece.movementStrategy();
+        Optional<BoardCoordinates> optionalPiecePosition = boardState.coordinatesForPiece(piece);
 
-        return piecePosition
-            .filter(coordinates -> piece.movementStrategy().possibleMovesFrom(coordinates).contains(move))
-            .isPresent();
+        if (optionalPiecePosition.isPresent()) {
+            if (movementStrategy.possibleMovesFrom(optionalPiecePosition.get()).contains(move)) {
+                BoardCoordinates piecePosition = optionalPiecePosition.get();
+                if (piecePosition.file() == move.file()) {
+                    Direction directionOfMove = piecePosition.rank().ordinal() < move.rank().ordinal() ? Direction.N : Direction.S;
+
+                    BoardCoordinates spotToCheck = piecePosition;
+
+                    while (spotToCheck != move) {
+                        spotToCheck = spotToCheck.coordinatesToThe(directionOfMove).get();
+
+                        if (boardState.getPieceAt(spotToCheck).isPresent()) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

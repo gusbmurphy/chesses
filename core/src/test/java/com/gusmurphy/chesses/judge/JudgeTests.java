@@ -50,4 +50,19 @@ public class JudgeTests {
         assertFalse(judge.moveIsPossible(piece, A5));
     }
 
+    @Test
+    void aPieceWithALinearStrategyCannotMovePastAnotherPiece() {
+        MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 5);
+        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
+        Piece blockingPiece = new Piece();
+
+        BoardState boardState = new BoardState();
+        boardState.placePieceAt(piece, A2);
+        boardState.placePieceAt(blockingPiece, A4);
+
+        Judge judge = new Judge(boardState);
+
+        assertFalse(judge.moveIsPossible(piece, A5));
+    }
+
 }

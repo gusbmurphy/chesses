@@ -39,6 +39,14 @@ public enum BoardCoordinates {
             .findFirst();
     }
 
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
     @Override
     public String toString() {
         return file.toString().substring(0, 1).toLowerCase() + (rank.ordinal() + 1);
