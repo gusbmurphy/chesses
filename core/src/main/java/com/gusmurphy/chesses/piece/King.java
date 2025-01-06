@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.player.PlayerColor;
 
-public class King implements Piece {
+public class King {
 
     private final PlayerColor color;
 
@@ -14,7 +14,6 @@ public class King implements Piece {
         this.color = color;
     }
 
-    @Override
     public PlayerColor color() {
         return color;
     }

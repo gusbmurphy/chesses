@@ -2,19 +2,19 @@ package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.piece.Piece;
+import com.gusmurphy.chesses.piece.King;
 
 public class PieceAndCoordinates {
 
-    private final Piece piece;
+    private final King piece;
     private final BoardCoordinates coordinates;
 
-    PieceAndCoordinates(Piece piece, BoardCoordinates coordinates) {
+    PieceAndCoordinates(King piece, BoardCoordinates coordinates) {
         this.piece = piece;
         this.coordinates = coordinates;
     }
 
-    public Piece getPiece() {
+    public King getPiece() {
         return piece;
     }
 
