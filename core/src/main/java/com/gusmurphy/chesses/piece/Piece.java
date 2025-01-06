@@ -14,6 +14,10 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(PlayerColor color, MovementStrategy movementStrategy) {
+        this.color = color;
+    }
+
     public PlayerColor color() {
         return color;
     }

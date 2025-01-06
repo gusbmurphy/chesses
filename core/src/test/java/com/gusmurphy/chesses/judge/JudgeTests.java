@@ -1,0 +1,31 @@
+package com.gusmurphy.chesses.judge;
+
+import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Direction;
+import com.gusmurphy.chesses.piece.LinearMovementStrategy;
+import com.gusmurphy.chesses.piece.MovementStrategy;
+import com.gusmurphy.chesses.piece.Piece;
+import com.gusmurphy.chesses.player.PlayerColor;
+import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class JudgeTests {
+
+    @Test
+    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy() {
+        MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
+        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
+
+        BoardState boardState = new BoardState();
+        boardState.placePieceAt(piece, A2);
+
+        Judge judge = new Judge(boardState);
+
+        assertTrue(judge.moveIsPossible(piece, A3));
+    }
+
+}
