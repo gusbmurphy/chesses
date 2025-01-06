@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class KingOnScreen {
+public class PieceOnScreen {
 
     private final SpriteBatch spriteBatch;
     private final Sprite kingSprite;
@@ -15,7 +15,7 @@ public class KingOnScreen {
     private final Vector2 effectivePosition;
     private boolean draggingKing = false;
 
-    public KingOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
+    public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
 
         Texture kingTexture = new Texture("b_king.png");

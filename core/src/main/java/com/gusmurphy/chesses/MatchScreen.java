@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
-import com.gusmurphy.chesses.piece.KingOnScreen;
+import com.gusmurphy.chesses.piece.PieceOnScreen;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
@@ -20,7 +20,7 @@ public class MatchScreen implements Screen {
     private final Vector2 cursorPosition;
 
     private final BoardOnScreen board;
-    private final KingOnScreen king;
+    private final PieceOnScreen king;
 
     static final float SQUARE_SIZE = 0.5f;
 
@@ -31,7 +31,7 @@ public class MatchScreen implements Screen {
         cursorPosition = new Vector2();
 
         board = new BoardOnScreen(this, SQUARE_SIZE);
-        king = new KingOnScreen(spriteBatch, SQUARE_SIZE, board.getScreenPositionForCenterOf(A4));
+        king = new PieceOnScreen(spriteBatch, SQUARE_SIZE, board.getScreenPositionForCenterOf(A4));
     }
 
     @Override
