@@ -42,4 +42,12 @@ public class JudgeTests {
         assertFalse(judge.moveIsPossible(piece, A4));
     }
 
+    @Test
+    void noMoveIsPossibleForAPieceNotOnTheBoard() {
+        BoardState boardState = new BoardState();
+        Piece piece = new Piece();
+        Judge judge = new Judge(boardState);
+        assertFalse(judge.moveIsPossible(piece, A5));
+    }
+
 }

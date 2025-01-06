@@ -4,6 +4,8 @@ import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.Piece;
 
+import java.util.Optional;
+
 public class Judge {
 
     private BoardState boardState;
@@ -13,8 +15,11 @@ public class Judge {
     }
 
     public boolean moveIsPossible(Piece piece, BoardCoordinates move) {
-        BoardCoordinates piecePosition = boardState.coordinatesForPiece(piece).get();
-        return piece.movementStrategy().possibleMovesFrom(piecePosition).contains(move);
+        Optional<BoardCoordinates> piecePosition = boardState.coordinatesForPiece(piece);
+
+        return piecePosition
+            .filter(coordinates -> piece.movementStrategy().possibleMovesFrom(coordinates).contains(move))
+            .isPresent();
     }
 
 }
