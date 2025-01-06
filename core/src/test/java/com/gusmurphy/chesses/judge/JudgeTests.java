@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class JudgeTests {
 
@@ -26,6 +27,19 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
 
         assertTrue(judge.moveIsPossible(piece, A3));
+    }
+
+    @Test
+    void aPieceWithALinearMovementStrategyCannotMoveToAPositionNotInItsStrategy() {
+        MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
+        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
+
+        BoardState boardState = new BoardState();
+        boardState.placePieceAt(piece, A2);
+
+        Judge judge = new Judge(boardState);
+
+        assertFalse(judge.moveIsPossible(piece, A4));
     }
 
 }

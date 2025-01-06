@@ -3,10 +3,7 @@ package com.gusmurphy.chesses.board;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.Piece;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BoardState {
 
@@ -33,6 +30,13 @@ public class BoardState {
         );
 
         return piecesAndCoordinates;
+    }
+
+    public Optional<BoardCoordinates> coordinatesForPiece(Piece piece) {
+        Optional<Map.Entry<BoardCoordinates, Piece>> entry = piecesByCoordinates
+            .entrySet().stream().filter(e -> e.getValue() == piece).findFirst();
+
+        return entry.map(Map.Entry::getKey);
     }
 
 }

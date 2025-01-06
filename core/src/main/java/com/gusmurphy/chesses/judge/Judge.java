@@ -6,12 +6,15 @@ import com.gusmurphy.chesses.piece.Piece;
 
 public class Judge {
 
-    public Judge(BoardState boardState) {
+    private BoardState boardState;
 
+    public Judge(BoardState boardState) {
+        this.boardState = boardState;
     }
 
     public boolean moveIsPossible(Piece piece, BoardCoordinates move) {
-        return true;
+        BoardCoordinates piecePosition = boardState.coordinatesForPiece(piece).get();
+        return piece.movementStrategy().possibleMovesFrom(piecePosition).contains(move);
     }
 
 }
