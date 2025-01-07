@@ -38,6 +38,20 @@ public class Judge {
 
                     return true;
                 }
+
+                Direction directionOfMove = piecePosition.file().ordinal() < move.file().ordinal() ? Direction.E : Direction.W;
+
+                BoardCoordinates spotToCheck = piecePosition;
+
+                while (spotToCheck != move) {
+                    spotToCheck = spotToCheck.coordinatesToThe(directionOfMove).get();
+
+                    if (boardState.getPieceAt(spotToCheck).isPresent()) {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 
