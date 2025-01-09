@@ -23,24 +23,7 @@ public class Judge {
         if (optionalPiecePosition.isPresent()) {
             if (movementStrategy.possibleMovesFrom(optionalPiecePosition.get()).contains(move)) {
                 BoardCoordinates piecePosition = optionalPiecePosition.get();
-                if (piecePosition.file() == move.file()) {
-                    Direction directionOfMove = piecePosition.rank().ordinal() < move.rank().ordinal() ? Direction.N : Direction.S;
-
-                    BoardCoordinates spotToCheck = piecePosition;
-
-                    while (spotToCheck != move) {
-                        spotToCheck = spotToCheck.coordinatesToThe(directionOfMove).get();
-
-                        if (boardState.getPieceAt(spotToCheck).isPresent()) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-
-                Direction directionOfMove = piecePosition.file().ordinal() < move.file().ordinal() ? Direction.E : Direction.W;
-
+                Direction directionOfMove = piecePosition.directionTo(move);
                 BoardCoordinates spotToCheck = piecePosition;
 
                 while (spotToCheck != move) {

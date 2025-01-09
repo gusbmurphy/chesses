@@ -25,11 +25,11 @@ public class JudgeTests {
     @ParameterizedTest
     @MethodSource("okayMoves")
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates move) {
-        MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.E), 1);
+        MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
 
         BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, A2);
+        boardState.placePieceAt(piece, D4);
 
         Judge judge = new Judge(boardState);
 
@@ -37,7 +37,16 @@ public class JudgeTests {
     }
 
     private static Stream<Arguments> okayMoves() {
-        return Stream.of(Arguments.of(A3), Arguments.of(B2));
+        return Stream.of(
+            Arguments.of(D5),
+            Arguments.of(E5),
+            Arguments.of(E4),
+            Arguments.of(E3),
+            Arguments.of(D3),
+            Arguments.of(C3),
+            Arguments.of(C4),
+            Arguments.of(C5)
+        );
     }
 
     @Test
