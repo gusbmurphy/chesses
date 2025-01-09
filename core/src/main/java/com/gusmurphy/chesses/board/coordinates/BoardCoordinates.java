@@ -39,6 +39,27 @@ public enum BoardCoordinates {
             .findFirst();
     }
 
+    public Direction directionTo(BoardCoordinates move) {
+        Direction directionOfMove;
+
+        if (file == move.file) {
+            directionOfMove = rank.ordinal() < move.rank.ordinal() ? Direction.N : Direction.S;
+        } else if (rank == move.rank) {
+            directionOfMove = file.ordinal() < move.file.ordinal() ? Direction.E : Direction.W;
+        } else {
+            int horizontalMovement = move.file.ordinal() - file.ordinal();
+            int verticalMovement = move.rank.ordinal() - rank.ordinal();
+
+            if (verticalMovement > 0) {
+                directionOfMove = horizontalMovement > 0 ? Direction.NE : Direction.NW;
+            } else {
+                directionOfMove = horizontalMovement > 0 ? Direction.SE : Direction.SW;
+            }
+        }
+
+        return directionOfMove;
+    }
+
     public File file() {
         return file;
     }
