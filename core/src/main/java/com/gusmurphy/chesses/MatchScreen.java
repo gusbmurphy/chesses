@@ -8,19 +8,34 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
+import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Direction;
+import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.judge.Judge;
+import com.gusmurphy.chesses.piece.LinearMovementStrategy;
+import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.piece.PieceOnScreen;
+import com.gusmurphy.chesses.piece.PieceOnScreenMovementListener;
+import com.gusmurphy.chesses.player.PlayerColor;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
-public class MatchScreen implements Screen {
+public class MatchScreen implements Screen, PieceOnScreenMovementListener {
 
     private final SpriteBatch spriteBatch;
     private final FitViewport viewport;
 
     private final Vector2 cursorPosition;
 
-    private final BoardOnScreen board;
-    private final PieceOnScreen king;
+    private final BoardOnScreen boardOnScreen;
+    private final PieceOnScreen kingOnScreen;
+
+    private final BoardState boardState;
+    private final Judge judge;
+    private final Piece king;
 
     static final float SQUARE_SIZE = 0.5f;
 
@@ -30,8 +45,14 @@ public class MatchScreen implements Screen {
 
         cursorPosition = new Vector2();
 
-        board = new BoardOnScreen(this, SQUARE_SIZE);
-        king = new PieceOnScreen(spriteBatch, SQUARE_SIZE, board.getScreenPositionForCenterOf(A4));
+        boardOnScreen = new BoardOnScreen(this, SQUARE_SIZE);
+        kingOnScreen = new PieceOnScreen(spriteBatch, SQUARE_SIZE, boardOnScreen.getScreenPositionForCenterOf(A4));
+
+        king = new Piece(PlayerColor.BLACK, new LinearMovementStrategy(Arrays.asList(Direction.values()), 1));
+        boardState = new BoardState();
+        boardState.placePieceAt(king, A4);
+        judge = new Judge(boardState);
+        kingOnScreen.subscribeToMovement(this);
     }
 
     @Override
@@ -39,7 +60,7 @@ public class MatchScreen implements Screen {
         cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(cursorPosition);
 
-        king.drag(cursorPosition);
+        kingOnScreen.drag(cursorPosition);
 
         drawScreen();
     }
@@ -50,8 +71,8 @@ public class MatchScreen implements Screen {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
-        board.draw();
-        king.draw();
+        boardOnScreen.draw();
+        kingOnScreen.draw();
 
         spriteBatch.end();
     }
@@ -62,6 +83,17 @@ public class MatchScreen implements Screen {
 
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    @Override
+    public void onPieceReleased(PieceOnScreen piece, Vector2 screenPosition) {
+        Optional<BoardCoordinates> releaseSpot = boardOnScreen.getBoardCoordinatesOfScreenPosition(screenPosition);
+
+        if (releaseSpot.isPresent()) {
+            if (judge.movesFor(king).contains(releaseSpot.get())) {
+                kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(releaseSpot.get()));
+            }
+        }
     }
 
     @Override
@@ -81,5 +113,4 @@ public class MatchScreen implements Screen {
 
     @Override
     public void dispose() { }
-
 }

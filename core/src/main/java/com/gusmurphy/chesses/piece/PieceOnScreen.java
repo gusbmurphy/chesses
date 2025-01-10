@@ -7,13 +7,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PieceOnScreen {
 
     private final SpriteBatch spriteBatch;
     private final Sprite kingSprite;
     private final Rectangle kingRectangle;
-    private final Vector2 effectivePosition;
+    private Vector2 effectivePosition;
     private boolean draggingKing = false;
+    private List<PieceOnScreenMovementListener> movementListeners = new ArrayList<>();
 
     public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
@@ -26,6 +30,10 @@ public class PieceOnScreen {
         kingSprite.setCenter(initialPosition.x, initialPosition.y);
     }
 
+    public void subscribeToMovement(PieceOnScreenMovementListener listener) {
+        movementListeners.add(listener);
+    }
+
     public void drag(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
             if (!draggingKing) {
@@ -34,6 +42,7 @@ public class PieceOnScreen {
                 }
             } else {
                 draggingKing = false;
+                movementListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
                 kingSprite.setCenter(effectivePosition.x, effectivePosition.y);
             }
         }
@@ -43,6 +52,10 @@ public class PieceOnScreen {
                 cursorPosition.x - kingSprite.getWidth() / 2, cursorPosition.y - kingSprite.getHeight() / 2
             );
         }
+    }
+
+    public void setEffectivePosition(Vector2 position) {
+        this.effectivePosition = position;
     }
 
     public void draw() {
