@@ -1,44 +1,27 @@
 package com.gusmurphy.chesses.judge;
 
 import com.gusmurphy.chesses.board.BoardState;
-import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.piece.MovementStrategy;
 import com.gusmurphy.chesses.piece.Piece;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class Judge {
 
-    private BoardState boardState;
+    private final BoardState boardState;
 
     public Judge(BoardState boardState) {
         this.boardState = boardState;
     }
 
-    public boolean moveIsPossible(Piece piece, BoardCoordinates move) {
-        MovementStrategy movementStrategy = piece.movementStrategy();
-        Optional<BoardCoordinates> optionalPiecePosition = boardState.coordinatesForPiece(piece);
-
-        if (optionalPiecePosition.isPresent()) {
-            if (movementStrategy.possibleMovesFrom(optionalPiecePosition.get()).contains(move)) {
-                BoardCoordinates piecePosition = optionalPiecePosition.get();
-                Direction directionOfMove = piecePosition.directionTo(move);
-                BoardCoordinates spotToCheck = piecePosition;
-
-                while (spotToCheck != move) {
-                    spotToCheck = spotToCheck.coordinatesToThe(directionOfMove).get();
-
-                    if (boardState.getPieceAt(spotToCheck).isPresent()) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
+    public List<BoardCoordinates> movesFor(Piece piece) {
+        Optional<BoardCoordinates> piecePosition = boardState.coordinatesForPiece(piece);
+        if (piecePosition.isPresent()) {
+            return piece.movementStrategy().possibleMovesFrom(piecePosition.get());
         }
-
-        return false;
+        return Collections.emptyList();
     }
 
 }
