@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
-public class MatchScreen implements Screen, PieceSelectionListener {
+public class MatchScreen extends BaseScreen implements PieceSelectionListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -92,27 +92,4 @@ public class MatchScreen implements Screen, PieceSelectionListener {
         }
     }
 
-    @Override
-    public void show() {
-    }
-
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void dispose() {
-    }
 }
