@@ -13,21 +13,21 @@ import java.util.List;
 public class PieceOnScreen {
 
     private final SpriteBatch spriteBatch;
-    private final Sprite kingSprite;
-    private final Rectangle kingRectangle;
+    private final Sprite sprite;
+    private final Rectangle bounds;
     private Vector2 effectivePosition;
-    private boolean draggingKing = false;
+    private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
     public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
 
         Texture kingTexture = new Texture("b_king.png");
-        kingSprite = new Sprite(kingTexture);
-        kingSprite.setSize(squareSize, squareSize);
-        kingRectangle = new Rectangle();
+        sprite = new Sprite(kingTexture);
+        sprite.setSize(squareSize, squareSize);
+        bounds = new Rectangle();
         effectivePosition = initialPosition;
-        kingSprite.setCenter(initialPosition.x, initialPosition.y);
+        sprite.setCenter(initialPosition.x, initialPosition.y);
     }
 
     public void subscribeToMovement(PieceSelectionListener listener) {
@@ -36,21 +36,21 @@ public class PieceOnScreen {
 
     public void drag(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
-            if (!draggingKing) {
-                if (kingRectangle.contains(cursorPosition)) {
-                    draggingKing = true;
+            if (!isDragged) {
+                if (bounds.contains(cursorPosition)) {
+                    isDragged = true;
                     selectionListeners.forEach(listener -> listener.onPieceSelected(this));
                 }
             } else {
-                draggingKing = false;
+                isDragged = false;
                 selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
-                kingSprite.setCenter(effectivePosition.x, effectivePosition.y);
+                sprite.setCenter(effectivePosition.x, effectivePosition.y);
             }
         }
 
-        if (draggingKing) {
-            kingSprite.setPosition(
-                cursorPosition.x - kingSprite.getWidth() / 2, cursorPosition.y - kingSprite.getHeight() / 2
+        if (isDragged) {
+            sprite.setPosition(
+                cursorPosition.x - sprite.getWidth() / 2, cursorPosition.y - sprite.getHeight() / 2
             );
         }
     }
@@ -61,8 +61,8 @@ public class PieceOnScreen {
 
     public void draw() {
         spriteBatch.begin();
-        kingSprite.draw(spriteBatch);
-        kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
+        sprite.draw(spriteBatch);
+        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         spriteBatch.end();
     }
 
