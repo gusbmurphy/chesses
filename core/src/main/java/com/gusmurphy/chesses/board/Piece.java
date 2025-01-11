@@ -9,7 +9,7 @@ public class Piece {
     private final PieceColorAndMovement pieceColorAndMovement;
     private final BoardCoordinates coordinates;
 
-    Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
+    public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
         this.pieceColorAndMovement = pieceColorAndMovement;
         this.coordinates = coordinates;
     }
