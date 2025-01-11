@@ -7,36 +7,33 @@ import java.util.*;
 
 public class BoardState {
 
-    private final HashMap<BoardCoordinates, PieceColorAndMovement> piecesByCoordinates = new HashMap<>();
+    private final List<Piece> piecesOnBoard = new ArrayList<>();
+
+    public void place(Piece piece) {
+        piecesOnBoard.add(piece);
+    }
 
     public void placePieceAt(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
-        piecesByCoordinates.put(coordinates, pieceColorAndMovement);
+        piecesOnBoard.add(new Piece(pieceColorAndMovement, coordinates));
     }
 
-    public Optional<PieceColorAndMovement> getPieceAt(BoardCoordinates coordinates) {
-        return Optional.ofNullable(piecesByCoordinates.get(coordinates));
+    public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
+        return piecesOnBoard.stream().filter(piece -> piece.getCoordinates() == coordinates).findFirst();
     }
 
-    public Optional<PieceColorAndMovement> removePieceAt(BoardCoordinates coordinates) {
-        PieceColorAndMovement removedPieceColorAndMovement = piecesByCoordinates.remove(coordinates);
-        return Optional.ofNullable(removedPieceColorAndMovement);
+    public Optional<Piece> removePieceAt(BoardCoordinates coordinates) {
+        Optional<Piece> piece = getPieceAt(coordinates);
+        piece.ifPresent(piecesOnBoard::remove);
+        return piece;
     }
 
     public List<Piece> getAllPieces() {
-        List<Piece> piecesAndCoordinates = new ArrayList<>();
-
-        piecesByCoordinates.forEach((key, value) ->
-            piecesAndCoordinates.add(new Piece(value, key))
-        );
-
-        return piecesAndCoordinates;
+        return piecesOnBoard;
     }
 
     public Optional<BoardCoordinates> coordinatesForPiece(PieceColorAndMovement pieceColorAndMovement) {
-        Optional<Map.Entry<BoardCoordinates, PieceColorAndMovement>> entry = piecesByCoordinates
-            .entrySet().stream().filter(e -> e.getValue() == pieceColorAndMovement).findFirst();
-
-        return entry.map(Map.Entry::getKey);
+        Optional<Piece> piece = piecesOnBoard.stream().filter(p -> p.getPiece() == pieceColorAndMovement).findFirst();
+        return piece.map(Piece::getCoordinates);
     }
 
 }

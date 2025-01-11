@@ -16,20 +16,21 @@ public class BoardStateTests {
     void aPieceCanBeAddedToTheBoard() {
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         BoardCoordinates coordinates = B5;
+        Piece piece = new Piece(pieceColorAndMovement, coordinates);
         BoardState boardState = new BoardState();
 
-        boardState.placePieceAt(pieceColorAndMovement, coordinates);
+        boardState.place(piece);
 
-        Optional<PieceColorAndMovement> pieceOnBoard = boardState.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(B5);
 
-        Assertions.assertEquals(pieceOnBoard.get(), pieceColorAndMovement);
+        Assertions.assertEquals(pieceOnBoard.get(), piece);
     }
 
     @Test
     void anEmptyOptionalIsReturnedForAnEmptyPosition() {
         BoardState boardState = new BoardState();
 
-        Optional<PieceColorAndMovement> result = boardState.getPieceAt(B5);
+        Optional<Piece> result = boardState.getPieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -39,13 +40,14 @@ public class BoardStateTests {
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
+        Piece piece = new Piece(pieceColorAndMovement, coordinates);
 
-        boardState.placePieceAt(pieceColorAndMovement, coordinates);
+        boardState.place(piece);
 
-        Optional<PieceColorAndMovement> removedPiece = boardState.removePieceAt(coordinates);
-        Assertions.assertEquals(removedPiece.get(), pieceColorAndMovement);
+        Optional<Piece> removedPiece = boardState.removePieceAt(coordinates);
+        Assertions.assertEquals(removedPiece.get(), piece);
 
-        Optional<PieceColorAndMovement> pieceOnBoard = boardState.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
         Assertions.assertFalse(pieceOnBoard.isPresent());
     }
 
@@ -53,7 +55,7 @@ public class BoardStateTests {
     void ifThereIsNoPieceToBeRemovedAnEmptyIsReturned() {
         BoardState boardState = new BoardState();
 
-        Optional<PieceColorAndMovement> result = boardState.removePieceAt(B5);
+        Optional<Piece> result = boardState.removePieceAt(B5);
 
         Assertions.assertFalse(result.isPresent());
     }
