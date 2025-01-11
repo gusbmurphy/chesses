@@ -22,13 +22,13 @@ public class BoardOnScreen {
     private final Viewport viewport;
     private final Texture darkSquareTexture;
     private final Texture lightSquareTexture;
-    private final float squareSize;
     private final Rectangle bounds;
     private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
+    public static final float SQUARE_SIZE = 0.5f;
 
-    public BoardOnScreen(final ChessesGame game, float squareSize) {
+    public BoardOnScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
@@ -36,8 +36,6 @@ public class BoardOnScreen {
 
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
-
-        this.squareSize = squareSize;
     }
 
     public void draw() {
@@ -52,9 +50,9 @@ public class BoardOnScreen {
             for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
                 boolean isDark = (x % 2) == (y % 2);
                 Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-                float xPosition = x * squareSize + bottomLeftX;
-                float yPosition = y * squareSize + bottomLeftY;
-                spriteBatch.draw(texture, xPosition, yPosition, squareSize, squareSize);
+                float xPosition = x * SQUARE_SIZE + bottomLeftX;
+                float yPosition = y * SQUARE_SIZE + bottomLeftY;
+                spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
             }
         }
 
@@ -62,12 +60,12 @@ public class BoardOnScreen {
 
         for (BoardCoordinates space : highlightedSpaces) {
             Vector2 center = getScreenPositionForCenterOf(space);
-            float xPosition = center.x - squareSize / 2;
-            float yPosition = center.y - squareSize / 2;
+            float xPosition = center.x - SQUARE_SIZE / 2;
+            float yPosition = center.y - SQUARE_SIZE / 2;
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.CYAN);
-            shapeRenderer.rect(xPosition, yPosition, squareSize, squareSize);
+            shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
             shapeRenderer.end();
         }
     }
@@ -85,10 +83,10 @@ public class BoardOnScreen {
 
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
-        float boardWidth = BOARD_WIDTH_IN_SQUARES * squareSize;
+        float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
 
-        float x = xyAdapter.x() * squareSize + squareSize / 2 + worldWidth / 2 - boardWidth / 2;
-        float y = xyAdapter.y() * squareSize + squareSize / 2 + worldHeight / 2 - boardWidth / 2;
+        float x = xyAdapter.x() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldWidth / 2 - boardWidth / 2;
+        float y = xyAdapter.y() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldHeight / 2 - boardWidth / 2;
         return new Vector2(x, y);
     }
 
@@ -97,8 +95,8 @@ public class BoardOnScreen {
             float xWithinBoard = screenPosition.x - bottomLeftX();
             float yWithinBoard = screenPosition.y - bottomLeftY();
 
-            int x = (int) Math.floor(xWithinBoard / squareSize);
-            int y = (int) Math.floor(yWithinBoard / squareSize);
+            int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
+            int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
 
             BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(x, y);
             return Optional.of(adapter.coordinates());
@@ -108,7 +106,7 @@ public class BoardOnScreen {
     }
 
     private float boardWidth() {
-        return BOARD_WIDTH_IN_SQUARES * squareSize;
+        return BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
     }
 
     private float bottomLeftX() {

@@ -35,8 +35,6 @@ public class MatchScreen implements Screen, PieceSelectionListener {
     private final Judge judge;
     private final Piece king;
 
-    static final float SQUARE_SIZE = 0.5f;
-
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
@@ -44,8 +42,8 @@ public class MatchScreen implements Screen, PieceSelectionListener {
 
         cursorPosition = new Vector2();
 
-        boardOnScreen = new BoardOnScreen(game, SQUARE_SIZE);
-        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), SQUARE_SIZE, boardOnScreen.getScreenPositionForCenterOf(A4));
+        boardOnScreen = new BoardOnScreen(game);
+        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), boardOnScreen.getScreenPositionForCenterOf(A4));
 
         king = DefaultPieces.king(PlayerColor.BLACK);
         boardState = new BoardState();

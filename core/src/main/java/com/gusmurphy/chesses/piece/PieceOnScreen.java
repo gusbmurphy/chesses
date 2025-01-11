@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.gusmurphy.chesses.board.BoardOnScreen.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,12 @@ public class PieceOnScreen {
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
+    public PieceOnScreen(SpriteBatch spriteBatch, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
 
         Texture kingTexture = new Texture("b_king.png");
         sprite = new Sprite(kingTexture);
-        sprite.setSize(squareSize, squareSize);
+        sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
         bounds = new Rectangle();
         effectivePosition = initialPosition;
         sprite.setCenter(effectivePosition.x, effectivePosition.y);
