@@ -27,7 +27,10 @@ public class Judge {
     }
 
     public List<BoardCoordinates> movesFor(Piece piece) {
-        return piece.getPiece().movementStrategy().possibleMovesFrom(piece.getCoordinates());
+        if (boardState.coordinatesForPiece(piece.getPiece()).isPresent()) {
+            return piece.getPiece().movementStrategy().possibleMovesFrom(piece.getCoordinates());
+        }
+        return Collections.emptyList();
     }
 
 }
