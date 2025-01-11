@@ -47,14 +47,22 @@ public class PieceOnScreen {
     private void updateDragStatusBasedOn(Vector2 cursorPosition) {
         if (!isDragged) {
             if (bounds.contains(cursorPosition)) {
-                isDragged = true;
-                selectionListeners.forEach(listener -> listener.onPieceSelected(this));
+                startDrag();
             }
         } else {
-            isDragged = false;
-            selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
-            sprite.setCenter(effectivePosition.x, effectivePosition.y);
+            endDrag(cursorPosition);
         }
+    }
+
+    private void startDrag() {
+        isDragged = true;
+        selectionListeners.forEach(listener -> listener.onPieceSelected(this));
+    }
+
+    private void endDrag(Vector2 cursorPosition) {
+        isDragged = false;
+        selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
+        sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
     private void updateSpritePosition(Vector2 cursorPosition) {
