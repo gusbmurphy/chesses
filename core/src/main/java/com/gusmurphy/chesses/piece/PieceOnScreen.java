@@ -49,10 +49,15 @@ public class PieceOnScreen {
         }
 
         if (isDragged) {
-            sprite.setPosition(
-                cursorPosition.x - sprite.getWidth() / 2, cursorPosition.y - sprite.getHeight() / 2
-            );
+            updateSpritePosition(cursorPosition);
         }
+    }
+
+    private void updateSpritePosition(Vector2 cursorPosition) {
+        sprite.setPosition(
+            cursorPosition.x - sprite.getWidth() / 2,
+            cursorPosition.y - sprite.getHeight() / 2
+        );
     }
 
     public void setEffectivePosition(Vector2 position) {
