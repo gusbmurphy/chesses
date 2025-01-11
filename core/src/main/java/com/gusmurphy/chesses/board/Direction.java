@@ -1,5 +1,8 @@
 package com.gusmurphy.chesses.board;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
 
     N(1, 0),
@@ -17,6 +20,10 @@ public enum Direction {
     Direction (int verticalValue, int horizontalValue) {
         this.verticalValue = verticalValue;
         this.horizontalValue = horizontalValue;
+    }
+
+    public static List<Direction> every() {
+        return Arrays.asList(values());
     }
 
     public int verticalValue() {
