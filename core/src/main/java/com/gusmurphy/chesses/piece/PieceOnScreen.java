@@ -15,19 +15,18 @@ public class PieceOnScreen {
     private final SpriteBatch spriteBatch;
     private final Sprite sprite;
     private final Rectangle bounds;
-    private Vector2 effectivePosition;
+    private Vector2 effectivePosition = new Vector2(0, 0);
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
+    public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize) {
         this.spriteBatch = spriteBatch;
 
         Texture kingTexture = new Texture("b_king.png");
         sprite = new Sprite(kingTexture);
         sprite.setSize(squareSize, squareSize);
         bounds = new Rectangle();
-        effectivePosition = initialPosition;
-        sprite.setCenter(initialPosition.x, initialPosition.y);
+        sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
     public void subscribeToMovement(PieceSelectionListener listener) {
