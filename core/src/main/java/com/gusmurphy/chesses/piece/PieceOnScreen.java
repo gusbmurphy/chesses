@@ -46,12 +46,16 @@ public class PieceOnScreen {
 
     private void updateDragStatusBasedOn(Vector2 cursorPosition) {
         if (!isDragged) {
-            if (bounds.contains(cursorPosition)) {
+            if (cursorIsOnPiece(cursorPosition)) {
                 startDrag();
             }
         } else {
             endDrag(cursorPosition);
         }
+    }
+
+    private boolean cursorIsOnPiece(Vector2 cursorPosition) {
+        return bounds.contains(cursorPosition);
     }
 
     private void startDrag() {
