@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.MatchScreen;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
@@ -29,10 +30,10 @@ public class BoardOnScreen {
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
 
-    public BoardOnScreen(final MatchScreen screen, float squareSize) {
-        spriteBatch = screen.getSpriteBatch();
-        shapeRenderer = screen.getShapeRenderer();
-        viewport = screen.getViewport();
+    public BoardOnScreen(final ChessesGame game, float squareSize) {
+        spriteBatch = game.getSpriteBatch();
+        shapeRenderer = game.getShapeRenderer();
+        viewport = game.getViewport();
         bounds = new Rectangle();
 
         lightSquareTexture = new Texture("light_square.png");

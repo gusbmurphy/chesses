@@ -49,8 +49,8 @@ public class MatchScreen implements Screen, PieceSelectionListener {
 
         cursorPosition = new Vector2();
 
-        boardOnScreen = new BoardOnScreen(this, SQUARE_SIZE);
-        kingOnScreen = new PieceOnScreen(spriteBatch, SQUARE_SIZE);
+        boardOnScreen = new BoardOnScreen(game, SQUARE_SIZE);
+        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), SQUARE_SIZE);
         kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(A4));
 
         king = new Piece(PlayerColor.BLACK, new LinearMovementStrategy(Arrays.asList(Direction.values()), 1));
@@ -78,19 +78,6 @@ public class MatchScreen implements Screen, PieceSelectionListener {
 
         boardOnScreen.draw();
         kingOnScreen.draw();
-    }
-
-    // TODO: We're kind of "drilling" the SpriteBatch and ShapeRenderer down...
-    public SpriteBatch getSpriteBatch() {
-        return spriteBatch;
-    }
-
-    public ShapeRenderer getShapeRenderer() {
-        return shapeRenderer;
-    }
-
-    public FitViewport getViewport() {
-        return viewport;
     }
 
     @Override
