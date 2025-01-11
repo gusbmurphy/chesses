@@ -50,8 +50,7 @@ public class MatchScreen implements Screen, PieceSelectionListener {
         cursorPosition = new Vector2();
 
         boardOnScreen = new BoardOnScreen(game, SQUARE_SIZE);
-        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), SQUARE_SIZE);
-        kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(A4));
+        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), SQUARE_SIZE, boardOnScreen.getScreenPositionForCenterOf(A4));
 
         king = new Piece(PlayerColor.BLACK, new LinearMovementStrategy(Arrays.asList(Direction.values()), 1));
         boardState = new BoardState();
