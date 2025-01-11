@@ -1,8 +1,7 @@
-package com.gusmurphy.chesses.board;
+package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 
 public class Piece {
 

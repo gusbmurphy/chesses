@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.judge;
 
 import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.board.Direction;
-import com.gusmurphy.chesses.board.Piece;
+import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.LinearMovementStrategy;
 import com.gusmurphy.chesses.piece.MovementStrategy;

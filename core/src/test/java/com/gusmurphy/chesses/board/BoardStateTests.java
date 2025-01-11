@@ -1,6 +1,7 @@
 package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
