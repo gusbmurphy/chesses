@@ -8,12 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
-import com.gusmurphy.chesses.MatchScreen;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,7 @@ public class BoardOnScreen {
     private final Texture lightSquareTexture;
     private final float squareSize;
     private final Rectangle bounds;
-    private ArrayList<BoardCoordinates> highlightedSpaces;
+    private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
 
@@ -40,8 +38,6 @@ public class BoardOnScreen {
         darkSquareTexture = new Texture("dark_square.png");
 
         this.squareSize = squareSize;
-
-        highlightedSpaces = new ArrayList<>();
     }
 
     public void draw() {
