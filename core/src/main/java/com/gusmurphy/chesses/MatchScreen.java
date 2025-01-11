@@ -1,7 +1,6 @@
 package com.gusmurphy.chesses;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,7 +32,7 @@ public class MatchScreen extends BaseScreen implements PieceSelectionListener {
 
     private final BoardState boardState;
     private final Judge judge;
-    private final Piece king;
+    private final PieceColorAndMovement king;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();

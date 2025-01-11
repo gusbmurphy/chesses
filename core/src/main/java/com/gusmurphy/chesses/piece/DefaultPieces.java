@@ -6,8 +6,8 @@ import static com.gusmurphy.chesses.board.Direction.*;
 
 public class DefaultPieces {
 
-    public static Piece king(PlayerColor color) {
-        return new Piece(color, new LinearMovementStrategy(every(), 1));
+    public static PieceColorAndMovement king(PlayerColor color) {
+        return new PieceColorAndMovement(color, new LinearMovementStrategy(every(), 1));
     }
 
 }

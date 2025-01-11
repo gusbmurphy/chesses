@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.LinearMovementStrategy;
 import com.gusmurphy.chesses.piece.MovementStrategy;
-import com.gusmurphy.chesses.piece.Piece;
+import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 import com.gusmurphy.chesses.player.PlayerColor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -27,14 +27,14 @@ public class JudgeTests {
     @MethodSource("okayMoves")
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates move) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
-        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
+        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
 
         BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, D4);
+        boardState.placePieceAt(pieceColorAndMovement, D4);
 
         Judge judge = new Judge(boardState);
 
-        assertTrue(judge.movesFor(piece).contains(move));
+        assertTrue(judge.movesFor(pieceColorAndMovement).contains(move));
     }
 
     private static Stream<Arguments> okayMoves() {
@@ -53,22 +53,22 @@ public class JudgeTests {
     @Test
     void aPieceWithALinearMovementStrategyCannotMoveToAPositionNotInItsStrategy() {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
-        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
+        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
 
         BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, A2);
+        boardState.placePieceAt(pieceColorAndMovement, A2);
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.movesFor(piece).contains(A4));
+        assertFalse(judge.movesFor(pieceColorAndMovement).contains(A4));
     }
 
     @Test
     void noMoveIsPossibleForAPieceNotOnTheBoard() {
         BoardState boardState = new BoardState();
-        Piece piece = new Piece();
+        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         Judge judge = new Judge(boardState);
-        assertFalse(judge.movesFor(piece).contains(A5));
+        assertFalse(judge.movesFor(pieceColorAndMovement).contains(A5));
     }
 
     @Disabled("Waiting a moment to get moves running in relation to other pieces")
@@ -78,16 +78,16 @@ public class JudgeTests {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
         );
-        Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
-        Piece blockingPiece = new Piece();
+        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
+        PieceColorAndMovement blockingPieceColorAndMovement = new PieceColorAndMovement();
 
         BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, A2);
-        boardState.placePieceAt(blockingPiece, otherPiecePosition);
+        boardState.placePieceAt(pieceColorAndMovement, A2);
+        boardState.placePieceAt(blockingPieceColorAndMovement, otherPiecePosition);
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.movesFor(piece).contains(move));
+        assertFalse(judge.movesFor(pieceColorAndMovement).contains(move));
     }
 
     private static Stream<Arguments> blockedMoves() {
