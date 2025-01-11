@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.judge;
 
-import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Board;
 import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.LinearMovementStrategy;
@@ -29,10 +29,10 @@ public class JudgeTests {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
 
-        BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, D4);
+        Board board = new Board();
+        board.placePieceAt(piece, D4);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new Judge(board);
 
         assertTrue(judge.movesFor(piece).contains(move));
     }
@@ -55,19 +55,19 @@ public class JudgeTests {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
         Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
 
-        BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, A2);
+        Board board = new Board();
+        board.placePieceAt(piece, A2);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new Judge(board);
 
         assertFalse(judge.movesFor(piece).contains(A4));
     }
 
     @Test
     void noMoveIsPossibleForAPieceNotOnTheBoard() {
-        BoardState boardState = new BoardState();
+        Board board = new Board();
         Piece piece = new Piece();
-        Judge judge = new Judge(boardState);
+        Judge judge = new Judge(board);
         assertFalse(judge.movesFor(piece).contains(A5));
     }
 
@@ -81,11 +81,11 @@ public class JudgeTests {
         Piece piece = new Piece(PlayerColor.BLACK, movementStrategy);
         Piece blockingPiece = new Piece();
 
-        BoardState boardState = new BoardState();
-        boardState.placePieceAt(piece, A2);
-        boardState.placePieceAt(blockingPiece, otherPiecePosition);
+        Board board = new Board();
+        board.placePieceAt(piece, A2);
+        board.placePieceAt(blockingPiece, otherPiecePosition);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new Judge(board);
 
         assertFalse(judge.movesFor(piece).contains(move));
     }

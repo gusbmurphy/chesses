@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.player;
 
-import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Board;
 import com.gusmurphy.chesses.piece.Piece;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ public class PlayerTests {
     @MethodSource("playerAndPieceColors")
     void aPlayerCanOnlyMovePiecesOfTheirColor(PlayerColor playerColor, PlayerColor pieceColor, boolean expected) {
         Player player = new Player(playerColor);
-        BoardState board = new BoardState();
+        Board board = new Board();
         Piece piece = new Piece(pieceColor);
         board.placePieceAt(piece, B5);
 
@@ -42,7 +42,7 @@ public class PlayerTests {
     @Test
     void nothingIsReturnedIfAPlayerTriesToMoveAPieceNotThere() {
         Player player = new Player(WHITE);
-        BoardState board = new BoardState();
+        Board board = new Board();
 
         Optional<Piece> pieceToMove = player.selectPieceToMove(board, B5);
 

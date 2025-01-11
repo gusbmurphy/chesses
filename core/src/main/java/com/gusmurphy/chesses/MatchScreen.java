@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
-import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.Board;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.judge.Judge;
 import com.gusmurphy.chesses.piece.*;
@@ -31,7 +31,7 @@ public class MatchScreen implements Screen, PieceSelectionListener {
     private final BoardOnScreen boardOnScreen;
     private final PieceOnScreen kingOnScreen;
 
-    private final BoardState boardState;
+    private final Board board;
     private final Judge judge;
     private final Piece king;
 
@@ -46,9 +46,9 @@ public class MatchScreen implements Screen, PieceSelectionListener {
         kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), boardOnScreen.getScreenPositionForCenterOf(A4));
 
         king = DefaultPieces.king(PlayerColor.BLACK);
-        boardState = new BoardState();
-        boardState.placePieceAt(king, A4);
-        judge = new Judge(boardState);
+        board = new Board();
+        board.placePieceAt(king, A4);
+        judge = new Judge(board);
         kingOnScreen.subscribeToMovement(this);
     }
 
@@ -84,8 +84,8 @@ public class MatchScreen implements Screen, PieceSelectionListener {
 
         if (releaseSpot.isPresent()) {
             if (judge.movesFor(king).contains(releaseSpot.get())) {
-                boardState.removePieceAt(boardState.coordinatesForPiece(king).get());
-                boardState.placePieceAt(king, releaseSpot.get());
+                board.removePieceAt(board.coordinatesForPiece(king).get());
+                board.placePieceAt(king, releaseSpot.get());
                 kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(releaseSpot.get()));
                 boardOnScreen.clearHighlightedSpaces();
             }
