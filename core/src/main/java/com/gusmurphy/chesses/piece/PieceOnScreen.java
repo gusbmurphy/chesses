@@ -36,20 +36,24 @@ public class PieceOnScreen {
 
     public void drag(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
-            if (!isDragged) {
-                if (bounds.contains(cursorPosition)) {
-                    isDragged = true;
-                    selectionListeners.forEach(listener -> listener.onPieceSelected(this));
-                }
-            } else {
-                isDragged = false;
-                selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
-                sprite.setCenter(effectivePosition.x, effectivePosition.y);
-            }
+            updateDragStatusBasedOn(cursorPosition);
         }
 
         if (isDragged) {
             updateSpritePosition(cursorPosition);
+        }
+    }
+
+    private void updateDragStatusBasedOn(Vector2 cursorPosition) {
+        if (!isDragged) {
+            if (bounds.contains(cursorPosition)) {
+                isDragged = true;
+                selectionListeners.forEach(listener -> listener.onPieceSelected(this));
+            }
+        } else {
+            isDragged = false;
+            selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
+            sprite.setCenter(effectivePosition.x, effectivePosition.y);
         }
     }
 
