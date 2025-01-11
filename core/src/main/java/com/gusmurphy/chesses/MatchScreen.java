@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,6 +20,7 @@ import com.gusmurphy.chesses.piece.PieceOnScreenMovementListener;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
@@ -26,6 +28,7 @@ import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 public class MatchScreen implements Screen, PieceOnScreenMovementListener {
 
     private final SpriteBatch spriteBatch;
+    private final ShapeRenderer shapeRenderer;
     private final FitViewport viewport;
 
     private final Vector2 cursorPosition;
@@ -41,6 +44,7 @@ public class MatchScreen implements Screen, PieceOnScreenMovementListener {
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
+        shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
 
         cursorPosition = new Vector2();
@@ -69,20 +73,29 @@ public class MatchScreen implements Screen, PieceOnScreenMovementListener {
         ScreenUtils.clear(Color.WHITE);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        spriteBatch.begin();
+        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
         boardOnScreen.draw();
         kingOnScreen.draw();
-
-        spriteBatch.end();
     }
 
+    // TODO: We're kind of "drilling" the SpriteBatch and ShapeRenderer down...
     public SpriteBatch getSpriteBatch() {
         return spriteBatch;
     }
 
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    @Override
+    public void onPieceSelected(PieceOnScreen piece) {
+        List<BoardCoordinates> possibleMoves = judge.movesFor(king);
+        boardOnScreen.addHighlightedSpaces(possibleMoves);
     }
 
     @Override
@@ -94,25 +107,32 @@ public class MatchScreen implements Screen, PieceOnScreenMovementListener {
                 boardState.removePieceAt(boardState.coordinatesForPiece(king).get());
                 boardState.placePieceAt(king, releaseSpot.get());
                 kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(releaseSpot.get()));
+                boardOnScreen.clearHighlightedSpaces();
             }
         }
     }
 
     @Override
-    public void show() { }
+    public void show() {
+    }
 
     @Override
-    public void resize(int width, int height) { }
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() { }
+    public void pause() {
+    }
 
     @Override
-    public void resume() { }
+    public void resume() {
+    }
 
     @Override
-    public void hide() { }
+    public void hide() {
+    }
 
     @Override
-    public void dispose() { }
+    public void dispose() {
+    }
 }

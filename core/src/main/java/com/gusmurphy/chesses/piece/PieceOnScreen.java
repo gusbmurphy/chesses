@@ -39,6 +39,7 @@ public class PieceOnScreen {
             if (!draggingKing) {
                 if (kingRectangle.contains(cursorPosition)) {
                     draggingKing = true;
+                    movementListeners.forEach(listener -> listener.onPieceSelected(this));
                 }
             } else {
                 draggingKing = false;
@@ -59,8 +60,10 @@ public class PieceOnScreen {
     }
 
     public void draw() {
+        spriteBatch.begin();
         kingSprite.draw(spriteBatch);
         kingRectangle.set(kingSprite.getX(), kingSprite.getY(), kingSprite.getWidth(), kingSprite.getHeight());
+        spriteBatch.end();
     }
 
 }

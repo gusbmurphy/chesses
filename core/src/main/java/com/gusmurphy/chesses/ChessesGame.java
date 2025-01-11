@@ -2,16 +2,19 @@ package com.gusmurphy.chesses;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class ChessesGame extends Game {
 
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
+    private ShapeRenderer shapeRenderer;
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         viewport = new FitViewport(8, 5);
 
         this.setScreen(new MatchScreen(this));
@@ -38,6 +41,10 @@ public class ChessesGame extends Game {
 
     public SpriteBatch getSpriteBatch() {
         return spriteBatch;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
     }
 
 }
