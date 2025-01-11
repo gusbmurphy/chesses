@@ -16,7 +16,7 @@ import com.gusmurphy.chesses.judge.Judge;
 import com.gusmurphy.chesses.piece.LinearMovementStrategy;
 import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.piece.PieceOnScreen;
-import com.gusmurphy.chesses.piece.PieceOnScreenMovementListener;
+import com.gusmurphy.chesses.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
-public class MatchScreen implements Screen, PieceOnScreenMovementListener {
+public class MatchScreen implements Screen, PieceSelectionListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;

@@ -17,7 +17,7 @@ public class PieceOnScreen {
     private final Rectangle kingRectangle;
     private Vector2 effectivePosition;
     private boolean draggingKing = false;
-    private List<PieceOnScreenMovementListener> movementListeners = new ArrayList<>();
+    private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
     public PieceOnScreen(SpriteBatch spriteBatch, Float squareSize, Vector2 initialPosition) {
         this.spriteBatch = spriteBatch;
@@ -30,8 +30,8 @@ public class PieceOnScreen {
         kingSprite.setCenter(initialPosition.x, initialPosition.y);
     }
 
-    public void subscribeToMovement(PieceOnScreenMovementListener listener) {
-        movementListeners.add(listener);
+    public void subscribeToMovement(PieceSelectionListener listener) {
+        selectionListeners.add(listener);
     }
 
     public void drag(Vector2 cursorPosition) {
@@ -39,11 +39,11 @@ public class PieceOnScreen {
             if (!draggingKing) {
                 if (kingRectangle.contains(cursorPosition)) {
                     draggingKing = true;
-                    movementListeners.forEach(listener -> listener.onPieceSelected(this));
+                    selectionListeners.forEach(listener -> listener.onPieceSelected(this));
                 }
             } else {
                 draggingKing = false;
-                movementListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
+                selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
                 kingSprite.setCenter(effectivePosition.x, effectivePosition.y);
             }
         }
