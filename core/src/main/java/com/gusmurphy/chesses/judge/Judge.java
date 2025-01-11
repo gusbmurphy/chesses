@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.judge;
 
-import com.gusmurphy.chesses.board.Board;
+import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.Piece;
 
@@ -10,14 +10,14 @@ import java.util.Optional;
 
 public class Judge {
 
-    private final Board board;
+    private final BoardState boardState;
 
-    public Judge(Board board) {
-        this.board = board;
+    public Judge(BoardState boardState) {
+        this.boardState = boardState;
     }
 
     public List<BoardCoordinates> movesFor(Piece piece) {
-        Optional<BoardCoordinates> piecePosition = board.coordinatesForPiece(piece);
+        Optional<BoardCoordinates> piecePosition = boardState.coordinatesForPiece(piece);
         if (piecePosition.isPresent()) {
             return piece.movementStrategy().possibleMovesFrom(piecePosition.get());
         }

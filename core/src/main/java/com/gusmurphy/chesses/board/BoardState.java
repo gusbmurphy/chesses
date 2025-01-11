@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.*;
 
-public class Board {
+public class BoardState {
 
     private final HashMap<BoardCoordinates, Piece> piecesByCoordinates = new HashMap<>();
 
