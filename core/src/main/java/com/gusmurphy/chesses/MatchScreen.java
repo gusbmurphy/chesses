@@ -10,16 +10,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.BoardOnScreen;
 import com.gusmurphy.chesses.board.BoardState;
-import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.judge.Judge;
-import com.gusmurphy.chesses.piece.LinearMovementStrategy;
-import com.gusmurphy.chesses.piece.Piece;
-import com.gusmurphy.chesses.piece.PieceOnScreen;
-import com.gusmurphy.chesses.piece.PieceSelectionListener;
+import com.gusmurphy.chesses.piece.*;
 import com.gusmurphy.chesses.player.PlayerColor;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +47,7 @@ public class MatchScreen implements Screen, PieceSelectionListener {
         boardOnScreen = new BoardOnScreen(game, SQUARE_SIZE);
         kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), SQUARE_SIZE, boardOnScreen.getScreenPositionForCenterOf(A4));
 
-        king = new Piece(PlayerColor.BLACK, new LinearMovementStrategy(Arrays.asList(Direction.values()), 1));
+        king = DefaultPieces.king(PlayerColor.BLACK);
         boardState = new BoardState();
         boardState.placePieceAt(king, A4);
         judge = new Judge(boardState);
