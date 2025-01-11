@@ -91,6 +91,8 @@ public class MatchScreen implements Screen, PieceOnScreenMovementListener {
 
         if (releaseSpot.isPresent()) {
             if (judge.movesFor(king).contains(releaseSpot.get())) {
+                boardState.removePieceAt(boardState.coordinatesForPiece(king).get());
+                boardState.placePieceAt(king, releaseSpot.get());
                 kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(releaseSpot.get()));
             }
         }
