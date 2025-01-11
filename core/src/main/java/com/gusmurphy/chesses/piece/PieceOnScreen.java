@@ -34,7 +34,7 @@ public class PieceOnScreen {
         selectionListeners.add(listener);
     }
 
-    public void drag(Vector2 cursorPosition) {
+    public void processDragging(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
             updateDragStatusBasedOn(cursorPosition);
         }

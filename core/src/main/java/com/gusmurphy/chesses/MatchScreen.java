@@ -64,7 +64,7 @@ public class MatchScreen implements Screen, PieceSelectionListener {
         cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(cursorPosition);
 
-        kingOnScreen.drag(cursorPosition);
+        kingOnScreen.processDragging(cursorPosition);
 
         drawScreen();
     }
