@@ -44,6 +44,17 @@ public class PieceOnScreen {
         }
     }
 
+    public void setEffectivePosition(Vector2 position) {
+        this.effectivePosition = position;
+    }
+
+    public void draw() {
+        spriteBatch.begin();
+        sprite.draw(spriteBatch);
+        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        spriteBatch.end();
+    }
+
     private void updateDragStatusBasedOn(Vector2 cursorPosition) {
         if (!isDragged) {
             if (cursorIsOnPiece(cursorPosition)) {
@@ -74,17 +85,6 @@ public class PieceOnScreen {
             cursorPosition.x - sprite.getWidth() / 2,
             cursorPosition.y - sprite.getHeight() / 2
         );
-    }
-
-    public void setEffectivePosition(Vector2 position) {
-        this.effectivePosition = position;
-    }
-
-    public void draw() {
-        spriteBatch.begin();
-        sprite.draw(spriteBatch);
-        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-        spriteBatch.end();
     }
 
 }
