@@ -22,11 +22,11 @@ public class BoardState {
         return Optional.ofNullable(removedPieceColorAndMovement);
     }
 
-    public List<PieceAndCoordinates> getAllPieces() {
-        List<PieceAndCoordinates> piecesAndCoordinates = new ArrayList<>();
+    public List<Piece> getAllPieces() {
+        List<Piece> piecesAndCoordinates = new ArrayList<>();
 
         piecesByCoordinates.forEach((key, value) ->
-            piecesAndCoordinates.add(new PieceAndCoordinates(value, key))
+            piecesAndCoordinates.add(new Piece(value, key))
         );
 
         return piecesAndCoordinates;

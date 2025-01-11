@@ -4,12 +4,12 @@ import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 
-public class PieceAndCoordinates {
+public class Piece {
 
     private final PieceColorAndMovement pieceColorAndMovement;
     private final BoardCoordinates coordinates;
 
-    PieceAndCoordinates(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
+    Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
         this.pieceColorAndMovement = pieceColorAndMovement;
         this.coordinates = coordinates;
     }

@@ -69,7 +69,7 @@ public class BoardStateTests {
         board.placePieceAt(pieceColorAndMovementB, H4);
         board.placePieceAt(pieceColorAndMovementC, H8);
 
-        List<PieceAndCoordinates> result = board.getAllPieces();
+        List<Piece> result = board.getAllPieces();
 
         Assertions.assertEquals(result.size(), 3);
     }
