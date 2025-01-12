@@ -18,9 +18,7 @@ import com.gusmurphy.chesses.piece.PieceOnScreen;
 import com.gusmurphy.chesses.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.player.PlayerColor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.A4;
 
@@ -35,7 +33,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
-    private final PieceOnScreen kingOnScreen;
+    private final Map<Piece, PieceOnScreen> piecesOnScreen = new HashMap<>();
 
     private final Judge judge;
     private final Piece king;
@@ -59,7 +57,8 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
 
-        kingOnScreen = new PieceOnScreen(king, this);
+        PieceOnScreen kingOnScreen = new PieceOnScreen(king, this);
+        piecesOnScreen.put(king, kingOnScreen);
 
         judge = new Judge(boardState);
         kingOnScreen.subscribeToMovement(this);
@@ -73,7 +72,9 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(cursorPosition);
 
-        kingOnScreen.processDragging(cursorPosition);
+        for (PieceOnScreen piece : piecesOnScreen.values()) {
+            piece.processDragging(cursorPosition);
+        }
     }
 
     public void draw() {
@@ -86,7 +87,9 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         drawSpaces(bottomLeftX, bottomLeftY);
         drawHighlightedSpaces();
 
-        kingOnScreen.draw();
+        for (PieceOnScreen piece : piecesOnScreen.values()) {
+            piece.draw();
+        }
     }
 
     private void drawSpaces(float bottomLeftX, float bottomLeftY) {
@@ -166,7 +169,9 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     @Override
     public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
         if (event == BoardStateEvent.PIECE_MOVED) {
-            kingOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()));
+            Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
+                pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
+            );
         }
     }
 
