@@ -22,6 +22,7 @@ public class Judge {
             List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
             List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
 
+            // TODO: Hmm...
             possibleMoves.forEach(possibleMove -> {
                 if (boardState.spotIsFree(possibleMove.spot())) {
                     spotsWeCouldGo.add(possibleMove.spot());
