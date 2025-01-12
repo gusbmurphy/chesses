@@ -176,6 +176,21 @@ public class JudgeTests {
     }
 
     @Test
+    void aLinearStrategyWithNoMaxDistanceCanMoveAllTheWayAcrossTheBoard() {
+        MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N));
+        Piece piece = new Piece(strategy, B1);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+
+        assertEquals(7, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(B2, B3, B4, B5, B6, B7, B8)));
+    }
+
+    @Test
     void andEvenInMultipleDirections() {
         MovementStrategy strategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.S), 1);
         Piece piece = new Piece(strategy, B2);

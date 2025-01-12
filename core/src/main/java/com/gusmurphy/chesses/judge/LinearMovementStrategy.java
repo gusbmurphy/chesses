@@ -17,6 +17,11 @@ public class LinearMovementStrategy implements MovementStrategy {
         this.maxDistance = maxDistance;
     }
 
+    public LinearMovementStrategy(List<Direction> directions) {
+        this.directions = directions;
+        this.maxDistance = 99;
+    }
+
     @Override
     public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
         ArrayList<PossibleMove> moves = new ArrayList<>();
