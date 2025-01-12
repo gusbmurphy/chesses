@@ -13,10 +13,19 @@ public class Piece {
     private BoardStateEventManager eventManager;
     private final PieceType type;
 
+    // TODO: These constructors are ugly
     public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates, PieceType type) {
         this.pieceColorAndMovement = pieceColorAndMovement;
         this.coordinates = coordinates;
         this.type = type;
+    }
+
+    public Piece(MovementStrategy strategy, BoardCoordinates coordinates) {
+        this(
+            new PieceColorAndMovement(PlayerColor.WHITE, strategy),
+            coordinates,
+            PieceType.KING
+        );
     }
 
     public PieceColorAndMovement getPiece() {
