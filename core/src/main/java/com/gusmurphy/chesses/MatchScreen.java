@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gusmurphy.chesses.board.BoardOnScreen;
-import com.gusmurphy.chesses.board.BoardState;
+import com.gusmurphy.chesses.board.*;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.judge.Judge;
 import com.gusmurphy.chesses.piece.*;
@@ -19,7 +18,7 @@ import java.util.Optional;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
 
-public class MatchScreen extends BaseScreen implements PieceSelectionListener {
+public class MatchScreen extends BaseScreen implements PieceSelectionListener, BoardStateEventListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -30,9 +29,8 @@ public class MatchScreen extends BaseScreen implements PieceSelectionListener {
     private final BoardOnScreen boardOnScreen;
     private final PieceOnScreen kingOnScreen;
 
-    private final BoardState boardState;
     private final Judge judge;
-    private final PieceColorAndMovement king;
+    private final Piece king;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
@@ -44,9 +42,13 @@ public class MatchScreen extends BaseScreen implements PieceSelectionListener {
         boardOnScreen = new BoardOnScreen(game);
         kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), boardOnScreen.getScreenPositionForCenterOf(A4));
 
-        king = DefaultPieces.king(PlayerColor.BLACK);
-        boardState = new BoardState();
-        boardState.placePieceAt(king, A4);
+        king = new Piece(DefaultPieces.king(PlayerColor.BLACK), A4);
+
+        BoardState boardState = new BoardState();
+        boardState.place(king);
+        BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
+        boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
+
         judge = new Judge(boardState);
         kingOnScreen.subscribeToMovement(this);
     }
@@ -83,11 +85,16 @@ public class MatchScreen extends BaseScreen implements PieceSelectionListener {
 
         if (releaseSpot.isPresent()) {
             if (judge.movesFor(king).contains(releaseSpot.get())) {
-                boardState.removePieceAt(boardState.coordinatesForPiece(king).get());
-                boardState.placePieceAt(king, releaseSpot.get());
-                kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(releaseSpot.get()));
+                king.moveTo(releaseSpot.get());
                 boardOnScreen.clearHighlightedSpaces();
             }
+        }
+    }
+
+    @Override
+    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
+        if (event == BoardStateEvent.PIECE_MOVED) {
+            kingOnScreen.setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(piece.getCoordinates()));
         }
     }
 
