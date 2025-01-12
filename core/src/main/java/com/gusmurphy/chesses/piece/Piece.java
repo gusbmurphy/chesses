@@ -10,10 +10,12 @@ public class Piece {
     private final PieceColorAndMovement pieceColorAndMovement;
     private BoardCoordinates coordinates;
     private BoardStateEventManager eventManager;
+    private final PieceType type;
 
-    public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
+    public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates, PieceType type) {
         this.pieceColorAndMovement = pieceColorAndMovement;
         this.coordinates = coordinates;
+        this.type = type;
     }
 
     public PieceColorAndMovement getPiece() {
@@ -22,6 +24,10 @@ public class Piece {
 
     public BoardCoordinates getCoordinates() {
         return coordinates;
+    }
+
+    public PieceType type() {
+        return type;
     }
 
     public BoardCoordinatesXyAdapter getXyCoordinates() {

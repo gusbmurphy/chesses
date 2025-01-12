@@ -15,7 +15,7 @@ public class PieceTests {
 
     @Test
     void whenAPieceIsMovedAnyListenersAreNotified() {
-        Piece piece = new Piece(DefaultPieces.king(PlayerColor.WHITE), A4);
+        Piece piece = DefaultPieces.king(PlayerColor.WHITE, A4);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);

@@ -42,7 +42,7 @@ public class MatchScreen extends BaseScreen implements PieceSelectionListener, B
         boardOnScreen = new BoardOnScreen(game);
         kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), boardOnScreen.getScreenPositionForCenterOf(A4));
 
-        king = new Piece(DefaultPieces.king(PlayerColor.BLACK), A4);
+        king = DefaultPieces.king(PlayerColor.BLACK, A4);
 
         BoardState boardState = new BoardState();
         boardState.place(king);

@@ -17,15 +17,6 @@ public class Judge {
         this.boardState = boardState;
     }
 
-    public List<BoardCoordinates> movesFor(PieceColorAndMovement pieceColorAndMovement) {
-        Optional<BoardCoordinates> piecePosition = boardState.coordinatesForPiece(pieceColorAndMovement);
-        if (piecePosition.isPresent()) {
-            Piece piece = new Piece(pieceColorAndMovement, piecePosition.get());
-            return movesFor(piece);
-        }
-        return Collections.emptyList();
-    }
-
     public List<BoardCoordinates> movesFor(Piece piece) {
         if (boardState.coordinatesForPiece(piece.getPiece()).isPresent()) {
             return piece.getPiece().movementStrategy().possibleMovesFrom(piece.getCoordinates());

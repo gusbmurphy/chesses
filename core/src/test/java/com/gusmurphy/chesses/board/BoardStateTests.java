@@ -1,8 +1,9 @@
 package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.piece.DefaultPieces;
 import com.gusmurphy.chesses.piece.Piece;
-import com.gusmurphy.chesses.piece.PieceColorAndMovement;
+import com.gusmurphy.chesses.player.PlayerColor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,7 @@ public class BoardStateTests {
 
     @Test
     void aPieceCanBeAddedToTheBoard() {
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
-        BoardCoordinates coordinates = B5;
-        Piece piece = new Piece(pieceColorAndMovement, coordinates);
+        Piece piece = DefaultPieces.king(PlayerColor.WHITE, B5);
         BoardState boardState = new BoardState();
 
         boardState.place(piece);
@@ -38,10 +37,9 @@ public class BoardStateTests {
 
     @Test
     void aPieceCanBeRemoved() {
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         BoardCoordinates coordinates = B5;
         BoardState boardState = new BoardState();
-        Piece piece = new Piece(pieceColorAndMovement, coordinates);
+        Piece piece = DefaultPieces.king(PlayerColor.WHITE, coordinates);
 
         boardState.place(piece);
 
@@ -65,12 +63,12 @@ public class BoardStateTests {
     void allPiecesOnTheBoardCanBeRetrieved() {
         BoardState board = new BoardState();
 
-        PieceColorAndMovement pieceColorAndMovementA = new PieceColorAndMovement();
-        PieceColorAndMovement pieceColorAndMovementB = new PieceColorAndMovement();
-        PieceColorAndMovement pieceColorAndMovementC = new PieceColorAndMovement();
-        board.placePieceAt(pieceColorAndMovementA, A3);
-        board.placePieceAt(pieceColorAndMovementB, H4);
-        board.placePieceAt(pieceColorAndMovementC, H8);
+        Piece pieceA = DefaultPieces.king(PlayerColor.WHITE, A3);
+        Piece pieceB = DefaultPieces.king(PlayerColor.WHITE, H4);
+        Piece pieceC = DefaultPieces.king(PlayerColor.WHITE, H8);
+        board.place(pieceA);
+        board.place(pieceB);
+        board.place(pieceC);
 
         List<Piece> result = board.getAllPieces();
 

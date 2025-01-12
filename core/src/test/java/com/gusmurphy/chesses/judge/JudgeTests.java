@@ -2,11 +2,8 @@ package com.gusmurphy.chesses.judge;
 
 import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.board.Direction;
-import com.gusmurphy.chesses.piece.Piece;
+import com.gusmurphy.chesses.piece.*;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.piece.LinearMovementStrategy;
-import com.gusmurphy.chesses.piece.MovementStrategy;
-import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 import com.gusmurphy.chesses.player.PlayerColor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -29,7 +26,7 @@ public class JudgeTests {
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates move) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, D4);
+        Piece piece = new Piece(pieceColorAndMovement, D4, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -56,7 +53,7 @@ public class JudgeTests {
     void aPieceWithALinearMovementStrategyCannotMoveToAPositionNotInItsStrategy() {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, A2);
+        Piece piece = new Piece(pieceColorAndMovement, A2, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -70,7 +67,7 @@ public class JudgeTests {
     void noMoveIsPossibleForAPieceNotOnTheBoard() {
         BoardState boardState = new BoardState();
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
-        Piece piece = new Piece(pieceColorAndMovement, A4);
+        Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
         Judge judge = new Judge(boardState);
         assertTrue(judge.movesFor(piece).isEmpty());
     }
@@ -83,10 +80,10 @@ public class JudgeTests {
             Arrays.asList(Direction.N, Direction.E), 5
         );
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, A2);
+        Piece piece = new Piece(pieceColorAndMovement, A2, PieceType.KING);
 
         PieceColorAndMovement blockingPieceColorAndMovement = new PieceColorAndMovement();
-        Piece blockingPiece = new Piece(blockingPieceColorAndMovement, otherPiecePosition);
+        Piece blockingPiece = new Piece(blockingPieceColorAndMovement, otherPiecePosition, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);

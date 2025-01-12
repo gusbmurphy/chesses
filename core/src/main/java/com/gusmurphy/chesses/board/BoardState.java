@@ -14,10 +14,6 @@ public class BoardState {
         piecesOnBoard.add(piece);
     }
 
-    public void placePieceAt(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates) {
-        piecesOnBoard.add(new Piece(pieceColorAndMovement, coordinates));
-    }
-
     public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
         return piecesOnBoard.stream().filter(piece -> piece.getCoordinates() == coordinates).findFirst();
     }
