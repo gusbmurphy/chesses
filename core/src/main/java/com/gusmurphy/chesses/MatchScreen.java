@@ -6,15 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.board.*;
-import com.gusmurphy.chesses.piece.DefaultPieces;
-import com.gusmurphy.chesses.piece.Piece;
-import com.gusmurphy.chesses.player.PlayerColor;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.A4;
-import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.H1;
 
 public class MatchScreen extends BaseScreen {
 
@@ -29,15 +20,7 @@ public class MatchScreen extends BaseScreen {
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
 
-        List<Piece> pieces = Arrays.asList(
-            DefaultPieces.king(PlayerColor.BLACK, A4),
-            DefaultPieces.king(PlayerColor.WHITE, H1)
-        );
-
-        BoardState boardState = new BoardState();
-        pieces.forEach(boardState::place);
-
-        boardOnScreen = new BoardOnScreen(boardState, game);
+        boardOnScreen = new BoardOnScreen(StartingBoards.demo(), game);
     }
 
     @Override
