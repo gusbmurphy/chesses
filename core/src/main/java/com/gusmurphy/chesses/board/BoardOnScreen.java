@@ -52,14 +52,14 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
 
-        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), getScreenPositionForCenterOf(A4));
-
         king = DefaultPieces.king(PlayerColor.BLACK, A4);
 
         BoardState boardState = new BoardState();
         boardState.place(king);
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
+
+        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), getScreenPositionForCenterOf(A4), king);
 
         judge = new Judge(boardState);
         kingOnScreen.subscribeToMovement(this);

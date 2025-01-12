@@ -1,7 +1,6 @@
 package com.gusmurphy.chesses.piece;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -21,11 +20,10 @@ public class PieceOnScreen {
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(SpriteBatch spriteBatch, Vector2 initialPosition) {
+    public PieceOnScreen(SpriteBatch spriteBatch, Vector2 initialPosition, Piece piece) {
         this.spriteBatch = spriteBatch;
 
-        Texture kingTexture = new Texture("b_king.png");
-        sprite = new Sprite(kingTexture);
+        sprite = PieceSprite.spriteFor(piece);
         sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
         bounds = new Rectangle();
         effectivePosition = initialPosition;
