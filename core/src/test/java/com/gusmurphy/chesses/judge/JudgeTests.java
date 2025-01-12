@@ -13,11 +13,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JudgeTests {
 
@@ -99,6 +100,93 @@ public class JudgeTests {
             Arguments.of(A4, A5),
             Arguments.of(B2, C2)
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleSpotMoves")
+    void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
+        Direction direction, BoardCoordinates expected
+    ) {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
+        Piece piece = new Piece(linear, D4);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        assertEquals(Collections.singletonList(expected), possibleMoves);
+    }
+
+    private static Stream<Arguments> singleSpotMoves() {
+        return Stream.of(
+            Arguments.of(Direction.N, D5),
+            Arguments.of(Direction.NE, E5),
+            Arguments.of(Direction.E, E4),
+            Arguments.of(Direction.SE, E3),
+            Arguments.of(Direction.S, D3),
+            Arguments.of(Direction.SW, C3),
+            Arguments.of(Direction.W, C4),
+            Arguments.of(Direction.NW, C5)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("movesOffTheBoard")
+    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
+        Piece piece = new Piece(linear, from);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        assertEquals(0, possibleMoves.size());
+    }
+
+    private static Stream<Arguments> movesOffTheBoard() {
+        return Stream.of(
+            Arguments.of(A8, Direction.N),
+            Arguments.of(A8, Direction.W),
+            Arguments.of(H8, Direction.N),
+            Arguments.of(H8, Direction.E),
+            Arguments.of(H1, Direction.S),
+            Arguments.of(H1, Direction.E),
+            Arguments.of(A1, Direction.S),
+            Arguments.of(A1, Direction.W)
+        );
+    }
+
+    @Test
+    void weCouldAlsoMoveTwoSpotsInOneDirection() {
+        MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 2);
+        Piece piece = new Piece(strategy, B2);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B4)));
+    }
+
+    @Test
+    void andEvenInMultipleDirections() {
+        MovementStrategy strategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.S), 1);
+        Piece piece = new Piece(strategy, B2);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B1)));
     }
 
 }
