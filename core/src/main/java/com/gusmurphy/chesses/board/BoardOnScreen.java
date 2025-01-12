@@ -36,7 +36,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     private final Map<Piece, PieceOnScreen> piecesOnScreen = new HashMap<>();
 
     private final Judge judge;
-    private final Piece king;
+    private final Piece blackKing;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 0.5f;
@@ -50,15 +50,15 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
 
-        king = DefaultPieces.king(PlayerColor.BLACK, A4);
+        blackKing = DefaultPieces.king(PlayerColor.BLACK, A4);
 
         BoardState boardState = new BoardState();
-        boardState.place(king);
+        boardState.place(blackKing);
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
 
-        PieceOnScreen kingOnScreen = new PieceOnScreen(king, this);
-        piecesOnScreen.put(king, kingOnScreen);
+        PieceOnScreen kingOnScreen = new PieceOnScreen(blackKing, this);
+        piecesOnScreen.put(blackKing, kingOnScreen);
 
         judge = new Judge(boardState);
         kingOnScreen.subscribeToMovement(this);
@@ -150,7 +150,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
 
     @Override
     public void onPieceSelected(Piece piece) {
-        List<BoardCoordinates> possibleMoves = judge.movesFor(king);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(blackKing);
         highlightedSpaces.addAll(possibleMoves);
     }
 
@@ -159,8 +159,8 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
 
         if (releaseSpot.isPresent()) {
-            if (judge.movesFor(king).contains(releaseSpot.get())) {
-                king.moveTo(releaseSpot.get());
+            if (judge.movesFor(blackKing).contains(releaseSpot.get())) {
+                blackKing.moveTo(releaseSpot.get());
                 highlightedSpaces.clear();
             }
         }
