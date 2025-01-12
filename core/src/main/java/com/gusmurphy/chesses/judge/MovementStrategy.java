@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.piece;
+package com.gusmurphy.chesses.judge;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 

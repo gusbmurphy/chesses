@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.piece;
 
+import com.gusmurphy.chesses.judge.MovementStrategy;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 // TODO: This can't be like this...

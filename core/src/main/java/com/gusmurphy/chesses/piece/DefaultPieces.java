@@ -1,6 +1,7 @@
 package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.judge.LinearMovementStrategy;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import static com.gusmurphy.chesses.board.Direction.*;
