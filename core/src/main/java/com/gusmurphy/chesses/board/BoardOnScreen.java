@@ -23,9 +23,9 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
     private final Viewport viewport;
-    private final Texture darkSquareTexture;
-    private final Texture lightSquareTexture;
-    private final Rectangle bounds;
+    private final Texture darkSquareTexture = new Texture("dark_square.png");
+    private final Texture lightSquareTexture = new Texture("light_square.png");
+    private final Rectangle bounds = new Rectangle();
     private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
@@ -40,10 +40,6 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
-        bounds = new Rectangle();
-
-        lightSquareTexture = new Texture("light_square.png");
-        darkSquareTexture = new Texture("dark_square.png");
 
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
