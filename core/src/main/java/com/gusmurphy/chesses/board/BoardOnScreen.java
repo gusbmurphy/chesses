@@ -114,14 +114,6 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         }
     }
 
-    public void addHighlightedSpaces(List<BoardCoordinates> spaces) {
-        highlightedSpaces.addAll(spaces);
-    }
-
-    public void clearHighlightedSpaces() {
-        highlightedSpaces.clear();
-    }
-
     public Vector2 getScreenPositionForCenterOf(BoardCoordinates coordinates) {
         BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(coordinates);
 
@@ -152,7 +144,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     @Override
     public void onPieceSelected(PieceOnScreen piece) {
         List<BoardCoordinates> possibleMoves = judge.movesFor(king);
-        addHighlightedSpaces(possibleMoves);
+        highlightedSpaces.addAll(possibleMoves);
     }
 
     @Override
@@ -162,7 +154,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         if (releaseSpot.isPresent()) {
             if (judge.movesFor(king).contains(releaseSpot.get())) {
                 king.moveTo(releaseSpot.get());
-                clearHighlightedSpaces();
+                highlightedSpaces.clear();
             }
         }
     }
