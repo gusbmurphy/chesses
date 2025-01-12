@@ -59,10 +59,14 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
 
-        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), getScreenPositionForCenterOf(A4), king);
+        kingOnScreen = new PieceOnScreen(king, this);
 
         judge = new Judge(boardState);
         kingOnScreen.subscribeToMovement(this);
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
     }
 
     public void render() {

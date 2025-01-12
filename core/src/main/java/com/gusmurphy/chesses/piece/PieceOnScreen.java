@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.gusmurphy.chesses.board.BoardOnScreen;
 
 import static com.gusmurphy.chesses.board.BoardOnScreen.*;
 
@@ -20,13 +21,13 @@ public class PieceOnScreen {
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(SpriteBatch spriteBatch, Vector2 initialPosition, Piece piece) {
-        this.spriteBatch = spriteBatch;
+    public PieceOnScreen(Piece piece, BoardOnScreen boardOnScreen) {
+        this.spriteBatch = boardOnScreen.getSpriteBatch();
 
         sprite = PieceSprite.spriteFor(piece);
         sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
         bounds = new Rectangle();
-        effectivePosition = initialPosition;
+        effectivePosition = boardOnScreen.getScreenPositionForCenterOf(piece.getCoordinates());
         sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
