@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.player.PlayerColor;
 import static com.gusmurphy.chesses.board.Direction.*;
 import static com.gusmurphy.chesses.piece.PieceType.*;
 
+// TODO: Would probably be good to have a builder for these...
 public class DefaultPieces {
 
     public static Piece king(PlayerColor color, BoardCoordinates position) {
