@@ -12,16 +12,11 @@ import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.judge.Judge;
-import com.gusmurphy.chesses.piece.DefaultPieces;
 import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.piece.PieceOnScreen;
 import com.gusmurphy.chesses.piece.PieceSelectionListener;
-import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.*;
-
-import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.A4;
-import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.H1;
 
 public class BoardOnScreen implements PieceSelectionListener, BoardStateEventListener {
 
@@ -41,7 +36,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 0.5f;
 
-    public BoardOnScreen(final ChessesGame game) {
+    public BoardOnScreen(BoardState boardState, final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
@@ -50,22 +45,14 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
 
-        Piece blackKing = DefaultPieces.king(PlayerColor.BLACK, A4);
-        Piece whiteKing = DefaultPieces.king(PlayerColor.WHITE, H1);
-
-        BoardState boardState = new BoardState();
-        boardState.place(blackKing);
-        boardState.place(whiteKing);
         BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
         boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
 
-        PieceOnScreen blackKingOnScreen = new PieceOnScreen(blackKing, this);
-        piecesOnScreen.put(blackKing, blackKingOnScreen);
-        blackKingOnScreen.subscribeToMovement(this);
-
-        PieceOnScreen whiteKingOnScreen = new PieceOnScreen(whiteKing, this);
-        piecesOnScreen.put(whiteKing, whiteKingOnScreen);
-        whiteKingOnScreen.subscribeToMovement(this);
+        for (Piece piece : boardState.getAllPieces()) {
+            PieceOnScreen pieceOnScreen = new PieceOnScreen(piece, this);
+            piecesOnScreen.put(piece, pieceOnScreen);
+            pieceOnScreen.subscribeToMovement(this);
+        }
 
         judge = new Judge(boardState);
     }
