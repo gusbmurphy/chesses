@@ -5,7 +5,10 @@ import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.judge.MovementStrategy;
+import com.gusmurphy.chesses.judge.PossibleMove;
 import com.gusmurphy.chesses.player.PlayerColor;
+
+import java.util.List;
 
 public class Piece {
 
@@ -27,6 +30,10 @@ public class Piece {
             coordinates,
             PieceType.KING
         );
+    }
+
+    public List<PossibleMove> currentPossibleMoves() {
+        return pieceColorAndMovement.movementStrategy().possibleMovesFrom(coordinates);
     }
 
     public PieceColorAndMovement getPiece() {
