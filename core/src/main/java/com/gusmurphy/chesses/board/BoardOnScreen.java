@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.board;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,12 +11,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
+import com.gusmurphy.chesses.judge.Judge;
+import com.gusmurphy.chesses.piece.DefaultPieces;
+import com.gusmurphy.chesses.piece.Piece;
+import com.gusmurphy.chesses.piece.PieceOnScreen;
+import com.gusmurphy.chesses.piece.PieceSelectionListener;
+import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BoardOnScreen {
+import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.A4;
+
+public class BoardOnScreen implements PieceSelectionListener, BoardStateEventListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -24,6 +33,12 @@ public class BoardOnScreen {
     private final Texture lightSquareTexture;
     private final Rectangle bounds;
     private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
+    private final Vector2 cursorPosition = new Vector2();
+
+    private final PieceOnScreen kingOnScreen;
+
+    private final Judge judge;
+    private final Piece king;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 0.5f;
@@ -36,6 +51,25 @@ public class BoardOnScreen {
 
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
+
+        kingOnScreen = new PieceOnScreen(game.getSpriteBatch(), getScreenPositionForCenterOf(A4));
+
+        king = DefaultPieces.king(PlayerColor.BLACK, A4);
+
+        BoardState boardState = new BoardState();
+        boardState.place(king);
+        BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
+        boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
+
+        judge = new Judge(boardState);
+        kingOnScreen.subscribeToMovement(this);
+    }
+
+    public void render() {
+        cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(cursorPosition);
+
+        kingOnScreen.processDragging(cursorPosition);
     }
 
     public void draw() {
@@ -68,6 +102,8 @@ public class BoardOnScreen {
             shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
             shapeRenderer.end();
         }
+
+        kingOnScreen.draw();
     }
 
     public void addHighlightedSpaces(List<BoardCoordinates> spaces) {
@@ -103,6 +139,31 @@ public class BoardOnScreen {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public void onPieceSelected(PieceOnScreen piece) {
+        List<BoardCoordinates> possibleMoves = judge.movesFor(king);
+        addHighlightedSpaces(possibleMoves);
+    }
+
+    @Override
+    public void onPieceReleased(PieceOnScreen piece, Vector2 screenPosition) {
+        Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
+
+        if (releaseSpot.isPresent()) {
+            if (judge.movesFor(king).contains(releaseSpot.get())) {
+                king.moveTo(releaseSpot.get());
+                clearHighlightedSpaces();
+            }
+        }
+    }
+
+    @Override
+    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
+        if (event == BoardStateEvent.PIECE_MOVED) {
+            kingOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()));
+        }
     }
 
     private float boardWidth() {
