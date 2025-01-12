@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.board.BoardStateEvent;
 import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
+import com.gusmurphy.chesses.player.PlayerColor;
 
 public class Piece {
 
@@ -24,6 +25,10 @@ public class Piece {
 
     public BoardCoordinates getCoordinates() {
         return coordinates;
+    }
+
+    public PlayerColor color() {
+        return pieceColorAndMovement.color();
     }
 
     public PieceType type() {
