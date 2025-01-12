@@ -49,14 +49,6 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         judge = new Judge(boardState);
     }
 
-    private void createPiecesOnScreenFor(BoardState boardState) {
-        for (Piece piece : boardState.getAllPieces()) {
-            PieceOnScreen pieceOnScreen = new PieceOnScreen(piece, this);
-            piecesOnScreen.put(piece, pieceOnScreen);
-            pieceOnScreen.subscribeToMovement(this);
-        }
-    }
-
     public SpriteBatch getSpriteBatch() {
         return spriteBatch;
     }
@@ -82,6 +74,63 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
 
         for (PieceOnScreen piece : piecesOnScreen.values()) {
             piece.draw();
+        }
+    }
+
+    public Optional<BoardCoordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
+        if (bounds.contains(screenPosition)) {
+            float xWithinBoard = screenPosition.x - bottomLeftX();
+            float yWithinBoard = screenPosition.y - bottomLeftY();
+
+            int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
+            int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
+
+            BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(x, y);
+            return Optional.of(adapter.coordinates());
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public void onPieceSelected(Piece piece) {
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        highlightedSpaces.addAll(possibleMoves);
+    }
+
+    @Override
+    public void onPieceReleased(Piece piece, Vector2 screenPosition) {
+        Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
+
+        releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
+    }
+
+    @Override
+    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
+        if (event == BoardStateEvent.PIECE_MOVED) {
+            Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
+                pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
+            );
+        }
+    }
+
+    public Vector2 getScreenPositionForCenterOf(BoardCoordinates coordinates) {
+        BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(coordinates);
+
+        float worldWidth = viewport.getWorldWidth();
+        float worldHeight = viewport.getWorldHeight();
+        float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
+
+        float x = xyAdapter.x() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldWidth / 2 - boardWidth / 2;
+        float y = xyAdapter.y() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldHeight / 2 - boardWidth / 2;
+        return new Vector2(x, y);
+    }
+
+    private void createPiecesOnScreenFor(BoardState boardState) {
+        for (Piece piece : boardState.getAllPieces()) {
+            PieceOnScreen pieceOnScreen = new PieceOnScreen(piece, this);
+            piecesOnScreen.put(piece, pieceOnScreen);
+            pieceOnScreen.subscribeToMovement(this);
         }
     }
 
@@ -114,59 +163,10 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         }
     }
 
-    public Vector2 getScreenPositionForCenterOf(BoardCoordinates coordinates) {
-        BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(coordinates);
-
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
-        float boardWidth = BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
-
-        float x = xyAdapter.x() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldWidth / 2 - boardWidth / 2;
-        float y = xyAdapter.y() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldHeight / 2 - boardWidth / 2;
-        return new Vector2(x, y);
-    }
-
-    public Optional<BoardCoordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
-        if (bounds.contains(screenPosition)) {
-            float xWithinBoard = screenPosition.x - bottomLeftX();
-            float yWithinBoard = screenPosition.y - bottomLeftY();
-
-            int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
-            int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
-
-            BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(x, y);
-            return Optional.of(adapter.coordinates());
-        }
-
-        return Optional.empty();
-    }
-
-    @Override
-    public void onPieceSelected(Piece piece) {
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
-        highlightedSpaces.addAll(possibleMoves);
-    }
-
-    @Override
-    public void onPieceReleased(Piece piece, Vector2 screenPosition) {
-        Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
-
-        releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
-    }
-
     private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
         if (judge.movesFor(piece).contains(releaseSpot)) {
             piece.moveTo(releaseSpot);
             highlightedSpaces.clear();
-        }
-    }
-
-    @Override
-    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
-        if (event == BoardStateEvent.PIECE_MOVED) {
-            Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
-                pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
-            );
         }
     }
 
