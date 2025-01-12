@@ -36,7 +36,6 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     private final Map<Piece, PieceOnScreen> piecesOnScreen = new HashMap<>();
 
     private final Judge judge;
-    private final Piece blackKing;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 0.5f;
@@ -50,7 +49,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         lightSquareTexture = new Texture("light_square.png");
         darkSquareTexture = new Texture("dark_square.png");
 
-        blackKing = DefaultPieces.king(PlayerColor.BLACK, A4);
+        Piece blackKing = DefaultPieces.king(PlayerColor.BLACK, A4);
 
         BoardState boardState = new BoardState();
         boardState.place(blackKing);
@@ -150,7 +149,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
 
     @Override
     public void onPieceSelected(Piece piece) {
-        List<BoardCoordinates> possibleMoves = judge.movesFor(blackKing);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
         highlightedSpaces.addAll(possibleMoves);
     }
 
@@ -158,11 +157,13 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     public void onPieceReleased(Piece piece, Vector2 screenPosition) {
         Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
 
-        if (releaseSpot.isPresent()) {
-            if (judge.movesFor(blackKing).contains(releaseSpot.get())) {
-                blackKing.moveTo(releaseSpot.get());
-                highlightedSpaces.clear();
-            }
+        releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
+    }
+
+    private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
+        if (judge.movesFor(piece).contains(releaseSpot)) {
+            piece.moveTo(releaseSpot);
+            highlightedSpaces.clear();
         }
     }
 
