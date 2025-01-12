@@ -7,6 +7,5 @@ import java.util.List;
 public interface MovementStrategy {
 
     List<BoardCoordinates> possibleMovesFrom(BoardCoordinates position);
-    boolean isLinear();
 
 }
