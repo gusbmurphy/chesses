@@ -203,4 +203,21 @@ public class JudgeTests {
         assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B1)));
     }
 
+    @Test
+    void aRelativeStrategyOnlyGoesToCertainSpotsRelativeToTheCurrentOne() {
+        RelativeStrategy partOne = new RelativeStrategy(1, 2);
+        RelativeStrategy partTwo = new RelativeStrategy(-2, 3);
+        MovementStrategy fullStrategy = new RelativeStrategy(partOne, partTwo);
+
+        Piece piece = new Piece(fullStrategy, E4);
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(F6, C7)));
+    }
+
 }
