@@ -76,8 +76,16 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         float boardWidth = boardWidth();
         float bottomLeftX = bottomLeftX();
         float bottomLeftY = bottomLeftY();
+
         bounds.set(bottomLeftX, bottomLeftY, boardWidth, boardWidth);
 
+        drawSpaces(bottomLeftX, bottomLeftY);
+        drawHighlightedSpaces();
+
+        kingOnScreen.draw();
+    }
+
+    private void drawSpaces(float bottomLeftX, float bottomLeftY) {
         spriteBatch.begin();
 
         for (int x = 0; x < BOARD_WIDTH_IN_SQUARES; x++) {
@@ -91,7 +99,9 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
         }
 
         spriteBatch.end();
+    }
 
+    private void drawHighlightedSpaces() {
         for (BoardCoordinates space : highlightedSpaces) {
             Vector2 center = getScreenPositionForCenterOf(space);
             float xPosition = center.x - SQUARE_SIZE / 2;
@@ -102,8 +112,6 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
             shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
             shapeRenderer.end();
         }
-
-        kingOnScreen.draw();
     }
 
     public void addHighlightedSpaces(List<BoardCoordinates> spaces) {
