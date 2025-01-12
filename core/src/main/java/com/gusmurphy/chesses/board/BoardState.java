@@ -33,4 +33,12 @@ public class BoardState {
         return piece.map(Piece::getCoordinates);
     }
 
+    public boolean spotIsFree(BoardCoordinates spot) {
+        return piecesOnBoard.stream().noneMatch(piece -> piece.getCoordinates() == spot);
+    }
+
+    public boolean pieceIsOnBoard(Piece piece) {
+        return piecesOnBoard.stream().anyMatch(other -> other == piece);
+    }
+
 }

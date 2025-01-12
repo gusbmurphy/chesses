@@ -73,7 +73,6 @@ public class JudgeTests {
         assertTrue(judge.movesFor(piece).isEmpty());
     }
 
-    @Disabled("Waiting a moment to get moves running in relation to other pieces")
     @ParameterizedTest
     @MethodSource("blockedMoves")
     void aPieceWithALinearStrategyCannotMovePastAnotherPiece(BoardCoordinates otherPiecePosition, BoardCoordinates move) {

@@ -18,18 +18,20 @@ public class Judge {
     }
 
     public List<BoardCoordinates> movesFor(Piece piece) {
-        if (boardState.coordinatesForPiece(piece.getPiece()).isPresent()) {
+        if (boardState.pieceIsOnBoard(piece)) {
             List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
             List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
 
             possibleMoves.forEach(possibleMove -> {
-                spotsWeCouldGo.add(possibleMove.spot());
+                if (boardState.spotIsFree(possibleMove.spot())) {
+                    spotsWeCouldGo.add(possibleMove.spot());
 
-                Optional<PossibleMove> next = possibleMove.next();
+                    Optional<PossibleMove> next = possibleMove.next();
 
-                while (next.isPresent()) {
-                    spotsWeCouldGo.add(next.get().spot());
-                    next = next.get().next();
+                    while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
+                        spotsWeCouldGo.add(next.get().spot());
+                        next = next.get().next();
+                    }
                 }
             });
 
