@@ -7,6 +7,7 @@ import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Judge {
 
@@ -24,11 +25,12 @@ public class Judge {
             possibleMoves.forEach(possibleMove -> {
                 spotsWeCouldGo.add(possibleMove.spot());
 
-                possibleMove.continuedDirection().ifPresent(direction -> {
-                    for (int spotsToCheck = possibleMove.continuedDistance(); spotsToCheck > 0; spotsToCheck--) {
-                        possibleMove.spot().coordinatesToThe(direction).ifPresent(spotsWeCouldGo::add);
-                    }
-                });
+                Optional<PossibleMove> next = possibleMove.next();
+
+                while (next.isPresent()) {
+                    spotsWeCouldGo.add(next.get().spot());
+                    next = next.get().next();
+                }
             });
 
             return spotsWeCouldGo;

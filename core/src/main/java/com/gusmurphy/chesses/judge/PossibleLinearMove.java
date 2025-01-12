@@ -23,12 +23,18 @@ public class PossibleLinearMove implements PossibleMove {
     }
 
     @Override
-    public Optional<Direction> continuedDirection() {
-        return Optional.of(direction);
+    public Optional<PossibleMove> next() {
+        int remainingDistance = distance - 1;
+
+        if (remainingDistance >= 0) {
+            Optional<BoardCoordinates> nextSpot = from.coordinatesToThe(direction);
+
+            if (nextSpot.isPresent()) {
+                return Optional.of(new PossibleLinearMove(nextSpot.get(), direction, remainingDistance));
+            }
+        }
+
+        return Optional.empty();
     }
 
-    @Override
-    public int continuedDistance() {
-        return distance;
-    }
 }
