@@ -14,6 +14,7 @@ import java.util.List;
 
 public class PieceOnScreen {
 
+    private final Piece piece;
     private final SpriteBatch spriteBatch;
     private final Sprite sprite;
     private final Rectangle bounds;
@@ -22,6 +23,7 @@ public class PieceOnScreen {
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
     public PieceOnScreen(Piece piece, BoardOnScreen boardOnScreen) {
+        this.piece = piece;
         this.spriteBatch = boardOnScreen.getSpriteBatch();
 
         sprite = PieceSprite.spriteFor(piece);
@@ -72,12 +74,12 @@ public class PieceOnScreen {
 
     private void startDrag() {
         isDragged = true;
-        selectionListeners.forEach(listener -> listener.onPieceSelected(this));
+        selectionListeners.forEach(listener -> listener.onPieceSelected(piece));
     }
 
     private void endDrag(Vector2 cursorPosition) {
         isDragged = false;
-        selectionListeners.forEach(listener -> listener.onPieceReleased(this, cursorPosition));
+        selectionListeners.forEach(listener -> listener.onPieceReleased(piece, cursorPosition));
         sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 

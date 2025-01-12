@@ -146,13 +146,13 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     }
 
     @Override
-    public void onPieceSelected(PieceOnScreen piece) {
+    public void onPieceSelected(Piece piece) {
         List<BoardCoordinates> possibleMoves = judge.movesFor(king);
         highlightedSpaces.addAll(possibleMoves);
     }
 
     @Override
-    public void onPieceReleased(PieceOnScreen piece, Vector2 screenPosition) {
+    public void onPieceReleased(Piece piece, Vector2 screenPosition) {
         Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
 
         if (releaseSpot.isPresent()) {
