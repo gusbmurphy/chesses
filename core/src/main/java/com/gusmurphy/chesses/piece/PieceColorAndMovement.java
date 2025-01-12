@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.player.PlayerColor;
 
+// TODO: This can't be like this...
 public class PieceColorAndMovement {
 
     private PlayerColor color;
