@@ -11,14 +11,16 @@ import java.util.List;
 
 public class Piece {
 
-    private final PieceColorAndMovement pieceColorAndMovement;
+    private final PlayerColor color;
+    private final MovementStrategy movementStrategy;
     private BoardCoordinates coordinates;
     private BoardStateEventManager eventManager;
     private final PieceType type;
 
     // TODO: These constructors are ugly
     public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates, PieceType type) {
-        this.pieceColorAndMovement = pieceColorAndMovement;
+        this.color = pieceColorAndMovement.color();
+        this.movementStrategy = pieceColorAndMovement.movementStrategy();
         this.coordinates = coordinates;
         this.type = type;
     }
@@ -32,7 +34,7 @@ public class Piece {
     }
 
     public List<PossibleMove> currentPossibleMoves() {
-        return pieceColorAndMovement.movementStrategy().possibleMovesFrom(coordinates);
+        return movementStrategy.possibleMovesFrom(coordinates);
     }
 
     public BoardCoordinates getCoordinates() {
@@ -40,7 +42,7 @@ public class Piece {
     }
 
     public PlayerColor color() {
-        return pieceColorAndMovement.color();
+        return color;
     }
 
     public PieceType type() {
