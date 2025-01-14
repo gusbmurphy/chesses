@@ -22,14 +22,20 @@ public class RelativeMovementStrategy implements MovementStrategy {
 
     @Override
     public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
-        BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(position);
-
         List<PossibleMove> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
-            BoardCoordinates moveSpot = new BoardCoordinatesXyAdapter(xyAdapter.x() + vector.x, xyAdapter.y() + vector.y).coordinates();
+            BoardCoordinates moveSpot = getPositionAtVectorFromOther(vector, position);
             moves.add(new PossibleStaticMove(moveSpot));
         }
         return moves;
+    }
+
+    private static BoardCoordinates getPositionAtVectorFromOther(MovementVector vector, BoardCoordinates position) {
+        BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(position);
+        return new BoardCoordinatesXyAdapter(
+            adapter.x() + vector.x,
+            adapter.y() + vector.y
+        ).coordinates();
     }
 
     static class MovementVector {
