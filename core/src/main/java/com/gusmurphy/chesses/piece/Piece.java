@@ -25,6 +25,18 @@ public class Piece {
         this.type = type;
     }
 
+    public Piece(
+        PlayerColor color,
+        MovementStrategy movementStrategy,
+        BoardCoordinates coordinates,
+        PieceType type
+    ) {
+        this.color = color;
+        this.movementStrategy = movementStrategy;
+        this.coordinates = coordinates;
+        this.type = type;
+    }
+
     public Piece(MovementStrategy strategy, BoardCoordinates coordinates) {
         this(
             new PieceColorAndMovement(PlayerColor.WHITE, strategy),
