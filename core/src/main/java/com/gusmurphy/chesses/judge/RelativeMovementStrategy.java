@@ -5,6 +5,7 @@ import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RelativeMovementStrategy implements MovementStrategy {
 
@@ -24,18 +25,23 @@ public class RelativeMovementStrategy implements MovementStrategy {
     public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
         List<PossibleMove> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
-            BoardCoordinates moveSpot = getPositionAtVectorFromOther(vector, position);
-            moves.add(new PossibleStaticMove(moveSpot));
+            Optional<BoardCoordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
+            moveSpot.ifPresent(spot -> moves.add(new PossibleStaticMove(spot)));
         }
         return moves;
     }
 
-    private static BoardCoordinates getPositionAtVectorFromOther(MovementVector vector, BoardCoordinates position) {
+    private static Optional<BoardCoordinates> getPositionAtVectorFromOther(MovementVector vector, BoardCoordinates position) {
         BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(position);
-        return new BoardCoordinatesXyAdapter(
-            adapter.x() + vector.x,
-            adapter.y() + vector.y
-        ).coordinates();
+
+        try {
+            return Optional.of(new BoardCoordinatesXyAdapter(
+                adapter.x() + vector.x,
+                adapter.y() + vector.y
+            ).coordinates());
+        } catch (IllegalArgumentException exception) {
+            return Optional.empty();
+        }
     }
 
     static class MovementVector {

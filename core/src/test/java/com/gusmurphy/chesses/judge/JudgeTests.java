@@ -219,4 +219,17 @@ public class JudgeTests {
         assertTrue(possibleMoves.containsAll(Arrays.asList(F6, C7)));
     }
 
+    @Test
+    void aRelativeStrategyCannotMoveOffTheBoard() {
+        MovementStrategy strategy = new RelativeMovementStrategy(0, 1);
+        Piece piece = new Piece(strategy, A8);
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+
+        assertTrue(possibleMoves.isEmpty());
+    }
+
 }
