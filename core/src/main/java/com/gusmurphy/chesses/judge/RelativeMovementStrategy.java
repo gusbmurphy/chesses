@@ -6,16 +6,16 @@ import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelativeStrategy implements MovementStrategy {
+public class RelativeMovementStrategy implements MovementStrategy {
 
     private final List<MovementVector> movementVectors = new ArrayList<>();
 
-    public RelativeStrategy(int x, int y) {
+    public RelativeMovementStrategy(int x, int y) {
         movementVectors.add(new MovementVector(x, y));
     }
 
-    public RelativeStrategy(RelativeStrategy... strategies) {
-        for (RelativeStrategy strategy : strategies) {
+    public RelativeMovementStrategy(RelativeMovementStrategy... strategies) {
+        for (RelativeMovementStrategy strategy : strategies) {
             movementVectors.addAll(strategy.movementVectors);
         }
     }

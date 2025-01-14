@@ -5,7 +5,6 @@ import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.piece.*;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.player.PlayerColor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -205,9 +204,9 @@ public class JudgeTests {
 
     @Test
     void aRelativeStrategyOnlyGoesToCertainSpotsRelativeToTheCurrentOne() {
-        RelativeStrategy partOne = new RelativeStrategy(1, 2);
-        RelativeStrategy partTwo = new RelativeStrategy(-2, 3);
-        MovementStrategy fullStrategy = new RelativeStrategy(partOne, partTwo);
+        RelativeMovementStrategy partOne = new RelativeMovementStrategy(1, 2);
+        RelativeMovementStrategy partTwo = new RelativeMovementStrategy(-2, 3);
+        MovementStrategy fullStrategy = new RelativeMovementStrategy(partOne, partTwo);
 
         Piece piece = new Piece(fullStrategy, E4);
         BoardState boardState = new BoardState();
