@@ -2,7 +2,6 @@ package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.Piece;
-import com.gusmurphy.chesses.piece.PieceColorAndMovement;
 
 import java.util.*;
 
@@ -26,11 +25,6 @@ public class BoardState {
 
     public List<Piece> getAllPieces() {
         return piecesOnBoard;
-    }
-
-    public Optional<BoardCoordinates> coordinatesForPiece(PieceColorAndMovement pieceColorAndMovement) {
-        Optional<Piece> piece = piecesOnBoard.stream().filter(p -> p.getPiece() == pieceColorAndMovement).findFirst();
-        return piece.map(Piece::getCoordinates);
     }
 
     public boolean spotIsFree(BoardCoordinates spot) {

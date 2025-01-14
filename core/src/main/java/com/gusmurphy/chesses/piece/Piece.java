@@ -3,7 +3,6 @@ package com.gusmurphy.chesses.piece;
 import com.gusmurphy.chesses.board.BoardStateEvent;
 import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.judge.MovementStrategy;
 import com.gusmurphy.chesses.judge.PossibleMove;
 import com.gusmurphy.chesses.player.PlayerColor;
@@ -36,10 +35,6 @@ public class Piece {
         return pieceColorAndMovement.movementStrategy().possibleMovesFrom(coordinates);
     }
 
-    public PieceColorAndMovement getPiece() {
-        return pieceColorAndMovement;
-    }
-
     public BoardCoordinates getCoordinates() {
         return coordinates;
     }
@@ -50,10 +45,6 @@ public class Piece {
 
     public PieceType type() {
         return type;
-    }
-
-    public BoardCoordinatesXyAdapter getXyCoordinates() {
-        return new BoardCoordinatesXyAdapter(coordinates);
     }
 
     public void moveTo(BoardCoordinates coordinates) {

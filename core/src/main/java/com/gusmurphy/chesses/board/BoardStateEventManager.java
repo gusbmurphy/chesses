@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class BoardStateEventManager {
 
-    private Map<BoardStateEvent, List<BoardStateEventListener>> listeners = new HashMap<>();
+    private final Map<BoardStateEvent, List<BoardStateEventListener>> listeners = new HashMap<>();
 
     public BoardStateEventManager(BoardState boardState) {
         boardState.getAllPieces().forEach(piece -> piece.setEventManager(this));

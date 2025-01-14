@@ -39,8 +39,8 @@ public class RelativeMovementStrategy implements MovementStrategy {
     }
 
     static class MovementVector {
-        public int x;
-        public int y;
+        public final int x;
+        public final int y;
 
         public MovementVector(int x, int y) {
             this.x = x;
