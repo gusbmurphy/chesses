@@ -12,10 +12,8 @@ public class DefaultPieces {
 
     public static Piece king(PlayerColor color, BoardCoordinates position) {
         return new Piece(
-            new PieceColorAndMovement(
-                color,
-                new LinearMovementStrategy(every(), 1)
-            ),
+            color,
+            new LinearMovementStrategy(every(), 1),
             position,
             KING
         );
