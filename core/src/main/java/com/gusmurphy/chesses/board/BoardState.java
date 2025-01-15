@@ -7,10 +7,16 @@ import java.util.*;
 
 public class BoardState {
 
+    private final BoardStateEventManager eventManager;
     private final List<Piece> piecesOnBoard = new ArrayList<>();
+
+    public BoardState() {
+        eventManager = new BoardStateEventManager(this);
+    }
 
     public void place(Piece piece) {
         piecesOnBoard.add(piece);
+        piece.setEventManager(eventManager);
     }
 
     public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {

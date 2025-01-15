@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.board.Direction.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -230,6 +231,30 @@ public class JudgeTests {
         List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
 
         assertTrue(possibleMoves.isEmpty());
+    }
+
+    @Test
+    void theSpecialCaseStrategyCanAllowADifferentMoveForACertainAmountOfTurns() {
+        MovementStrategy strategy = new CompositeMovementStrategy(
+            new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(N), 2)),
+            new LinearMovementStrategy(Collections.singletonList(N), 1)
+        );
+        Piece piece = new Piece(strategy, C2);
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+
+        // At first, we can move up to two spaces...
+        assertEquals(2, possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(Arrays.asList(C3, C4)));
+
+        // After moving, there should only be one possible move.
+        piece.moveTo(C4);
+        List<BoardCoordinates> possibleMovesAfterFirst = judge.movesFor(piece);
+        assertEquals(1, possibleMovesAfterFirst.size());
+        assertTrue(possibleMovesAfterFirst.contains(C5));
     }
 
 }

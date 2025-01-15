@@ -1,9 +1,11 @@
 package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.BoardStateEvent;
+import com.gusmurphy.chesses.board.BoardStateEventListener;
 import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.judge.MovementStrategy;
+import com.gusmurphy.chesses.judge.PieceAwareMovementStrategy;
 import com.gusmurphy.chesses.judge.PossibleMove;
 import com.gusmurphy.chesses.player.PlayerColor;
 
@@ -23,6 +25,10 @@ public class Piece {
         this.movementStrategy = pieceColorAndMovement.movementStrategy();
         this.coordinates = coordinates;
         this.type = type;
+
+        if (this.movementStrategy instanceof PieceAwareMovementStrategy) {
+            ((PieceAwareMovementStrategy) this.movementStrategy).setRelevantPiece(this);
+        }
     }
 
     public Piece(
@@ -35,6 +41,10 @@ public class Piece {
         this.movementStrategy = movementStrategy;
         this.coordinates = coordinates;
         this.type = type;
+
+        if (this.movementStrategy instanceof PieceAwareMovementStrategy) {
+            ((PieceAwareMovementStrategy) this.movementStrategy).setRelevantPiece(this);
+        }
     }
 
     public Piece(MovementStrategy strategy, BoardCoordinates coordinates) {
@@ -68,6 +78,10 @@ public class Piece {
 
     public void setEventManager(BoardStateEventManager manager) {
         eventManager = manager;
+
+        if (movementStrategy instanceof PieceAwareMovementStrategy) {
+            manager.subscribe((BoardStateEventListener) movementStrategy, BoardStateEvent.PIECE_MOVED);
+        }
     }
 
 }
