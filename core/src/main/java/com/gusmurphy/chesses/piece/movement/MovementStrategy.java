@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MovementStrategy {
 
-    List<PossibleMove> possibleMovesFrom(BoardCoordinates position);
+    List<Move> possibleMovesFrom(BoardCoordinates position);
 
 }

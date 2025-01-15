@@ -8,7 +8,7 @@ import java.util.List;
 public class NullMovementStrategy implements MovementStrategy {
 
     @Override
-    public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
+    public List<Move> possibleMovesFrom(BoardCoordinates position) {
         return Collections.emptyList();
     }
 

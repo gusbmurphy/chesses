@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.judge;
 import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.piece.movement.PossibleMove;
+import com.gusmurphy.chesses.piece.movement.Move;
 import com.gusmurphy.chesses.piece.movement.TakingMove;
 
 import java.util.ArrayList;
@@ -27,17 +27,17 @@ public class Judge {
         return Collections.emptyList();
     }
 
-    public List<PossibleMove> possibleMovesFor(Piece piece) {
-        List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
-        List<PossibleMove> actualMoves = new ArrayList<>();
+    public List<Move> possibleMovesFor(Piece piece) {
+        List<Move> moves = piece.currentPossibleMoves();
+        List<Move> actualMoves = new ArrayList<>();
 
-        possibleMoves.forEach(possibleMove ->
+        moves.forEach(possibleMove ->
             {
                 Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
                 if (!pieceAtSpot.isPresent()) {
                     actualMoves.add(possibleMove);
 
-                    Optional<PossibleMove> next = possibleMove.next();
+                    Optional<Move> next = possibleMove.next();
 
                     while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
                         actualMoves.add(next.get());
@@ -54,21 +54,21 @@ public class Judge {
 
     private List<BoardCoordinates> spacesPieceCanMoveTo(Piece piece) {
         List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
-        List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
+        List<Move> moves = piece.currentPossibleMoves();
 
-        possibleMoves.forEach(possibleMove ->
+        moves.forEach(possibleMove ->
             spotsWeCouldGo.addAll(getAllMovesBranchingFrom(possibleMove))
         );
 
         return spotsWeCouldGo.stream().distinct().collect(Collectors.toList());
     }
 
-    private List<BoardCoordinates> getAllMovesBranchingFrom(PossibleMove possibleMove) {
+    private List<BoardCoordinates> getAllMovesBranchingFrom(Move move) {
         List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
-        if (boardState.spotIsFree(possibleMove.spot())) {
-            spotsWeCouldGo.add(possibleMove.spot());
+        if (boardState.spotIsFree(move.spot())) {
+            spotsWeCouldGo.add(move.spot());
 
-            Optional<PossibleMove> next = possibleMove.next();
+            Optional<Move> next = move.next();
 
             while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
                 spotsWeCouldGo.add(next.get().spot());

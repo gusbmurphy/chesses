@@ -5,10 +5,10 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
-public interface PossibleMove {
+public interface Move {
 
     BoardCoordinates spot();
-    Optional<PossibleMove> next();
+    Optional<Move> next();
     Optional<Piece> takes();
 
 }

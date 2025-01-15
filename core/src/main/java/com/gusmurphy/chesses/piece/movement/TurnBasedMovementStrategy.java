@@ -19,7 +19,7 @@ public class TurnBasedMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
+    public List<Move> possibleMovesFrom(BoardCoordinates position) {
         if (moveCount < expirationMoveCount) {
             return strategy.possibleMovesFrom(position);
         }

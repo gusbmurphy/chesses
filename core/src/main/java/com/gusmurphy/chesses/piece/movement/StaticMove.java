@@ -5,10 +5,10 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
-public class PossibleStaticMove implements PossibleMove {
+public class StaticMove implements Move {
     private final BoardCoordinates spot;
 
-    public PossibleStaticMove(BoardCoordinates spot) {
+    public StaticMove(BoardCoordinates spot) {
         this.spot = spot;
     }
 
@@ -18,7 +18,7 @@ public class PossibleStaticMove implements PossibleMove {
     }
 
     @Override
-    public Optional<PossibleMove> next() {
+    public Optional<Move> next() {
         return Optional.empty();
     }
 

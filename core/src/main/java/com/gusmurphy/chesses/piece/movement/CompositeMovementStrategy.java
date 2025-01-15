@@ -19,8 +19,8 @@ public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
-        List<PossibleMove> moves = new ArrayList<>();
+    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+        List<Move> moves = new ArrayList<>();
         strategies.forEach(strategy -> moves.addAll(strategy.possibleMovesFrom(position)));
         return moves.stream().distinct().collect(Collectors.toList());
     }

@@ -22,11 +22,11 @@ public class RelativeMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
-        List<PossibleMove> moves = new ArrayList<>();
+    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+        List<Move> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
             Optional<BoardCoordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
-            moveSpot.ifPresent(spot -> moves.add(new PossibleStaticMove(spot)));
+            moveSpot.ifPresent(spot -> moves.add(new StaticMove(spot)));
         }
         return moves;
     }

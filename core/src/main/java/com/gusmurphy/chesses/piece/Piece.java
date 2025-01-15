@@ -6,7 +6,7 @@ import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.movement.MovementStrategy;
 import com.gusmurphy.chesses.piece.movement.PieceAwareMovementStrategy;
-import com.gusmurphy.chesses.piece.movement.PossibleMove;
+import com.gusmurphy.chesses.piece.movement.Move;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class Piece {
         );
     }
 
-    public List<PossibleMove> currentPossibleMoves() {
+    public List<Move> currentPossibleMoves() {
         return movementStrategy.possibleMovesFrom(coordinates);
     }
 

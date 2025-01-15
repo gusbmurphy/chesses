@@ -28,12 +28,12 @@ public class LinearMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<PossibleMove> possibleMovesFrom(BoardCoordinates position) {
-        ArrayList<PossibleMove> moves = new ArrayList<>();
+    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+        ArrayList<Move> moves = new ArrayList<>();
 
         for (Direction direction : directions) {
             position.coordinatesToThe(direction).ifPresent(moveStart -> {
-                PossibleMove move = new PossibleLinearMove(moveStart, direction, maxDistance - 1);
+                Move move = new LinearMove(moveStart, direction, maxDistance - 1);
                 moves.add(move);
             });
         }

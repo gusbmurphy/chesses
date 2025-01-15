@@ -6,13 +6,13 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
-public class PossibleLinearMove implements PossibleMove {
+public class LinearMove implements Move {
 
     private final BoardCoordinates from;
     private final Direction direction;
     private final int distance;
 
-    public PossibleLinearMove(BoardCoordinates from, Direction direction, int distance) {
+    public LinearMove(BoardCoordinates from, Direction direction, int distance) {
         this.from = from;
         this.direction = direction;
         this.distance = distance;
@@ -24,14 +24,14 @@ public class PossibleLinearMove implements PossibleMove {
     }
 
     @Override
-    public Optional<PossibleMove> next() {
+    public Optional<Move> next() {
         int remainingDistance = distance - 1;
 
         if (remainingDistance >= 0) {
             Optional<BoardCoordinates> nextSpot = from.coordinatesToThe(direction);
 
             if (nextSpot.isPresent()) {
-                return Optional.of(new PossibleLinearMove(nextSpot.get(), direction, remainingDistance));
+                return Optional.of(new LinearMove(nextSpot.get(), direction, remainingDistance));
             }
         }
 

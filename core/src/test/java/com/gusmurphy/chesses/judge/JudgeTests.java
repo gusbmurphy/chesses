@@ -272,8 +272,8 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        List<PossibleMove> possibleMoves = judge.possibleMovesFor(piece);
-        assertEquals(pieceToTake, possibleMoves.get(0).takes().get());
+        List<Move> moves = judge.possibleMovesFor(piece);
+        assertEquals(pieceToTake, moves.get(0).takes().get());
     }
 
     private static Stream<Arguments> oppositeColorPairs() {

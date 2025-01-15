@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
-public class TakingMove implements PossibleMove {
+public class TakingMove implements Move {
 
     private final BoardCoordinates spot;
     private final Piece pieceToTake;
@@ -21,7 +21,7 @@ public class TakingMove implements PossibleMove {
     }
 
     @Override
-    public Optional<PossibleMove> next() {
+    public Optional<Move> next() {
         return Optional.empty();
     }
 
