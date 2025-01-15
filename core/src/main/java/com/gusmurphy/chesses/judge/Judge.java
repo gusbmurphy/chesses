@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.board.BoardState;
 import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.movement.PossibleMove;
+import com.gusmurphy.chesses.piece.movement.TakingMove;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +25,31 @@ public class Judge {
             return spacesPieceCanMoveTo(piece);
         }
         return Collections.emptyList();
+    }
+
+    public List<PossibleMove> possibleMovesFor(Piece piece) {
+        List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
+        List<PossibleMove> actualMoves = new ArrayList<>();
+
+        possibleMoves.forEach(possibleMove ->
+            {
+                Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
+                if (!pieceAtSpot.isPresent()) {
+                    actualMoves.add(possibleMove);
+
+                    Optional<PossibleMove> next = possibleMove.next();
+
+                    while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
+                        actualMoves.add(next.get());
+                        next = next.get().next();
+                    }
+                } else if (pieceAtSpot.get().color() != piece.color()) {
+                    actualMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
+                }
+            }
+        );
+
+        return actualMoves;
     }
 
     private List<BoardCoordinates> spacesPieceCanMoveTo(Piece piece) {

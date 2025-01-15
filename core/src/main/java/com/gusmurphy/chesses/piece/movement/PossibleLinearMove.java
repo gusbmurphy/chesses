@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.piece.movement;
 
 import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
@@ -34,6 +35,11 @@ public class PossibleLinearMove implements PossibleMove {
             }
         }
 
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Piece> takes() {
         return Optional.empty();
     }
 

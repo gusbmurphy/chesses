@@ -258,4 +258,29 @@ public class JudgeTests {
         assertTrue(possibleMovesAfterFirst.contains(C5));
     }
 
+    @ParameterizedTest
+    @MethodSource("oppositeColorPairs")
+    void aMoveOntoASpotOccupiedByAnotherPieceOfTheOppositeColorTakesThatPiece(PlayerColor takingColor, PlayerColor takenColor) {
+        MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(S), 1);
+        Piece piece = new Piece(takingColor, linear, C4, PieceType.BISHOP);
+
+        Piece pieceToTake = new Piece(takenColor, new NullMovementStrategy(), C3, PieceType.QUEEN);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+        boardState.place(pieceToTake);
+
+        Judge judge = new Judge(boardState);
+
+        List<PossibleMove> possibleMoves = judge.possibleMovesFor(piece);
+        assertEquals(pieceToTake, possibleMoves.get(0).takes().get());
+    }
+
+    private static Stream<Arguments> oppositeColorPairs() {
+        return Stream.of(
+            Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
+            Arguments.of(PlayerColor.BLACK, PlayerColor.WHITE)
+        );
+    }
+
 }
