@@ -21,26 +21,30 @@ public class Judge {
 
     public List<BoardCoordinates> movesFor(Piece piece) {
         if (boardState.pieceIsOnBoard(piece)) {
-            List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
-            List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
-
-            // TODO: Hmm...
-            possibleMoves.forEach(possibleMove -> {
-                if (boardState.spotIsFree(possibleMove.spot())) {
-                    spotsWeCouldGo.add(possibleMove.spot());
-
-                    Optional<PossibleMove> next = possibleMove.next();
-
-                    while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
-                        spotsWeCouldGo.add(next.get().spot());
-                        next = next.get().next();
-                    }
-                }
-            });
-
-            return spotsWeCouldGo.stream().distinct().collect(Collectors.toList());
+            return spacesPieceCanMoveTo(piece);
         }
         return Collections.emptyList();
+    }
+
+    private List<BoardCoordinates> spacesPieceCanMoveTo(Piece piece) {
+        List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
+        List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
+
+        // TODO: Hmm...
+        possibleMoves.forEach(possibleMove -> {
+            if (boardState.spotIsFree(possibleMove.spot())) {
+                spotsWeCouldGo.add(possibleMove.spot());
+
+                Optional<PossibleMove> next = possibleMove.next();
+
+                while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
+                    spotsWeCouldGo.add(next.get().spot());
+                    next = next.get().next();
+                }
+            }
+        });
+
+        return spotsWeCouldGo.stream().distinct().collect(Collectors.toList());
     }
 
 }
