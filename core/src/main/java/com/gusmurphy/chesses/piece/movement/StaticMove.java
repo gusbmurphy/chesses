@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.piece.Piece;
 
 import java.util.Optional;
 
-public class StaticMove implements Move {
+public class StaticMove extends Move {
     private final BoardCoordinates spot;
 
     public StaticMove(BoardCoordinates spot) {
