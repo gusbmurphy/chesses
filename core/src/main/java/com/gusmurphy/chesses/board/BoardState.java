@@ -41,4 +41,8 @@ public class BoardState {
         return piecesOnBoard.stream().anyMatch(other -> other == piece);
     }
 
+    public BoardStateEventManager getEventManager() {
+        return eventManager;
+    }
+
 }

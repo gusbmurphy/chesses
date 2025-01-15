@@ -37,12 +37,11 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     public static final float SQUARE_SIZE = 0.5f;
 
     public BoardOnScreen(BoardState boardState, final ChessesGame game) {
+        boardState.getEventManager().subscribe(this, BoardStateEvent.PIECE_MOVED);
+
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
-
-        BoardStateEventManager boardStateEventManager = new BoardStateEventManager(boardState);
-        boardStateEventManager.subscribe(this, BoardStateEvent.PIECE_MOVED);
 
         createPiecesOnScreenFor(boardState);
 
