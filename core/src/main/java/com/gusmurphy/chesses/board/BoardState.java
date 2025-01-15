@@ -37,10 +37,6 @@ public class BoardState {
         return piecesOnBoard.stream().noneMatch(piece -> piece.getCoordinates() == spot);
     }
 
-    public boolean pieceIsOnBoard(Piece piece) {
-        return piecesOnBoard.stream().anyMatch(other -> other == piece);
-    }
-
     public BoardStateEventManager getEventManager() {
         return eventManager;
     }
