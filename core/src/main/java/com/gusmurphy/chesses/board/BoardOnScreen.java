@@ -15,8 +15,10 @@ import com.gusmurphy.chesses.judge.Judge;
 import com.gusmurphy.chesses.piece.Piece;
 import com.gusmurphy.chesses.piece.PieceOnScreen;
 import com.gusmurphy.chesses.piece.PieceSelectionListener;
+import com.gusmurphy.chesses.piece.movement.Move;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BoardOnScreen implements PieceSelectionListener, BoardStateEventListener {
 
@@ -93,7 +95,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
 
     @Override
     public void onPieceSelected(Piece piece) {
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<BoardCoordinates> possibleMoves = judge.possibleMovesFor(piece).stream().map(Move::spot).collect(Collectors.toList());
         highlightedSpaces.addAll(possibleMoves);
     }
 
@@ -163,7 +165,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     }
 
     private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
-        if (judge.movesFor(piece).contains(releaseSpot)) {
+        if (judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == releaseSpot)) {
             piece.moveTo(releaseSpot);
             highlightedSpaces.clear();
         }

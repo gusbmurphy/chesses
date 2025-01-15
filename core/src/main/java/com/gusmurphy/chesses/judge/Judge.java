@@ -7,7 +7,6 @@ import com.gusmurphy.chesses.piece.movement.Move;
 import com.gusmurphy.chesses.piece.movement.TakingMove;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Judge {
 
@@ -15,13 +14,6 @@ public class Judge {
 
     public Judge(BoardState boardState) {
         this.boardState = boardState;
-    }
-
-    public List<BoardCoordinates> movesFor(Piece piece) {
-        if (boardState.pieceIsOnBoard(piece)) {
-            return spacesPieceCanMoveTo(piece);
-        }
-        return Collections.emptyList();
     }
 
     public List<Move> possibleMovesFor(Piece piece) {
@@ -51,32 +43,6 @@ public class Judge {
             movesBySpot.put(move.spot(), move);
         }
         return new ArrayList<>(movesBySpot.values());
-    }
-
-    private List<BoardCoordinates> spacesPieceCanMoveTo(Piece piece) {
-        List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
-        List<Move> moves = piece.currentPossibleMoves();
-
-        moves.forEach(possibleMove ->
-            spotsWeCouldGo.addAll(getAllMovesBranchingFrom(possibleMove))
-        );
-
-        return spotsWeCouldGo.stream().distinct().collect(Collectors.toList());
-    }
-
-    private List<BoardCoordinates> getAllMovesBranchingFrom(Move move) {
-        List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
-        if (boardState.spotIsFree(move.spot())) {
-            spotsWeCouldGo.add(move.spot());
-
-            Optional<Move> next = move.next();
-
-            while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
-                spotsWeCouldGo.add(next.get().spot());
-                next = next.get().next();
-            }
-        }
-        return spotsWeCouldGo;
     }
 
 }
