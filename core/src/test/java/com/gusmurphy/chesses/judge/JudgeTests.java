@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.player.PlayerColor.*;
 import static com.gusmurphy.chesses.board.Direction.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,15 +77,15 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("blockedMoves")
-    void aPieceWithALinearStrategyCannotMovePastAnotherPiece(BoardCoordinates otherPiecePosition, BoardCoordinates spot) {
+    void aPieceWithALinearStrategyCannotMovePastAnotherPieceOfTheSameColor(
+        BoardCoordinates otherPiecePosition, BoardCoordinates spot, PlayerColor color
+    ) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
         );
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, A2, PieceType.KING);
+        Piece piece = new Piece(color, movementStrategy, A2, PieceType.KING);
 
-        PieceColorAndMovement blockingPieceColorAndMovement = new PieceColorAndMovement();
-        Piece blockingPiece = new Piece(blockingPieceColorAndMovement, otherPiecePosition, PieceType.KING);
+        Piece blockingPiece = new Piece(color, new NullMovementStrategy(), otherPiecePosition, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -97,8 +98,8 @@ public class JudgeTests {
 
     private static Stream<Arguments> blockedMoves() {
         return Stream.of(
-            Arguments.of(A4, A5),
-            Arguments.of(B2, C2)
+            Arguments.of(A4, A5, WHITE),
+            Arguments.of(B2, C2, BLACK)
         );
     }
 
