@@ -1,8 +1,6 @@
-package com.gusmurphy.chesses.piece;
+package com.gusmurphy.chesses.piece.movement;
 
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.judge.MovementStrategy;
-import com.gusmurphy.chesses.judge.PossibleMove;
 
 import java.util.Collections;
 import java.util.List;

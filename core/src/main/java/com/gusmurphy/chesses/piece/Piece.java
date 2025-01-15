@@ -4,9 +4,9 @@ import com.gusmurphy.chesses.board.BoardStateEvent;
 import com.gusmurphy.chesses.board.BoardStateEventListener;
 import com.gusmurphy.chesses.board.BoardStateEventManager;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.judge.MovementStrategy;
-import com.gusmurphy.chesses.judge.PieceAwareMovementStrategy;
-import com.gusmurphy.chesses.judge.PossibleMove;
+import com.gusmurphy.chesses.piece.movement.MovementStrategy;
+import com.gusmurphy.chesses.piece.movement.PieceAwareMovementStrategy;
+import com.gusmurphy.chesses.piece.movement.PossibleMove;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.List;

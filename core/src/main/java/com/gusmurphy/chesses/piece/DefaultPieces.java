@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.piece;
 
 import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.judge.*;
+import com.gusmurphy.chesses.piece.movement.*;
 import com.gusmurphy.chesses.player.PlayerColor;
 
 import java.util.Collections;
