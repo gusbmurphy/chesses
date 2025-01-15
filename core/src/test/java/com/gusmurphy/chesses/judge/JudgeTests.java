@@ -234,7 +234,7 @@ public class JudgeTests {
     }
 
     @Test
-    void theSpecialCaseStrategyCanAllowADifferentMoveForACertainAmountOfTurns() {
+    void theCompositeStrategyCanBeUsedToGetPawnStyleMovement() {
         MovementStrategy strategy = new CompositeMovementStrategy(
             new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(N), 2)),
             new LinearMovementStrategy(Collections.singletonList(N), 1)
