@@ -38,6 +38,10 @@ public class Judge {
             }
         );
 
+        return uniqueMovesBySpot(actualMoves);
+    }
+
+    private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
         HashMap<BoardCoordinates, Move> movesBySpot = new HashMap<>();
         for (Move move : actualMoves) {
             movesBySpot.put(move.spot(), move);
