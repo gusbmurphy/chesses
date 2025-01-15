@@ -25,7 +25,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("okayMoves")
-    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates move) {
+    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates spot) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
         Piece piece = new Piece(pieceColorAndMovement, D4, PieceType.KING);
@@ -35,7 +35,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertTrue(judge.movesFor(piece).contains(move));
+        assertTrue(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
     }
 
     private static Stream<Arguments> okayMoves() {
@@ -62,7 +62,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.movesFor(piece).contains(A4));
+        assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == A4));
     }
 
     @Test
@@ -71,12 +71,12 @@ public class JudgeTests {
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
         Judge judge = new Judge(boardState);
-        assertTrue(judge.movesFor(piece).isEmpty());
+        assertTrue(judge.possibleMovesFor(piece).isEmpty());
     }
 
     @ParameterizedTest
     @MethodSource("blockedMoves")
-    void aPieceWithALinearStrategyCannotMovePastAnotherPiece(BoardCoordinates otherPiecePosition, BoardCoordinates move) {
+    void aPieceWithALinearStrategyCannotMovePastAnotherPiece(BoardCoordinates otherPiecePosition, BoardCoordinates spot) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
         );
@@ -92,7 +92,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.movesFor(piece).contains(move));
+        assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
     }
 
     private static Stream<Arguments> blockedMoves() {
@@ -115,8 +115,8 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
-        assertEquals(Collections.singletonList(expected), possibleMoves);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        assertEquals(expected, possibleMoves.get(0).spot());
     }
 
     private static Stream<Arguments> singleSpotMoves() {
@@ -143,7 +143,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
         assertEquals(0, possibleMoves.size());
     }
 
@@ -169,10 +169,11 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B4)));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B4));
     }
 
     @Test
@@ -184,10 +185,16 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(7, possibleMoves.size());
-        assertTrue(possibleMoves.containsAll(Arrays.asList(B2, B3, B4, B5, B6, B7, B8)));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B2));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B4));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B5));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B6));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B7));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B8));
     }
 
     @Test
@@ -199,9 +206,10 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.containsAll(Arrays.asList(B3, B1)));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B1));
     }
 
     @Test
@@ -215,10 +223,11 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.containsAll(Arrays.asList(F6, C7)));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == F6));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C7));
     }
 
     @Test
@@ -229,7 +238,7 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertTrue(possibleMoves.isEmpty());
     }
@@ -245,17 +254,18 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        List<BoardCoordinates> possibleMoves = judge.movesFor(piece);
+        List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         // At first, we can move up to two spaces...
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.containsAll(Arrays.asList(C3, C4)));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C4));
 
         // After moving, there should only be one possible move.
         piece.moveTo(C4);
-        List<BoardCoordinates> possibleMovesAfterFirst = judge.movesFor(piece);
+        List<Move> possibleMovesAfterFirst = judge.possibleMovesFor(piece);
         assertEquals(1, possibleMovesAfterFirst.size());
-        assertTrue(possibleMovesAfterFirst.contains(C5));
+        assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.spot() == C5));
     }
 
     @ParameterizedTest

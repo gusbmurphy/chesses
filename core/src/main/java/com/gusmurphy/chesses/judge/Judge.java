@@ -6,10 +6,7 @@ import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.piece.movement.Move;
 import com.gusmurphy.chesses.piece.movement.TakingMove;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Judge {
@@ -49,7 +46,11 @@ public class Judge {
             }
         );
 
-        return actualMoves;
+        HashMap<BoardCoordinates, Move> movesBySpot = new HashMap<>();
+        for (Move move : actualMoves) {
+            movesBySpot.put(move.spot(), move);
+        }
+        return new ArrayList<>(movesBySpot.values());
     }
 
     private List<BoardCoordinates> spacesPieceCanMoveTo(Piece piece) {
