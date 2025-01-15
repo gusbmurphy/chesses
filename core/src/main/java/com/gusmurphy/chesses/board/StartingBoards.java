@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.board;
 
 import com.gusmurphy.chesses.piece.DefaultPieces;
 import com.gusmurphy.chesses.piece.Piece;
-import com.gusmurphy.chesses.player.PlayerColor;
+import static com.gusmurphy.chesses.player.PlayerColor.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,12 +13,14 @@ public class StartingBoards {
 
     public static BoardState demo() {
         List<Piece> pieces = Arrays.asList(
-            DefaultPieces.king(PlayerColor.BLACK, A4),
-            DefaultPieces.king(PlayerColor.WHITE, H1),
-            DefaultPieces.rook(PlayerColor.WHITE, B3),
-            DefaultPieces.bishop(PlayerColor.WHITE, H4),
-            DefaultPieces.queen(PlayerColor.BLACK, D7),
-            DefaultPieces.knight(PlayerColor.BLACK, C4)
+            DefaultPieces.king(BLACK, A4),
+            DefaultPieces.king(WHITE, H1),
+            DefaultPieces.rook(WHITE, B3),
+            DefaultPieces.bishop(WHITE, H4),
+            DefaultPieces.queen(BLACK, D7),
+            DefaultPieces.knight(BLACK, C4),
+            DefaultPieces.pawn(BLACK, B7),
+            DefaultPieces.pawn(WHITE, G2)
         );
 
         BoardState boardState = new BoardState();

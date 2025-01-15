@@ -1,9 +1,11 @@
 package com.gusmurphy.chesses.piece;
 
+import com.gusmurphy.chesses.board.Direction;
 import com.gusmurphy.chesses.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.judge.LinearMovementStrategy;
-import com.gusmurphy.chesses.judge.RelativeMovementStrategy;
+import com.gusmurphy.chesses.judge.*;
 import com.gusmurphy.chesses.player.PlayerColor;
+
+import java.util.Collections;
 
 import static com.gusmurphy.chesses.board.Direction.*;
 import static com.gusmurphy.chesses.piece.PieceType.*;
@@ -62,6 +64,22 @@ public class DefaultPieces {
             ),
             position,
             KNIGHT
+        );
+    }
+
+    public static Piece pawn(PlayerColor color, BoardCoordinates position) {
+        Direction movementDirection = color == PlayerColor.WHITE ? N : S;
+
+        MovementStrategy movementStrategy = new CompositeMovementStrategy(
+            new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(movementDirection), 2)),
+            new LinearMovementStrategy(Collections.singletonList(movementDirection), 1)
+        );
+
+        return new Piece(
+            color,
+            movementStrategy,
+            position,
+            PAWN
         );
     }
 
