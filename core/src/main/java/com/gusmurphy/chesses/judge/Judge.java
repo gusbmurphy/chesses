@@ -30,21 +30,26 @@ public class Judge {
         List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
         List<PossibleMove> possibleMoves = piece.currentPossibleMoves();
 
-        // TODO: Hmm...
-        possibleMoves.forEach(possibleMove -> {
-            if (boardState.spotIsFree(possibleMove.spot())) {
-                spotsWeCouldGo.add(possibleMove.spot());
-
-                Optional<PossibleMove> next = possibleMove.next();
-
-                while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
-                    spotsWeCouldGo.add(next.get().spot());
-                    next = next.get().next();
-                }
-            }
-        });
+        possibleMoves.forEach(possibleMove ->
+            spotsWeCouldGo.addAll(getAllMovesBranchingFrom(possibleMove))
+        );
 
         return spotsWeCouldGo.stream().distinct().collect(Collectors.toList());
+    }
+
+    private List<BoardCoordinates> getAllMovesBranchingFrom(PossibleMove possibleMove) {
+        List<BoardCoordinates> spotsWeCouldGo = new ArrayList<>();
+        if (boardState.spotIsFree(possibleMove.spot())) {
+            spotsWeCouldGo.add(possibleMove.spot());
+
+            Optional<PossibleMove> next = possibleMove.next();
+
+            while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
+                spotsWeCouldGo.add(next.get().spot());
+                next = next.get().next();
+            }
+        }
+        return spotsWeCouldGo;
     }
 
 }
