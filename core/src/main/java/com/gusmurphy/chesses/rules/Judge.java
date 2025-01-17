@@ -43,6 +43,7 @@ public class Judge {
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
         boardState.removePieceAt(spot);
+        piece.moveTo(spot);
     }
 
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {

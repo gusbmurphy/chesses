@@ -304,6 +304,19 @@ public class JudgeTests {
         assertFalse(boardState.getAllPieces().contains(pieceToTake));
     }
 
+    @Test
+    void aMoveCanBeSubmittedToMoveAPieceOnTheBoard() {
+        Piece piece = DefaultPieces.rook(WHITE, C4);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        judge.submitMove(piece, C5);
+
+        assertEquals(C5, piece.getCoordinates());
+    }
+
     private static Stream<Arguments> oppositeColorPairs() {
         return Stream.of(
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
