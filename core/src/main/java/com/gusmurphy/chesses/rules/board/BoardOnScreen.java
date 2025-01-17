@@ -32,6 +32,7 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
     private final Vector2 cursorPosition = new Vector2();
 
     private final Map<Piece, PieceOnScreen> piecesOnScreen = new HashMap<>();
+    private Piece selectedPiece;
 
     private final Judge judge;
 
@@ -95,15 +96,24 @@ public class BoardOnScreen implements PieceSelectionListener, BoardStateEventLis
 
     @Override
     public void onPieceSelected(Piece piece) {
-        List<BoardCoordinates> possibleMoves = judge.possibleMovesFor(piece).stream().map(Move::spot).collect(Collectors.toList());
-        highlightedSpaces.addAll(possibleMoves);
+        if (selectedPiece == null) {
+            List<BoardCoordinates> possibleMoves = judge.possibleMovesFor(piece).stream().map(Move::spot).collect(Collectors.toList());
+            highlightedSpaces.addAll(possibleMoves);
+            selectedPiece = piece;
+            PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
+            pieceOnScreen.setDragStatus(true);
+        }
     }
 
     @Override
     public void onPieceReleased(Piece piece, Vector2 screenPosition) {
-        Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
-
-        releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
+        if (selectedPiece == piece) {
+            Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
+            releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
+            selectedPiece = null;
+            PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
+            pieceOnScreen.setDragStatus(false);
+        }
     }
 
     @Override
