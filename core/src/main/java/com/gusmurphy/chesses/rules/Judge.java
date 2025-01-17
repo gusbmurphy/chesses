@@ -41,6 +41,10 @@ public class Judge {
         return uniqueMovesBySpot(actualMoves);
     }
 
+    public void submitMove(Piece piece, BoardCoordinates spot) {
+        boardState.removePieceAt(spot);
+    }
+
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
         HashMap<BoardCoordinates, Move> movesBySpot = new HashMap<>();
         for (Move move : actualMoves) {

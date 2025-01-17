@@ -3,6 +3,7 @@ package com.gusmurphy.chesses.rules;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceColorAndMovement;
 import com.gusmurphy.chesses.rules.piece.PieceType;
@@ -286,6 +287,21 @@ public class JudgeTests {
 
         List<Move> moves = judge.possibleMovesFor(piece);
         assertEquals(pieceToTake, moves.get(0).takes().get());
+    }
+
+    @Test
+    void afterAPieceIsTakenItIsNoLongerOnTheBoard() {
+        Piece piece = DefaultPieces.rook(WHITE, C4);
+        Piece pieceToTake = DefaultPieces.rook(BLACK, C5);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+        boardState.place(pieceToTake);
+
+        Judge judge = new Judge(boardState);
+        judge.submitMove(piece, C5);
+
+        assertFalse(boardState.getAllPieces().contains(pieceToTake));
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
