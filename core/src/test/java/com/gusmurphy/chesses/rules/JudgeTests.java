@@ -78,7 +78,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("blockedMoves")
-    void aPieceWithALinearStrategyCannotMovePastAnotherPieceOfTheSameColor(
+    void aPieceCannotMovePastAnotherPieceOfTheSameColor(
         BoardCoordinates otherPiecePosition, BoardCoordinates spot, PlayerColor color
     ) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
