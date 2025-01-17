@@ -43,7 +43,12 @@ public class Judge {
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
         if (possibleMovesFor(piece).stream().anyMatch(move -> move.spot() == spot)) {
-            boardState.removePieceAt(spot);
+            Optional<Piece> pieceAtSpot = boardState.getPieceAt(spot);
+            pieceAtSpot.ifPresent(otherPiece -> {
+                otherPiece.take();
+                boardState.removePieceAt(spot);
+            });
+
             piece.moveTo(spot);
         }
     }

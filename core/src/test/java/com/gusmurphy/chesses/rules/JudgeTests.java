@@ -1,12 +1,10 @@
 package com.gusmurphy.chesses.rules;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.board.BoardStateEvent;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
-import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.PieceColorAndMovement;
-import com.gusmurphy.chesses.rules.piece.PieceType;
+import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -302,6 +300,25 @@ public class JudgeTests {
         judge.submitMove(piece, C5);
 
         assertFalse(boardState.getAllPieces().contains(pieceToTake));
+    }
+
+    @Test
+    void whenAPieceIsTakenAnEventIsBroadcast() {
+        Piece piece = DefaultPieces.rook(WHITE, C4);
+        Piece pieceToTake = DefaultPieces.rook(BLACK, C5);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+        boardState.place(pieceToTake);
+
+        Judge judge = new Judge(boardState);
+
+        TestBoardStateEventListener listener = new TestBoardStateEventListener();
+        boardState.getEventManager().subscribe(listener, BoardStateEvent.PIECE_TAKEN);
+
+        judge.submitMove(piece, C5);
+
+        assertEquals(pieceToTake, listener.getLastPieceTaken().get());
     }
 
     @Test

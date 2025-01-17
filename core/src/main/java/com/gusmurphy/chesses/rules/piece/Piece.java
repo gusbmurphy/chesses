@@ -76,6 +76,10 @@ public class Piece {
         eventManager.notify(BoardStateEvent.PIECE_MOVED, this);
     }
 
+    public void take() {
+        eventManager.notify(BoardStateEvent.PIECE_TAKEN, this);
+    }
+
     public void setEventManager(BoardStateEventManager manager) {
         eventManager = manager;
 
