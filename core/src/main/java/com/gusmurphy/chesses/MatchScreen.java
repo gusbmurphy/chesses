@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gusmurphy.chesses.board.*;
+import com.gusmurphy.chesses.rules.board.BoardOnScreen;
+import com.gusmurphy.chesses.rules.board.StartingBoards;
 
 public class MatchScreen extends BaseScreen {
 
