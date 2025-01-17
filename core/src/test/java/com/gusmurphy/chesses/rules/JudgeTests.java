@@ -317,6 +317,19 @@ public class JudgeTests {
         assertEquals(C5, piece.getCoordinates());
     }
 
+    @Test
+    void anIllegalMoveDoesNothing() {
+        Piece piece = DefaultPieces.rook(WHITE, C4);
+
+        BoardState boardState = new BoardState();
+        boardState.place(piece);
+
+        Judge judge = new Judge(boardState);
+        judge.submitMove(piece, D5);
+
+        assertEquals(C4, piece.getCoordinates());
+    }
+
     private static Stream<Arguments> oppositeColorPairs() {
         return Stream.of(
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),

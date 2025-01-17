@@ -17,7 +17,7 @@ public class TakingMove implements Move {
 
     @Override
     public BoardCoordinates spot() {
-        return null;
+        return spot;
     }
 
     @Override
