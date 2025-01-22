@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class PieceDecorator implements Piece {
 
-    private final Piece decoratedPiece;
+    protected final Piece decoratedPiece;
 
     PieceDecorator(Piece piece) {
         decoratedPiece = piece;
