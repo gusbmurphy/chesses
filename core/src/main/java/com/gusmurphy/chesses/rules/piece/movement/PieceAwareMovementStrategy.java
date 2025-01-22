@@ -9,6 +9,7 @@ public abstract class PieceAwareMovementStrategy implements MovementStrategy, Pi
 
     public void setRelevantPiece(Piece piece) {
         relevantPiece = piece;
+        piece.subscribeToEvents(this);
     }
 
 }

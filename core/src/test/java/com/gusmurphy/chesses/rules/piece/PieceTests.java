@@ -1,13 +1,11 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.BoardStateEventManager;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.rules.board.PieceEvent.MOVED;
 import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,9 +18,8 @@ public class PieceTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        BoardStateEventManager eventManager = new BoardStateEventManager(boardState);
         TestPieceEventListener listener = new TestPieceEventListener();
-        eventManager.subscribe(listener, MOVED);
+        piece.subscribeToEvents(listener);
 
         piece.moveTo(D5);
         Optional<Piece> lastMovedPiece = listener.getLastMovedPiece();

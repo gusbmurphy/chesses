@@ -7,16 +7,10 @@ import java.util.*;
 
 public class BoardState {
 
-    private final BoardStateEventManager eventManager;
     private final List<Piece> piecesOnBoard = new ArrayList<>();
-
-    public BoardState() {
-        eventManager = new BoardStateEventManager(this);
-    }
 
     public void place(Piece piece) {
         piecesOnBoard.add(piece);
-        piece.setEventManager(eventManager);
     }
 
     public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
@@ -35,10 +29,6 @@ public class BoardState {
 
     public boolean spotIsFree(BoardCoordinates spot) {
         return piecesOnBoard.stream().noneMatch(piece -> piece.getCoordinates() == spot);
-    }
-
-    public BoardStateEventManager getEventManager() {
-        return eventManager;
     }
 
 }

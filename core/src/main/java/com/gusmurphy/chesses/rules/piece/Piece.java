@@ -2,13 +2,13 @@ package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
-import com.gusmurphy.chesses.rules.board.BoardStateEventManager;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.movement.MovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.PieceAwareMovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.Move;
 import com.gusmurphy.chesses.rules.PlayerColor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Piece {
@@ -16,8 +16,8 @@ public class Piece {
     private final PlayerColor color;
     private final MovementStrategy movementStrategy;
     private BoardCoordinates coordinates;
-    private BoardStateEventManager eventManager;
     private final PieceType type;
+    private final List<PieceEventListener> eventListeners = new ArrayList<>();
 
     // TODO: These constructors are ugly
     public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates, PieceType type) {
@@ -55,6 +55,10 @@ public class Piece {
         );
     }
 
+    public void subscribeToEvents(PieceEventListener listener) {
+        eventListeners.add(listener);
+    }
+
     public List<Move> currentPossibleMoves() {
         return movementStrategy.possibleMovesFrom(coordinates);
     }
@@ -73,19 +77,11 @@ public class Piece {
 
     public void moveTo(BoardCoordinates coordinates) {
         this.coordinates = coordinates;
-        eventManager.notify(PieceEvent.MOVED, this);
+        eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.MOVED, this));
     }
 
     public void take() {
-        eventManager.notify(PieceEvent.TAKEN, this);
-    }
-
-    public void setEventManager(BoardStateEventManager manager) {
-        eventManager = manager;
-
-        if (movementStrategy instanceof PieceAwareMovementStrategy) {
-            manager.subscribe((PieceEventListener) movementStrategy, PieceEvent.MOVED);
-        }
+        eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.TAKEN, this));
     }
 
 }

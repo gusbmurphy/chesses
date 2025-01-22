@@ -20,7 +20,7 @@ import com.gusmurphy.chesses.rules.piece.movement.Move;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BoardOnScreen implements PieceSelectionListener, PieceEventListener {
+public class BoardOnScreen implements PieceSelectionListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -40,8 +40,6 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     public static final float SQUARE_SIZE = 0.5f;
 
     public BoardOnScreen(BoardState boardState, final ChessesGame game) {
-        boardState.getEventManager().subscribe(this, PieceEvent.MOVED);
-
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
@@ -113,15 +111,6 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
             selectedPiece = null;
             PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
             pieceOnScreen.setDragStatus(false);
-        }
-    }
-
-    @Override
-    public void onPieceEvent(PieceEvent event, Piece piece) {
-        if (event == PieceEvent.MOVED) {
-            Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
-                pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
-            );
         }
     }
 

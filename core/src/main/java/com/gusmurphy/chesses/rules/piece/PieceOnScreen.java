@@ -6,14 +6,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gusmurphy.chesses.rules.board.BoardOnScreen;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 
 import static com.gusmurphy.chesses.rules.board.BoardOnScreen.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceOnScreen {
+public class PieceOnScreen implements PieceEventListener {
 
+    private final BoardOnScreen boardOnScreen;
     private final Piece piece;
     private final SpriteBatch spriteBatch;
     private final Sprite sprite;
@@ -24,7 +27,10 @@ public class PieceOnScreen {
 
     public PieceOnScreen(Piece piece, BoardOnScreen boardOnScreen) {
         this.piece = piece;
+        piece.subscribeToEvents(this);
         this.spriteBatch = boardOnScreen.getSpriteBatch();
+
+        this.boardOnScreen = boardOnScreen;
 
         sprite = PieceSprite.spriteFor(piece);
         sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
@@ -82,4 +88,10 @@ public class PieceOnScreen {
         );
     }
 
+    @Override
+    public void onPieceEvent(PieceEvent event, Piece piece) {
+        if (event == PieceEvent.MOVED) {
+            setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
+        }
+    }
 }

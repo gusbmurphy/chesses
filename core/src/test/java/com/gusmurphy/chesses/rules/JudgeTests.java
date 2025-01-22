@@ -314,7 +314,7 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
 
         TestPieceEventListener listener = new TestPieceEventListener();
-        boardState.getEventManager().subscribe(listener, PieceEvent.TAKEN);
+        pieceToTake.subscribeToEvents(listener);
 
         judge.submitMove(piece, C5);
 
