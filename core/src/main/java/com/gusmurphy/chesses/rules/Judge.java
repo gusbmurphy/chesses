@@ -21,22 +21,26 @@ public class Judge {
         List<Move> actualMoves = new ArrayList<>();
 
         moves.forEach(possibleMove -> {
-            Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
-            if (!pieceAtSpot.isPresent()) {
-                actualMoves.add(possibleMove);
-
-                Optional<Move> next = possibleMove.next();
-
-                while (next.isPresent()) {
-                    actualMoves.add(next.get());
-                    next = next.get().next();
-                }
-            } else if (pieceAtSpot.get().color() != piece.color()) {
-                actualMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
-            }
+            addMovesFor(piece, possibleMove, actualMoves);
         });
 
         return uniqueMovesBySpot(actualMoves);
+    }
+
+    private void addMovesFor(Piece piece, Move possibleMove, List<Move> actualMoves) {
+        Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
+        if (!pieceAtSpot.isPresent()) {
+            actualMoves.add(possibleMove);
+
+            Optional<Move> next = possibleMove.next();
+
+            while (next.isPresent()) {
+                actualMoves.add(next.get());
+                next = next.get().next();
+            }
+        } else if (pieceAtSpot.get().color() != piece.color()) {
+            actualMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
+        }
     }
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
