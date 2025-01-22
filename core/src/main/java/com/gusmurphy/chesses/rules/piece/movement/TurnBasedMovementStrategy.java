@@ -28,7 +28,7 @@ public class TurnBasedMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+    public void onPieceEvent(PieceEvent event, Piece piece) {
         if (event == PieceEvent.MOVED && piece == super.relevantPiece) {
             moveCount++;
         }

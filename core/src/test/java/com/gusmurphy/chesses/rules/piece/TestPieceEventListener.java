@@ -19,7 +19,7 @@ public class TestPieceEventListener implements PieceEventListener {
     }
 
     @Override
-    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+    public void onPieceEvent(PieceEvent event, Piece piece) {
         switch (event) {
             case MOVED:
                 lastMovedPiece = piece;

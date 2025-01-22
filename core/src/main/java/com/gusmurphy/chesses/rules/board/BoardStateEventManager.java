@@ -24,7 +24,7 @@ public class BoardStateEventManager {
     }
 
     public void notify(PieceEvent event, Piece piece) {
-        listeners.get(event).forEach(listener -> listener.onBoardStateEvent(event, piece));
+        listeners.get(event).forEach(listener -> listener.onPieceEvent(event, piece));
     }
 
 }

@@ -26,10 +26,10 @@ public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+    public void onPieceEvent(PieceEvent event, Piece piece) {
         strategies.forEach(strategy -> {
             if (strategy instanceof PieceAwareMovementStrategy) {
-                ((PieceEventListener) strategy).onBoardStateEvent(event, piece);
+                ((PieceEventListener) strategy).onPieceEvent(event, piece);
             }
         });
     }

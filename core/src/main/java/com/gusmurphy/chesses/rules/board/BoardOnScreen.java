@@ -117,7 +117,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     @Override
-    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+    public void onPieceEvent(PieceEvent event, Piece piece) {
         if (event == PieceEvent.MOVED) {
             Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
                 pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
