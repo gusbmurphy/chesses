@@ -12,8 +12,9 @@ import static com.gusmurphy.chesses.rules.board.BoardOnScreen.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceOnScreen extends PieceDecorator {
+public class PieceOnScreen {
 
+    private final Piece piece;
     private final SpriteBatch spriteBatch;
     private final Sprite sprite;
     private final Rectangle bounds;
@@ -22,7 +23,7 @@ public class PieceOnScreen extends PieceDecorator {
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
     public PieceOnScreen(Piece piece, BoardOnScreen boardOnScreen) {
-        super(piece);
+        this.piece = piece;
         this.spriteBatch = boardOnScreen.getSpriteBatch();
 
         sprite = PieceSprite.spriteFor(piece);
@@ -63,9 +64,9 @@ public class PieceOnScreen extends PieceDecorator {
 
     private void checkForClick(Vector2 cursorPosition) {
         if (cursorIsOnPiece(cursorPosition) && !isDragged) {
-            selectionListeners.forEach(listener -> listener.onPieceSelected(super.decoratedPiece));
+            selectionListeners.forEach(listener -> listener.onPieceSelected(piece));
         } else if (isDragged) {
-            selectionListeners.forEach(listener -> listener.onPieceReleased(super.decoratedPiece, cursorPosition));
+            selectionListeners.forEach(listener -> listener.onPieceReleased(piece, cursorPosition));
             sprite.setCenter(effectivePosition.x, effectivePosition.y);
         }
     }
