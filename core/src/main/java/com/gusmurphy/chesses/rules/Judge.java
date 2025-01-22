@@ -36,7 +36,7 @@ public class Judge {
 
             Optional<Move> next = move.next();
 
-            while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
+            while (next.isPresent() && moveIsLegal(next.get())) {
                 legalMoves.add(next.get());
                 next = next.get().next();
             }
@@ -45,6 +45,10 @@ public class Judge {
         }
 
         return legalMoves;
+    }
+
+    private boolean moveIsLegal(Move next) {
+        return boardState.spotIsFree(next.spot());
     }
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
