@@ -29,7 +29,7 @@ public class JudgeTests {
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates spot) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new ConcretePiece(pieceColorAndMovement, D4, PieceType.KING);
+        Piece piece = new Piece(pieceColorAndMovement, D4, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -56,7 +56,7 @@ public class JudgeTests {
     void aPieceWithALinearMovementStrategyCannotMoveToAPositionNotInItsStrategy() {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new ConcretePiece(pieceColorAndMovement, A2, PieceType.KING);
+        Piece piece = new Piece(pieceColorAndMovement, A2, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -70,7 +70,7 @@ public class JudgeTests {
     void noMoveIsPossibleForAPieceNotOnTheBoard() {
         BoardState boardState = new BoardState();
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
-        Piece piece = new ConcretePiece(pieceColorAndMovement, A4, PieceType.KING);
+        Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
         Judge judge = new Judge(boardState);
         assertTrue(judge.possibleMovesFor(piece).isEmpty());
     }
@@ -83,9 +83,9 @@ public class JudgeTests {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
         );
-        Piece piece = new ConcretePiece(color, movementStrategy, A2, PieceType.KING);
+        Piece piece = new Piece(color, movementStrategy, A2, PieceType.KING);
 
-        Piece blockingPiece = new ConcretePiece(color, new NullMovementStrategy(), otherPiecePosition, PieceType.KING);
+        Piece blockingPiece = new Piece(color, new NullMovementStrategy(), otherPiecePosition, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -109,7 +109,7 @@ public class JudgeTests {
         Direction direction, BoardCoordinates expected
     ) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
-        Piece piece = new ConcretePiece(linear, D4);
+        Piece piece = new Piece(linear, D4);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -137,7 +137,7 @@ public class JudgeTests {
     @MethodSource("movesOffTheBoard")
     void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
-        Piece piece = new ConcretePiece(linear, from);
+        Piece piece = new Piece(linear, from);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -164,7 +164,7 @@ public class JudgeTests {
     @Test
     void weCouldAlsoMoveTwoSpotsInOneDirection() {
         MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 2);
-        Piece piece = new ConcretePiece(strategy, B2);
+        Piece piece = new Piece(strategy, B2);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -180,7 +180,7 @@ public class JudgeTests {
     @Test
     void aLinearStrategyWithNoMaxDistanceCanMoveAllTheWayAcrossTheBoard() {
         MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N));
-        Piece piece = new ConcretePiece(strategy, B1);
+        Piece piece = new Piece(strategy, B1);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -201,7 +201,7 @@ public class JudgeTests {
     @Test
     void andEvenInMultipleDirections() {
         MovementStrategy strategy = new LinearMovementStrategy(Arrays.asList(Direction.N, Direction.S), 1);
-        Piece piece = new ConcretePiece(strategy, B2);
+        Piece piece = new Piece(strategy, B2);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -219,7 +219,7 @@ public class JudgeTests {
         RelativeMovementStrategy partTwo = new RelativeMovementStrategy(-2, 3);
         MovementStrategy fullStrategy = new RelativeMovementStrategy(partOne, partTwo);
 
-        Piece piece = new ConcretePiece(fullStrategy, E4);
+        Piece piece = new Piece(fullStrategy, E4);
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
@@ -234,7 +234,7 @@ public class JudgeTests {
     @Test
     void aRelativeStrategyCannotMoveOffTheBoard() {
         MovementStrategy strategy = new RelativeMovementStrategy(0, 1);
-        Piece piece = new ConcretePiece(strategy, A8);
+        Piece piece = new Piece(strategy, A8);
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
@@ -250,7 +250,7 @@ public class JudgeTests {
             new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(N), 2)),
             new LinearMovementStrategy(Collections.singletonList(N), 1)
         );
-        Piece piece = new ConcretePiece(strategy, C2);
+        Piece piece = new Piece(strategy, C2);
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
@@ -273,9 +273,9 @@ public class JudgeTests {
     @MethodSource("oppositeColorPairs")
     void aMoveOntoASpotOccupiedByAnotherPieceOfTheOppositeColorTakesThatPiece(PlayerColor takingColor, PlayerColor takenColor) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(S), 1);
-        Piece piece = new ConcretePiece(takingColor, linear, C4, PieceType.BISHOP);
+        Piece piece = new Piece(takingColor, linear, C4, PieceType.BISHOP);
 
-        Piece pieceToTake = new ConcretePiece(takenColor, new NullMovementStrategy(), C3, PieceType.QUEEN);
+        Piece pieceToTake = new Piece(takenColor, new NullMovementStrategy(), C3, PieceType.QUEEN);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
