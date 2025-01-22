@@ -18,9 +18,10 @@ import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.movement.Move;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class BoardOnScreen implements PieceSelectionListener {
+public class BoardOnScreen implements PieceSelectionListener, PieceEventListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -31,7 +32,7 @@ public class BoardOnScreen implements PieceSelectionListener {
     private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
-    private final Map<Piece, PieceOnScreen> piecesOnScreen = new HashMap<>();
+    private final Map<Piece, PieceOnScreen> piecesOnScreen = new ConcurrentHashMap<>();
     private Piece selectedPiece;
 
     private final Judge judge;
@@ -45,6 +46,7 @@ public class BoardOnScreen implements PieceSelectionListener {
         viewport = game.getViewport();
 
         createPiecesOnScreenFor(boardState);
+        subscribeToEventsFromPieces(boardState);
 
         judge = new Judge(boardState);
     }
@@ -165,7 +167,7 @@ public class BoardOnScreen implements PieceSelectionListener {
 
     private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
         if (judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == releaseSpot)) {
-            piece.moveTo(releaseSpot);
+            judge.submitMove(piece, releaseSpot);
             highlightedSpaces.clear();
         }
     }
@@ -180,6 +182,17 @@ public class BoardOnScreen implements PieceSelectionListener {
 
     private float bottomLeftY() {
         return viewport.getWorldHeight() / 2 - boardWidth() / 2;
+    }
+
+    @Override
+    public void onPieceEvent(PieceEvent event, Piece piece) {
+        if (event == PieceEvent.TAKEN) {
+            piecesOnScreen.remove(piece);
+        }
+    }
+
+    private void subscribeToEventsFromPieces(BoardState boardState) {
+        boardState.getAllPieces().forEach(piece -> piece.subscribeToEvents(this));
     }
 
 }
