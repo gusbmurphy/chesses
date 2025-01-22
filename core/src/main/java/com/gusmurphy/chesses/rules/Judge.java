@@ -20,19 +20,19 @@ public class Judge {
         List<Move> moves = piece.currentPossibleMoves();
         List<Move> legalMoves = new ArrayList<>();
 
-        moves.forEach(possibleMove -> {
-            Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
+        moves.forEach(move -> {
+            Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
             if (!pieceAtSpot.isPresent()) {
-                legalMoves.add(possibleMove);
+                legalMoves.add(move);
 
-                Optional<Move> next = possibleMove.next();
+                Optional<Move> next = move.next();
 
-                while (next.isPresent() && boardState.spotIsFree(possibleMove.next().get().spot())) {
+                while (next.isPresent() && boardState.spotIsFree(move.next().get().spot())) {
                     legalMoves.add(next.get());
                     next = next.get().next();
                 }
             } else if (pieceAtSpot.get().color() != piece.color()) {
-                legalMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
+                legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
             }
         });
 
