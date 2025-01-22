@@ -14,7 +14,7 @@ import static com.gusmurphy.chesses.rules.piece.PieceType.*;
 public class DefaultPieces {
 
     public static Piece king(PlayerColor color, BoardCoordinates position) {
-        return new Piece(
+        return new ConcretePiece(
             color,
             new LinearMovementStrategy(every(), 1),
             position,
@@ -23,7 +23,7 @@ public class DefaultPieces {
     }
 
     public static Piece queen(PlayerColor color, BoardCoordinates position) {
-        return new Piece(
+        return new ConcretePiece(
             color,
             new LinearMovementStrategy(every()),
             position,
@@ -32,7 +32,7 @@ public class DefaultPieces {
     }
 
     public static Piece rook(PlayerColor color, BoardCoordinates position) {
-        return new Piece(
+        return new ConcretePiece(
             color,
             new LinearMovementStrategy(N, E, S, W),
             position,
@@ -41,7 +41,7 @@ public class DefaultPieces {
     }
 
     public static Piece bishop(PlayerColor color, BoardCoordinates position) {
-        return new Piece(
+        return new ConcretePiece(
             color,
             new LinearMovementStrategy(NE, SE, SW, NW),
             position,
@@ -50,7 +50,7 @@ public class DefaultPieces {
     }
 
     public static Piece knight(PlayerColor color, BoardCoordinates position) {
-        return new Piece(
+        return new ConcretePiece(
             color,
             new RelativeMovementStrategy(
                 new RelativeMovementStrategy(1, 2),
@@ -75,7 +75,7 @@ public class DefaultPieces {
             new LinearMovementStrategy(Collections.singletonList(movementDirection), 1)
         );
 
-        return new Piece(
+        return new ConcretePiece(
             color,
             movementStrategy,
             position,
