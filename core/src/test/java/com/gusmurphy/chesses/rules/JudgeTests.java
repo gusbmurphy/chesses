@@ -288,6 +288,18 @@ public class JudgeTests {
     }
 
     @Test
+    void aRookCanTakeAPawnAWaysAway() {
+        Piece rook = DefaultPieces.rook(BLACK, B2);
+        Piece pawn = DefaultPieces.pawn(WHITE, B7);
+
+        BoardState boardState = new BoardState(rook, pawn);
+        Judge judge = new Judge(boardState);
+
+        List<Move> moves = judge.possibleMovesFor(rook);
+        assertTrue(moves.stream().anyMatch(move -> move.spot() == B7 && move.takes().get() == pawn));
+    }
+
+    @Test
     void afterAPieceIsTakenItIsNoLongerOnTheBoard() {
         Piece piece = DefaultPieces.rook(WHITE, C4);
         Piece pieceToTake = DefaultPieces.rook(BLACK, C5);
