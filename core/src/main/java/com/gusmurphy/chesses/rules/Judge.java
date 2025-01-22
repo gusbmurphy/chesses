@@ -34,7 +34,7 @@ public class Judge {
 
             Optional<Move> next = possibleMove.next();
 
-            while (next.isPresent()) {
+            while (next.isPresent() && boardState.spotIsFree(possibleMove.next().get().spot())) {
                 actualMoves.add(next.get());
                 next = next.get().next();
             }
