@@ -21,17 +21,25 @@ public class Judge {
         List<Move> legalMoves = new ArrayList<>();
 
         moves.forEach(move -> {
-            Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
-            if (!pieceAtSpot.isPresent()) {
-                legalMoves.add(move);
-
-                legalMoves.addAll(legalMovesFrom(move));
-            } else if (pieceAtSpot.get().color() != piece.color()) {
-                legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
-            }
+            legalMoves.addAll(getAllLegalMovesFor(piece, move));
         });
 
         return uniqueMovesBySpot(legalMoves);
+    }
+
+    private List<Move> getAllLegalMovesFor(Piece piece, Move move) {
+        List<Move> legalMoves = new ArrayList<>();
+
+        Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
+        if (!pieceAtSpot.isPresent()) {
+            legalMoves.add(move);
+
+            legalMoves.addAll(legalMovesFrom(move));
+        } else if (pieceAtSpot.get().color() != piece.color()) {
+            legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
+        }
+
+        return legalMoves;
     }
 
     private List<Move> legalMovesFrom(Move move) {
