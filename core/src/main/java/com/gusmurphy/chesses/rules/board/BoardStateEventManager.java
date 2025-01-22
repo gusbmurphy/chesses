@@ -9,21 +9,21 @@ import java.util.Map;
 
 public class BoardStateEventManager {
 
-    private final Map<BoardStateEvent, List<PieceEventListener>> listeners = new HashMap<>();
+    private final Map<PieceEvent, List<PieceEventListener>> listeners = new HashMap<>();
 
     public BoardStateEventManager(BoardState boardState) {
         boardState.getAllPieces().forEach(piece -> piece.setEventManager(this));
 
-        for (BoardStateEvent event : BoardStateEvent.values()) {
+        for (PieceEvent event : PieceEvent.values()) {
             listeners.put(event, new ArrayList<>());
         }
     }
 
-    public void subscribe(PieceEventListener listener, BoardStateEvent event) {
+    public void subscribe(PieceEventListener listener, PieceEvent event) {
         listeners.get(event).add(listener);
     }
 
-    public void notify(BoardStateEvent event, Piece piece) {
+    public void notify(PieceEvent event, Piece piece) {
         listeners.get(event).forEach(listener -> listener.onBoardStateEvent(event, piece));
     }
 

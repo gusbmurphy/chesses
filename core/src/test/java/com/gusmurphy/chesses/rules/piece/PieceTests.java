@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.rules.board.BoardStateEvent.PIECE_MOVED;
+import static com.gusmurphy.chesses.rules.board.PieceEvent.MOVED;
 import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,7 +22,7 @@ public class PieceTests {
 
         BoardStateEventManager eventManager = new BoardStateEventManager(boardState);
         TestPieceEventListener listener = new TestPieceEventListener();
-        eventManager.subscribe(listener, PIECE_MOVED);
+        eventManager.subscribe(listener, MOVED);
 
         piece.moveTo(D5);
         Optional<Piece> lastMovedPiece = listener.getLastMovedPiece();

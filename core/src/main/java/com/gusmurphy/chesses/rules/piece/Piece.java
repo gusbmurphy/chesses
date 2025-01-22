@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece;
 
-import com.gusmurphy.chesses.rules.board.BoardStateEvent;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.BoardStateEventManager;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
@@ -73,18 +73,18 @@ public class Piece {
 
     public void moveTo(BoardCoordinates coordinates) {
         this.coordinates = coordinates;
-        eventManager.notify(BoardStateEvent.PIECE_MOVED, this);
+        eventManager.notify(PieceEvent.MOVED, this);
     }
 
     public void take() {
-        eventManager.notify(BoardStateEvent.PIECE_TAKEN, this);
+        eventManager.notify(PieceEvent.TAKEN, this);
     }
 
     public void setEventManager(BoardStateEventManager manager) {
         eventManager = manager;
 
         if (movementStrategy instanceof PieceAwareMovementStrategy) {
-            manager.subscribe((PieceEventListener) movementStrategy, BoardStateEvent.PIECE_MOVED);
+            manager.subscribe((PieceEventListener) movementStrategy, PieceEvent.MOVED);
         }
     }
 

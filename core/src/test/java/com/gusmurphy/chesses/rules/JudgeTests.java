@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.BoardStateEvent;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.*;
@@ -314,7 +314,7 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
 
         TestPieceEventListener listener = new TestPieceEventListener();
-        boardState.getEventManager().subscribe(listener, BoardStateEvent.PIECE_TAKEN);
+        boardState.getEventManager().subscribe(listener, PieceEvent.TAKEN);
 
         judge.submitMove(piece, C5);
 

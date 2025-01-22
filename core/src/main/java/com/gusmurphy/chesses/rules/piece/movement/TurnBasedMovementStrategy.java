@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.BoardStateEvent;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -28,8 +28,8 @@ public class TurnBasedMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
-        if (event == BoardStateEvent.PIECE_MOVED && piece == super.relevantPiece) {
+    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+        if (event == PieceEvent.MOVED && piece == super.relevantPiece) {
             moveCount++;
         }
     }

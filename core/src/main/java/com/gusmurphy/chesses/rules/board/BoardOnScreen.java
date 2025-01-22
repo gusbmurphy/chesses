@@ -40,7 +40,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     public static final float SQUARE_SIZE = 0.5f;
 
     public BoardOnScreen(BoardState boardState, final ChessesGame game) {
-        boardState.getEventManager().subscribe(this, BoardStateEvent.PIECE_MOVED);
+        boardState.getEventManager().subscribe(this, PieceEvent.MOVED);
 
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
@@ -117,8 +117,8 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     @Override
-    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
-        if (event == BoardStateEvent.PIECE_MOVED) {
+    public void onBoardStateEvent(PieceEvent event, Piece piece) {
+        if (event == PieceEvent.MOVED) {
             Optional.ofNullable(piecesOnScreen.get(piece)).ifPresent(
                 pieceOnScreen -> pieceOnScreen.setEffectivePosition(getScreenPositionForCenterOf(piece.getCoordinates()))
             );

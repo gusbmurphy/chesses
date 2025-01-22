@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece;
 
-import com.gusmurphy.chesses.rules.board.BoardStateEvent;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 
 import java.util.Optional;
@@ -19,12 +19,12 @@ public class TestPieceEventListener implements PieceEventListener {
     }
 
     @Override
-    public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
+    public void onBoardStateEvent(PieceEvent event, Piece piece) {
         switch (event) {
-            case PIECE_MOVED:
+            case MOVED:
                 lastMovedPiece = piece;
                 break;
-            case PIECE_TAKEN:
+            case TAKEN:
                 lastPieceTaken = piece;
                 break;
         }
