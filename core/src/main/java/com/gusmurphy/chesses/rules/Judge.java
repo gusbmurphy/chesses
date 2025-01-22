@@ -20,23 +20,21 @@ public class Judge {
         List<Move> moves = piece.currentPossibleMoves();
         List<Move> actualMoves = new ArrayList<>();
 
-        moves.forEach(possibleMove ->
-            {
-                Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
-                if (!pieceAtSpot.isPresent()) {
-                    actualMoves.add(possibleMove);
+        moves.forEach(possibleMove -> {
+            Optional<Piece> pieceAtSpot = boardState.getPieceAt(possibleMove.spot());
+            if (!pieceAtSpot.isPresent()) {
+                actualMoves.add(possibleMove);
 
-                    Optional<Move> next = possibleMove.next();
+                Optional<Move> next = possibleMove.next();
 
-                    while (next.isPresent() && boardState.spotIsFree(next.get().spot())) {
-                        actualMoves.add(next.get());
-                        next = next.get().next();
-                    }
-                } else if (pieceAtSpot.get().color() != piece.color()) {
-                    actualMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
+                while (next.isPresent()) {
+                    actualMoves.add(next.get());
+                    next = next.get().next();
                 }
+            } else if (pieceAtSpot.get().color() != piece.color()) {
+                actualMoves.add(new TakingMove(possibleMove.spot(), pieceAtSpot.get()));
             }
-        );
+        });
 
         return uniqueMovesBySpot(actualMoves);
     }
