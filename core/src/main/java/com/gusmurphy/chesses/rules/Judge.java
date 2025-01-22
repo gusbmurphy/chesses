@@ -38,12 +38,16 @@ public class Judge {
         List<Move> legalMoves = new ArrayList<>();
         Optional<Move> next = move.next();
 
-        while (next.isPresent() && boardState.spotIsFree(move.next().get().spot())) {
+        while (shouldContinueFrom(move, next)) {
             legalMoves.add(next.get());
             next = next.get().next();
         }
 
         return legalMoves;
+    }
+
+    private boolean shouldContinueFrom(Move move, Optional<Move> next) {
+        return next.isPresent() && boardState.spotIsFree(move.next().get().spot());
     }
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
