@@ -34,21 +34,14 @@ public class Judge {
         if (!pieceAtSpot.isPresent()) {
             legalMoves.add(move);
 
-            legalMoves.addAll(legalMovesFrom(move));
+            Optional<Move> next = move.next();
+
+            while (shouldContinueFrom(next)) {
+                legalMoves.add(next.get());
+                next = next.get().next();
+            }
         } else if (pieceAtSpot.get().color() != piece.color()) {
             legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
-        }
-
-        return legalMoves;
-    }
-
-    private List<Move> legalMovesFrom(Move move) {
-        List<Move> legalMoves = new ArrayList<>();
-        Optional<Move> next = move.next();
-
-        while (shouldContinueFrom(next)) {
-            legalMoves.add(next.get());
-            next = next.get().next();
         }
 
         return legalMoves;
