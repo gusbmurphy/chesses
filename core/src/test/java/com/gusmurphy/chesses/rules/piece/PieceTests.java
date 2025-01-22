@@ -21,7 +21,7 @@ public class PieceTests {
         boardState.place(piece);
 
         BoardStateEventManager eventManager = new BoardStateEventManager(boardState);
-        TestBoardStateEventListener listener = new TestBoardStateEventListener();
+        TestPieceEventListener listener = new TestPieceEventListener();
         eventManager.subscribe(listener, PIECE_MOVED);
 
         piece.moveTo(D5);

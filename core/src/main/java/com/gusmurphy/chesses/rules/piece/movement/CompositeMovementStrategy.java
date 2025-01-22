@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
 import com.gusmurphy.chesses.rules.board.BoardStateEvent;
-import com.gusmurphy.chesses.rules.board.BoardStateEventListener;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -29,7 +29,7 @@ public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
     public void onBoardStateEvent(BoardStateEvent event, Piece piece) {
         strategies.forEach(strategy -> {
             if (strategy instanceof PieceAwareMovementStrategy) {
-                ((BoardStateEventListener) strategy).onBoardStateEvent(event, piece);
+                ((PieceEventListener) strategy).onBoardStateEvent(event, piece);
             }
         });
     }

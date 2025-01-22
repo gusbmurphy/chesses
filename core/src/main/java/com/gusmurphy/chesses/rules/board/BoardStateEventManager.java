@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class BoardStateEventManager {
 
-    private final Map<BoardStateEvent, List<BoardStateEventListener>> listeners = new HashMap<>();
+    private final Map<BoardStateEvent, List<PieceEventListener>> listeners = new HashMap<>();
 
     public BoardStateEventManager(BoardState boardState) {
         boardState.getAllPieces().forEach(piece -> piece.setEventManager(this));
@@ -19,7 +19,7 @@ public class BoardStateEventManager {
         }
     }
 
-    public void subscribe(BoardStateEventListener listener, BoardStateEvent event) {
+    public void subscribe(PieceEventListener listener, BoardStateEvent event) {
         listeners.get(event).add(listener);
     }
 

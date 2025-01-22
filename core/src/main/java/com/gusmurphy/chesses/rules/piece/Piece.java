@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.BoardStateEvent;
-import com.gusmurphy.chesses.rules.board.BoardStateEventListener;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.BoardStateEventManager;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.movement.MovementStrategy;
@@ -84,7 +84,7 @@ public class Piece {
         eventManager = manager;
 
         if (movementStrategy instanceof PieceAwareMovementStrategy) {
-            manager.subscribe((BoardStateEventListener) movementStrategy, BoardStateEvent.PIECE_MOVED);
+            manager.subscribe((PieceEventListener) movementStrategy, BoardStateEvent.PIECE_MOVED);
         }
     }
 

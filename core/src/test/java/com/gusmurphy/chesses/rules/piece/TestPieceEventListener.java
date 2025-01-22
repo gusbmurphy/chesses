@@ -1,11 +1,11 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.BoardStateEvent;
-import com.gusmurphy.chesses.rules.board.BoardStateEventListener;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 
 import java.util.Optional;
 
-public class TestBoardStateEventListener implements BoardStateEventListener {
+public class TestPieceEventListener implements PieceEventListener {
 
     private Piece lastMovedPiece;
     private Piece lastPieceTaken;

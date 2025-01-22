@@ -1,9 +1,9 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.BoardStateEventListener;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
-public abstract class PieceAwareMovementStrategy implements MovementStrategy, BoardStateEventListener {
+public abstract class PieceAwareMovementStrategy implements MovementStrategy, PieceEventListener {
 
     protected Piece relevantPiece;
 

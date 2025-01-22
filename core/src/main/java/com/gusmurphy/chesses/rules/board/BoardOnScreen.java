@@ -20,7 +20,7 @@ import com.gusmurphy.chesses.rules.piece.movement.Move;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BoardOnScreen implements PieceSelectionListener, BoardStateEventListener {
+public class BoardOnScreen implements PieceSelectionListener, PieceEventListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
