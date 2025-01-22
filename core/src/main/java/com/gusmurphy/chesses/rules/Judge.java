@@ -25,7 +25,7 @@ public class Judge {
             if (!pieceAtSpot.isPresent()) {
                 legalMoves.add(move);
 
-                continueAddingFrom(move, legalMoves);
+                legalMoves.addAll(legalMovesFrom(move));
             } else if (pieceAtSpot.get().color() != piece.color()) {
                 legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
             }
@@ -34,13 +34,16 @@ public class Judge {
         return uniqueMovesBySpot(legalMoves);
     }
 
-    private void continueAddingFrom(Move move, List<Move> legalMoves) {
+    private List<Move> legalMovesFrom(Move move) {
+        List<Move> legalMoves = new ArrayList<>();
         Optional<Move> next = move.next();
 
         while (next.isPresent() && boardState.spotIsFree(move.next().get().spot())) {
             legalMoves.add(next.get());
             next = next.get().next();
         }
+
+        return legalMoves;
     }
 
     public void submitMove(Piece piece, BoardCoordinates spot) {
