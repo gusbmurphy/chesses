@@ -9,6 +9,10 @@ public class BoardState {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
 
+    public BoardState(Piece... pieces) {
+        piecesOnBoard.addAll(Arrays.asList(pieces));
+    }
+
     public void place(Piece piece) {
         piecesOnBoard.add(piece);
     }
