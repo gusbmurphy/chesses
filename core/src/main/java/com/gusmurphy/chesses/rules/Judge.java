@@ -34,10 +34,11 @@ public class Judge {
         if (!pieceAtSpot.isPresent()) {
             legalMoves.add(move);
 
-            Optional<Move> next = move.next();
-            if (next.isPresent()) {
-                legalMoves.addAll(getAllLegalMovesFor(piece, next.get()));
-            }
+            move.next().map(nextMove ->
+                legalMoves.addAll(
+                    getAllLegalMovesFor(piece, nextMove)
+                )
+            );
         } else if (pieceAtSpot.get().color() != piece.color()) {
             legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
         }
