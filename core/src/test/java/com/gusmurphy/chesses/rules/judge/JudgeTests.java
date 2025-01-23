@@ -34,7 +34,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         assertTrue(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
     }
@@ -61,7 +61,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == A4));
     }
@@ -71,7 +71,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         assertTrue(judge.possibleMovesFor(piece).isEmpty());
     }
 
@@ -91,7 +91,7 @@ public class JudgeTests {
         boardState.place(piece);
         boardState.place(blockingPiece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
     }
@@ -114,7 +114,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
         assertEquals(expected, possibleMoves.get(0).spot());
@@ -142,7 +142,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
         assertEquals(0, possibleMoves.size());
@@ -169,7 +169,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(2, possibleMoves.size());
@@ -185,7 +185,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(7, possibleMoves.size());
@@ -206,7 +206,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
         assertEquals(2, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
@@ -223,7 +223,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertEquals(2, possibleMoves.size());
@@ -238,7 +238,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         assertTrue(possibleMoves.isEmpty());
@@ -254,7 +254,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         List<Move> possibleMoves = judge.possibleMovesFor(piece);
 
         // At first, we can move up to two spaces...
@@ -281,7 +281,7 @@ public class JudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         List<Move> moves = judge.possibleMovesFor(piece);
         assertEquals(pieceToTake, moves.get(0).takes().get());
@@ -293,7 +293,7 @@ public class JudgeTests {
         Piece pawn = DefaultPieces.pawn(WHITE, B7);
 
         BoardState boardState = new BoardState(rook, pawn);
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         List<Move> moves = judge.possibleMovesFor(rook);
         assertTrue(moves.stream().anyMatch(move -> move.spot() == B7 && move.takes().get() == pawn));
@@ -308,7 +308,7 @@ public class JudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         judge.submitMove(piece, C5);
 
         assertFalse(boardState.getAllPieces().contains(pieceToTake));
@@ -323,7 +323,7 @@ public class JudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
 
         TestPieceEventListener listener = new TestPieceEventListener();
         pieceToTake.subscribeToEvents(listener);
@@ -340,7 +340,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         judge.submitMove(piece, C5);
 
         assertEquals(C5, piece.getCoordinates());
@@ -353,7 +353,7 @@ public class JudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new Judge(boardState);
+        Judge judge = new JudgeImplementation(boardState);
         judge.submitMove(piece, D5);
 
         assertEquals(C4, piece.getCoordinates());
