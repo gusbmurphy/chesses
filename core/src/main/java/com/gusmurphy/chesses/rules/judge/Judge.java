@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules;
+package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;

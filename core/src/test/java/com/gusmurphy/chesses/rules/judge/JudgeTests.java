@@ -1,7 +1,7 @@
-package com.gusmurphy.chesses.rules;
+package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.*;

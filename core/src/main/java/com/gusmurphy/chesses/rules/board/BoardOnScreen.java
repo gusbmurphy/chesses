@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.rules.Judge;
+import com.gusmurphy.chesses.rules.judge.Judge;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceOnScreen;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
