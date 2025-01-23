@@ -6,7 +6,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class LinearMove extends Move {
+public class LinearMove implements Move {
 
     private final BoardCoordinates from;
     private final Direction direction;

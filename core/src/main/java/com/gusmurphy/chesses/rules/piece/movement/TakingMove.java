@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class TakingMove extends Move {
+public class TakingMove implements Move {
 
     private final BoardCoordinates spot;
     private final Piece pieceToTake;
