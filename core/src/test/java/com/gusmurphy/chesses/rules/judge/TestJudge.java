@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class TestJudge implements Judge {
+public class TestJudge extends BaseJudge {
 
     private Piece lastMovedPiece;
 

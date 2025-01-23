@@ -4,9 +4,11 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
+import static com.gusmurphy.chesses.rules.PlayerColor.*;
+
 public class PlayerTurnRule extends JudgeDecorator {
 
-    private final PlayerColor currentTurnColor;
+    private PlayerColor currentTurnColor;
 
     public PlayerTurnRule(Judge judge, PlayerColor initialTurnColor) {
         super(judge);
@@ -17,6 +19,8 @@ public class PlayerTurnRule extends JudgeDecorator {
     public void submitMove(Piece piece, BoardCoordinates spot) {
         if (piece.color() == currentTurnColor) {
             super.submitMove(piece, spot);
+            currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
+            super.listeners.forEach(listener -> listener.onTurnChange(currentTurnColor));
         }
     }
 

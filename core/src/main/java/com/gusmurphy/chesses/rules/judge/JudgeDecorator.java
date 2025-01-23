@@ -6,7 +6,7 @@ import com.gusmurphy.chesses.rules.piece.movement.Move;
 
 import java.util.List;
 
-public abstract class JudgeDecorator implements Judge {
+public abstract class JudgeDecorator extends BaseJudge {
 
     private final Judge wrappedJudge;
 

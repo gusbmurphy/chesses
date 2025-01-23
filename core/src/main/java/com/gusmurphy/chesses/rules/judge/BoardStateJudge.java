@@ -9,7 +9,7 @@ import com.gusmurphy.chesses.rules.piece.movement.TakingMove;
 
 import java.util.*;
 
-public class BoardStateJudge implements Judge {
+public class BoardStateJudge extends BaseJudge {
 
     private final BoardState boardState;
 

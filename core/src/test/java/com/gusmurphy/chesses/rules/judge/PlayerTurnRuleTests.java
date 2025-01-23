@@ -43,6 +43,23 @@ public class PlayerTurnRuleTests {
         assertEquals(piece, testJudge.getLastMovedPiece().get());
     }
 
+    @ParameterizedTest
+    @MethodSource("oppositeColorPairs")
+    void theTurnColorAlternates(
+        PlayerColor currentTurnColor, PlayerColor turnColorAfterMove
+    ) {
+        TestJudge testJudge = new TestJudge();
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+
+        TestRuleEventListener turnEventListener = new TestRuleEventListener();
+        turnAwareJudge.subscribeToEvents(turnEventListener);
+
+        Piece piece = DefaultPieces.rook(currentTurnColor, C4);
+        turnAwareJudge.submitMove(piece, C5);
+
+        assertEquals(turnColorAfterMove, turnEventListener.getLatestTurnColor().get());
+    }
+
     private static Stream<Arguments> oppositeColorPairs() {
         return Stream.of(
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
