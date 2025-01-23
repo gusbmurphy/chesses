@@ -359,22 +359,25 @@ public class JudgeTests {
         assertEquals(C4, piece.getCoordinates());
     }
 
+    @ParameterizedTest
+    @MethodSource("oppositeColorPairs")
+    void nothingHappensIfAMoveIsSubmittedForAPieceWithoutTheCurrentTurnsColor(
+        PlayerColor pieceColor, PlayerColor currentTurnColor
+    ) {
+        TestJudge testJudge = new TestJudge();
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+
+        Piece piece = DefaultPieces.rook(pieceColor, C4);
+        turnAwareJudge.submitMove(piece, C5);
+
+        assertFalse(testJudge.getLastMovedPiece().isPresent());
+    }
+
     private static Stream<Arguments> oppositeColorPairs() {
         return Stream.of(
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
             Arguments.of(PlayerColor.BLACK, PlayerColor.WHITE)
         );
-    }
-
-    @Test
-    void nothingHappensIfAMoveIsSubmittedForAPieceWithoutTheCurrentTurnsColor() {
-        TestJudge testJudge = new TestJudge();
-        Judge turnAwareJudge = new PlayerTurnRule(testJudge, WHITE);
-
-        Piece piece = DefaultPieces.rook(BLACK, C4);
-        turnAwareJudge.submitMove(piece, C5);
-
-        assertFalse(testJudge.getLastMovedPiece().isPresent());
     }
 
 }
