@@ -22,13 +22,13 @@ public class Judge {
         List<Move> legalMoves = new ArrayList<>();
 
         moves.forEach(move -> {
-            legalMoves.addAll(getAllLegalMovesFor(piece, move));
+            legalMoves.addAll(getAllLegalMovesFor(move));
         });
 
         return uniqueMovesBySpot(legalMoves);
     }
 
-    private List<Move> getAllLegalMovesFor(Piece piece, Move move) {
+    private List<Move> getAllLegalMovesFor(MoveWithPiece move) {
         List<Move> legalMoves = new ArrayList<>();
 
         Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
@@ -37,10 +37,10 @@ public class Judge {
 
             move.next().map(nextMove ->
                 legalMoves.addAll(
-                    getAllLegalMovesFor(piece, nextMove)
+                    getAllLegalMovesFor(new MoveWithPiece(nextMove, move.getMovingPiece()))
                 )
             );
-        } else if (pieceAtSpot.get().color() != piece.color()) {
+        } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
             legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
         }
 
