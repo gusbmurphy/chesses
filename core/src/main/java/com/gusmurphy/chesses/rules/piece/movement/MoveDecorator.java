@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public abstract class MoveDecorator implements Move {
 
-    private Move wrappedMove;
+    private final Move wrappedMove;
 
     MoveDecorator(Move move) {
         wrappedMove = move;
