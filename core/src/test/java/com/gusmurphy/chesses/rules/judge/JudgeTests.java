@@ -369,7 +369,7 @@ public class JudgeTests {
     @Test
     void nothingHappensIfAMoveIsSubmittedForAPieceWithoutTheCurrentTurnsColor() {
         TestJudge testJudge = new TestJudge();
-        Judge turnAwareJudge = new TurnAwareJudge(testJudge, WHITE);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, WHITE);
 
         Piece piece = DefaultPieces.rook(BLACK, C4);
         turnAwareJudge.submitMove(piece, C5);

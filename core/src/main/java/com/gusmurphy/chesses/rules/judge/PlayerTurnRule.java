@@ -4,9 +4,9 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
-public class TurnAwareJudge extends JudgeDecorator {
+public class PlayerTurnRule extends JudgeDecorator {
 
-    public TurnAwareJudge(Judge judge, PlayerColor playerColor) {
+    public PlayerTurnRule(Judge judge, PlayerColor playerColor) {
         super(judge);
     }
 
