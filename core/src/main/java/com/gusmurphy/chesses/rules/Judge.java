@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.movement.Move;
+import com.gusmurphy.chesses.rules.piece.movement.MoveWithPiece;
 import com.gusmurphy.chesses.rules.piece.movement.TakingMove;
 
 import java.util.*;
@@ -17,7 +18,7 @@ public class Judge {
     }
 
     public List<Move> possibleMovesFor(Piece piece) {
-        List<Move> moves = piece.currentPossibleMoves();
+        List<MoveWithPiece> moves = piece.currentPossibleMoves();
         List<Move> legalMoves = new ArrayList<>();
 
         moves.forEach(move -> {
