@@ -9,6 +9,7 @@ import com.gusmurphy.chesses.rules.piece.movement.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
@@ -371,6 +372,18 @@ public class JudgeTests {
         turnAwareJudge.submitMove(piece, C5);
 
         assertFalse(testJudge.getLastMovedPiece().isPresent());
+    }
+
+    @ParameterizedTest
+    @EnumSource(PlayerColor.class)
+    void aMoveIsPassedAlongIfItIsForTheCorrectColor(PlayerColor color) {
+        TestJudge testJudge = new TestJudge();
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, color);
+
+        Piece piece = DefaultPieces.rook(color, C4);
+        turnAwareJudge.submitMove(piece, C5);
+
+        assertEquals(piece, testJudge.getLastMovedPiece().get());
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
