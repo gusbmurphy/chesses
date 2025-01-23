@@ -9,11 +9,11 @@ import com.gusmurphy.chesses.rules.piece.movement.TakingMove;
 
 import java.util.*;
 
-public class JudgeImplementation implements Judge {
+public class BoardStateJudge implements Judge {
 
     private final BoardState boardState;
 
-    public JudgeImplementation(BoardState boardState) {
+    public BoardStateJudge(BoardState boardState) {
         this.boardState = boardState;
     }
 

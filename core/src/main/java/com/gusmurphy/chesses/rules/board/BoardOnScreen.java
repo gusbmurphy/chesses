@@ -12,7 +12,7 @@ import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.rules.judge.Judge;
-import com.gusmurphy.chesses.rules.judge.JudgeImplementation;
+import com.gusmurphy.chesses.rules.judge.BoardStateJudge;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceOnScreen;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
@@ -49,7 +49,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         createPiecesOnScreenFor(boardState);
         subscribeToEventsFromPieces(boardState);
 
-        judge = new JudgeImplementation(boardState);
+        judge = new BoardStateJudge(boardState);
     }
 
     public SpriteBatch getSpriteBatch() {
