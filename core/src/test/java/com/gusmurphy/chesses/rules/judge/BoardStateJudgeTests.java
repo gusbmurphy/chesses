@@ -3,6 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.Direction;
+import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.*;
@@ -14,6 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
@@ -23,6 +25,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoardStateJudgeTests {
+
+    @Test
+    void weCanGetAllMovesForAllPiecesOnTheBoard() {
+        Piece king = DefaultPieces.king(WHITE, C4);
+        Piece rook = DefaultPieces.rook(WHITE, G3);
+        BoardState boardState = new BoardState(king, rook);
+
+        Judge judge = new BoardStateJudge(boardState);
+        List<PieceMove> moves = judge.getPossibleMoves();
+
+        List<PieceMove> movesForKing = moves.stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
+        List<PieceMove> movesForRook = moves.stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
+
+        assertEquals(8, movesForKing.size());
+        assertEquals(14, movesForRook.size());
+    }
 
     @ParameterizedTest
     @MethodSource("okayMoves")

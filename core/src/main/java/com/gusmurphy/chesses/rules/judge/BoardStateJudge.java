@@ -29,6 +29,16 @@ public class BoardStateJudge extends BaseJudge {
         return uniqueMovesBySpot(legalMoves);
     }
 
+    @Override
+    public List<PieceMove> getPossibleMoves() {
+        List<PieceMove> pieceMoves = new ArrayList<>();
+        boardState.getAllPieces().forEach(piece -> {
+            List<Move> moves = possibleMovesFor(piece);
+            moves.forEach(move -> pieceMoves.add(new PieceMove(move, piece)));
+        });
+        return pieceMoves;
+    }
+
     private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
