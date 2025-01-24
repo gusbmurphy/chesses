@@ -4,7 +4,7 @@ import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.movement.Move;
-import com.gusmurphy.chesses.rules.piece.movement.MoveWithPiece;
+import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.TakingMove;
 
 import java.util.*;
@@ -19,7 +19,7 @@ public class BoardStateJudge extends BaseJudge {
 
     @Override
     public List<Move> possibleMovesFor(Piece piece) {
-        List<MoveWithPiece> moves = piece.currentPossibleMoves();
+        List<PieceMove> moves = piece.currentPossibleMoves();
         List<Move> legalMoves = new ArrayList<>();
 
         moves.forEach(move -> {
@@ -29,7 +29,7 @@ public class BoardStateJudge extends BaseJudge {
         return uniqueMovesBySpot(legalMoves);
     }
 
-    private List<Move> getAllLegalMovesFor(MoveWithPiece move) {
+    private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
         Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
@@ -38,7 +38,7 @@ public class BoardStateJudge extends BaseJudge {
 
             move.next().map(nextMove ->
                 legalMoves.addAll(
-                    getAllLegalMovesFor(new MoveWithPiece(nextMove, move.getMovingPiece()))
+                    getAllLegalMovesFor(new PieceMove(nextMove, move.getMovingPiece()))
                 )
             );
         } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {

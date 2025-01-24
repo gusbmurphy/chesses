@@ -3,10 +3,9 @@ package com.gusmurphy.chesses.rules.piece;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
-import com.gusmurphy.chesses.rules.piece.movement.MoveWithPiece;
+import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.MovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.PieceAwareMovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.Move;
 import com.gusmurphy.chesses.rules.PlayerColor;
 
 import java.util.ArrayList;
@@ -61,11 +60,11 @@ public class Piece {
         eventListeners.add(listener);
     }
 
-    public List<MoveWithPiece> currentPossibleMoves() {
+    public List<PieceMove> currentPossibleMoves() {
         return movementStrategy
             .possibleMovesFrom(coordinates)
             .stream()
-            .map(move -> new MoveWithPiece(move, this))
+            .map(move -> new PieceMove(move, this))
             .collect(Collectors.toList());
     }
 
