@@ -11,10 +11,15 @@ import java.util.Optional;
 public class TestJudge extends BaseJudge {
 
     private Piece lastMovedPiece;
+    private List<Move> possibleMoves = Collections.emptyList();
 
     @Override
     public List<Move> possibleMovesFor(Piece piece) {
-        return Collections.emptyList();
+        return possibleMoves;
+    }
+
+    public void setPossibleMoves(List<Move> moves) {
+        possibleMoves = moves;
     }
 
     @Override

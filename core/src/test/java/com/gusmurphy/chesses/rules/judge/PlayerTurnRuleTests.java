@@ -3,17 +3,21 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.movement.Move;
+import com.gusmurphy.chesses.rules.piece.movement.StaticMove;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.C4;
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.C5;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTurnRuleTests {
 
@@ -58,6 +62,22 @@ public class PlayerTurnRuleTests {
         turnAwareJudge.submitMove(piece, C5);
 
         assertEquals(turnColorAfterMove, turnEventListener.getLatestTurnColor().get());
+    }
+
+    @ParameterizedTest
+    @MethodSource("oppositeColorPairs")
+    void noMovesArePossibleForAPieceWithoutTheCurrentTurnColor(PlayerColor currentTurnColor, PlayerColor pieceColor) {
+        TestJudge testJudge = new TestJudge();
+        testJudge.setPossibleMoves(Collections.singletonList(new StaticMove(C5)));
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+
+        TestRuleEventListener turnEventListener = new TestRuleEventListener();
+        turnAwareJudge.subscribeToEvents(turnEventListener);
+
+        Piece piece = DefaultPieces.rook(pieceColor, C4);
+        List<Move> possibleMoves = turnAwareJudge.possibleMovesFor(piece);
+
+        assertTrue(possibleMoves.isEmpty());
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
