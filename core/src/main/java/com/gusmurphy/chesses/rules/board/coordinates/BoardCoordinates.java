@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.Rank;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 
 import static com.gusmurphy.chesses.rules.board.Rank.*;
 
@@ -26,6 +27,14 @@ public enum BoardCoordinates {
     BoardCoordinates(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
     }
 
     public Optional<BoardCoordinates> coordinatesToThe(Direction direction) {
