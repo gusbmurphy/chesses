@@ -103,7 +103,12 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     @Override
     public void onPieceSelected(Piece piece) {
         if (selectedPiece == null) {
-            List<BoardCoordinates> possibleMoves = judge.possibleMovesFor(piece).stream().map(Move::spot).collect(Collectors.toList());
+            List<BoardCoordinates> possibleMoves = judge
+                .getPossibleMoves()
+                .stream()
+                .filter(move -> move.getMovingPiece() == piece)
+                .map(Move::spot)
+                .collect(Collectors.toList());
             highlightedSpaces.addAll(possibleMoves);
             selectedPiece = piece;
             PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
@@ -172,7 +177,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
-        if (judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == releaseSpot)) {
+        if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.spot() == releaseSpot)) {
             judge.submitMove(piece, releaseSpot);
             highlightedSpaces.clear();
         }

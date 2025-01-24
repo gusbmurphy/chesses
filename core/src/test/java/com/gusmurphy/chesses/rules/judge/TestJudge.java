@@ -2,7 +2,6 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.Move;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 
 import java.util.Collections;
@@ -12,14 +11,9 @@ import java.util.Optional;
 public class TestJudge extends BaseJudge {
 
     private Piece lastMovedPiece;
-    private List<Move> possibleMoves = Collections.emptyList();
+    private List<PieceMove> possibleMoves = Collections.emptyList();
 
-    @Override
-    public List<Move> possibleMovesFor(Piece piece) {
-        return possibleMoves;
-    }
-
-    public void setPossibleMoves(List<Move> moves) {
+    public void setPossibleMoves(List<PieceMove> moves) {
         possibleMoves = moves;
     }
 
@@ -30,7 +24,7 @@ public class TestJudge extends BaseJudge {
 
     @Override
     public List<PieceMove> getPossibleMoves() {
-        return Collections.emptyList();
+        return possibleMoves;
     }
 
     public Optional<Piece> getLastMovedPiece() {

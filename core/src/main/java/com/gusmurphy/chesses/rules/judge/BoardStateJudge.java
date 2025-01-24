@@ -17,8 +17,7 @@ public class BoardStateJudge extends BaseJudge {
         this.boardState = boardState;
     }
 
-    @Override
-    public List<Move> possibleMovesFor(Piece piece) {
+    protected List<Move> possibleMovesFor(Piece piece) {
         List<PieceMove> moves = piece.currentPossibleMoves();
         List<Move> legalMoves = new ArrayList<>();
 

@@ -3,10 +3,11 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.Move;
+import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
 
@@ -29,11 +30,12 @@ public class PlayerTurnRule extends JudgeDecorator {
     }
 
     @Override
-    public List<Move> possibleMovesFor(Piece piece) {
-        if (piece.color() == currentTurnColor) {
-            return super.possibleMovesFor(piece);
-        }
-        return Collections.emptyList();
+    public List<PieceMove> getPossibleMoves() {
+        List<PieceMove> moves = super.getPossibleMoves();
+        return moves
+            .stream()
+            .filter(pieceMove -> pieceMove.getMovingPiece().color() == currentTurnColor)
+            .collect(Collectors.toList());
     }
 
 }

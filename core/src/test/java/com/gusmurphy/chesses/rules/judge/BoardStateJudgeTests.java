@@ -54,7 +54,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        assertTrue(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
+        assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
     }
 
     private static Stream<Arguments> okayMoves() {
@@ -81,7 +81,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == A4));
+        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == A4));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class BoardStateJudgeTests {
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
         Judge judge = new BoardStateJudge(boardState);
-        assertTrue(judge.possibleMovesFor(piece).isEmpty());
+        assertTrue(judge.getPossibleMoves().isEmpty());
     }
 
     @ParameterizedTest
@@ -111,7 +111,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        assertFalse(judge.possibleMovesFor(piece).stream().anyMatch(m -> m.spot() == spot));
+        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
     }
 
     private static Stream<Arguments> blockedMoves() {
@@ -134,7 +134,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(expected, possibleMoves.get(0).spot());
     }
 
@@ -162,7 +162,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(0, possibleMoves.size());
     }
 
@@ -188,7 +188,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
@@ -204,7 +204,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(7, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B2));
@@ -225,7 +225,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(2, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B1));
@@ -242,7 +242,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == F6));
@@ -257,7 +257,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertTrue(possibleMoves.isEmpty());
     }
@@ -273,7 +273,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
 
         Judge judge = new BoardStateJudge(boardState);
-        List<Move> possibleMoves = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         // At first, we can move up to two spaces...
         assertEquals(2, possibleMoves.size());
@@ -282,7 +282,7 @@ public class BoardStateJudgeTests {
 
         // After moving, there should only be one possible move.
         piece.moveTo(C4);
-        List<Move> possibleMovesAfterFirst = judge.possibleMovesFor(piece);
+        List<PieceMove> possibleMovesAfterFirst = judge.getPossibleMoves();
         assertEquals(1, possibleMovesAfterFirst.size());
         assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.spot() == C5));
     }
@@ -301,7 +301,7 @@ public class BoardStateJudgeTests {
 
         Judge judge = new BoardStateJudge(boardState);
 
-        List<Move> moves = judge.possibleMovesFor(piece);
+        List<PieceMove> moves = judge.getPossibleMoves();
         assertEquals(pieceToTake, moves.get(0).takes().get());
     }
 
@@ -313,7 +313,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState(rook, pawn);
         Judge judge = new BoardStateJudge(boardState);
 
-        List<Move> moves = judge.possibleMovesFor(rook);
+        List<PieceMove> moves = judge.getPossibleMoves();
         assertTrue(moves.stream().anyMatch(move -> move.spot() == B7 && move.takes().get() == pawn));
     }
 
