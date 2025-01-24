@@ -53,8 +53,8 @@ public class PlayerTurnRuleTests {
         TestJudge testJudge = new TestJudge();
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
-        TestRuleEventListener turnEventListener = new TestRuleEventListener();
-        turnAwareJudge.subscribeToEvents(turnEventListener);
+        TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
+        turnAwareJudge.subscribeToTurnChange(turnEventListener);
 
         Piece piece = DefaultPieces.rook(currentTurnColor, C4);
         turnAwareJudge.submitMove(piece, C5);
@@ -69,8 +69,8 @@ public class PlayerTurnRuleTests {
         testJudge.setPossibleMoves(Collections.singletonList(new StaticMove(C5)));
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
-        TestRuleEventListener turnEventListener = new TestRuleEventListener();
-        turnAwareJudge.subscribeToEvents(turnEventListener);
+        TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
+        turnAwareJudge.subscribeToTurnChange(turnEventListener);
 
         Piece piece = DefaultPieces.rook(pieceColor, C4);
         List<Move> possibleMoves = turnAwareJudge.possibleMovesFor(piece);

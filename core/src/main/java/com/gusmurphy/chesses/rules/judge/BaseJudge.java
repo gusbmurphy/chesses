@@ -5,10 +5,10 @@ import java.util.List;
 
 public abstract class BaseJudge implements Judge {
 
-    protected final List<RuleEventListener> listeners = new ArrayList<>();
+    protected final List<TurnChangeListener> listeners = new ArrayList<>();
 
     @Override
-    public void subscribeToEvents(RuleEventListener listener) {
+    public void subscribeToTurnChange(TurnChangeListener listener) {
         listeners.add(listener);
     }
 

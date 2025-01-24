@@ -9,5 +9,5 @@ import java.util.List;
 public interface Judge {
     List<Move> possibleMovesFor(Piece piece);
     void submitMove(Piece piece, BoardCoordinates spot);
-    void subscribeToEvents(RuleEventListener listener);
+    void subscribeToTurnChange(TurnChangeListener listener);
 }

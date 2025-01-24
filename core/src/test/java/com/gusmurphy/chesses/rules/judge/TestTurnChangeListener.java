@@ -4,7 +4,7 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 
 import java.util.Optional;
 
-public class TestRuleEventListener implements RuleEventListener {
+public class TestTurnChangeListener implements TurnChangeListener {
 
     private PlayerColor latestTurnColor;
 
