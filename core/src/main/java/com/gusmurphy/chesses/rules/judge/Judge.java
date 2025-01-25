@@ -35,15 +35,22 @@ public class Judge {
         Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
         if (!pieceAtSpot.isPresent()) {
             legalMoves.add(move);
-
-            move.next().map(nextMove ->
-                legalMoves.addAll(
-                    getAllLegalMovesFor(new PieceMove(nextMove, move.getMovingPiece()))
-                )
-            );
+            legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
         } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
             legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
         }
+
+        return legalMoves;
+    }
+
+    private List<Move> getAllLegalMovesContinuingFrom(PieceMove move) {
+        List<Move> legalMoves = new ArrayList<>();
+
+        move.next().map(nextMove ->
+            legalMoves.addAll(
+                getAllLegalMovesFor(new PieceMove(nextMove, move.getMovingPiece()))
+            )
+        );
 
         return legalMoves;
     }
