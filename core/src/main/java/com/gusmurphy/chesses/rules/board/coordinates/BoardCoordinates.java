@@ -33,10 +33,6 @@ public enum BoardCoordinates {
         return file;
     }
 
-    public Rank rank() {
-        return rank;
-    }
-
     public static BoardCoordinates with(File file, Rank rank) {
         return Arrays.stream(values()).filter(spot -> spot.file == file && spot.rank == rank).findFirst().get();
     }
