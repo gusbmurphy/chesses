@@ -6,7 +6,6 @@ import com.gusmurphy.chesses.rules.board.Rank;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.Random;
 
 import static com.gusmurphy.chesses.rules.board.Rank.*;
 
