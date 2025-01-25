@@ -24,7 +24,7 @@ import static com.gusmurphy.chesses.rules.board.Direction.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoardStateJudgeTests {
+public class JudgeTests {
 
     @Test
     void weCanGetAllMovesForAllPiecesOnTheBoard() {
@@ -32,7 +32,7 @@ public class BoardStateJudgeTests {
         Piece rook = DefaultPieces.rook(WHITE, G3);
         BoardState boardState = new BoardState(king, rook);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> moves = judge.getPossibleMoves();
 
         List<PieceMove> movesForKing = moves.stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
     }
@@ -79,7 +79,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == A4));
     }
@@ -89,7 +89,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
         Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         assertTrue(judge.getPossibleMoves().isEmpty());
     }
 
@@ -109,7 +109,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
         boardState.place(blockingPiece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
     }
@@ -132,7 +132,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(expected, possibleMoves.get(0).spot());
@@ -160,7 +160,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(0, possibleMoves.size());
@@ -187,7 +187,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
@@ -203,7 +203,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(7, possibleMoves.size());
@@ -224,7 +224,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
         assertEquals(2, possibleMoves.size());
         assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
@@ -241,7 +241,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
@@ -256,7 +256,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         assertTrue(possibleMoves.isEmpty());
@@ -272,7 +272,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         List<PieceMove> possibleMoves = judge.getPossibleMoves();
 
         // At first, we can move up to two spaces...
@@ -299,7 +299,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         List<PieceMove> moves = judge.getPossibleMoves();
         assertEquals(pieceToTake, moves.get(0).takes().get());
@@ -311,7 +311,7 @@ public class BoardStateJudgeTests {
         Piece pawn = DefaultPieces.pawn(WHITE, B7);
 
         BoardState boardState = new BoardState(rook, pawn);
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         List<PieceMove> moves = judge.getPossibleMoves();
         assertTrue(moves.stream().anyMatch(move -> move.spot() == B7 && move.takes().get() == pawn));
@@ -326,7 +326,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         judge.submitMove(piece, C5);
 
         assertFalse(boardState.getAllPieces().contains(pieceToTake));
@@ -341,7 +341,7 @@ public class BoardStateJudgeTests {
         boardState.place(piece);
         boardState.place(pieceToTake);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
 
         TestPieceEventListener listener = new TestPieceEventListener();
         pieceToTake.subscribeToEvents(listener);
@@ -358,7 +358,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         judge.submitMove(piece, C5);
 
         assertEquals(C5, piece.getCoordinates());
@@ -371,7 +371,7 @@ public class BoardStateJudgeTests {
         BoardState boardState = new BoardState();
         boardState.place(piece);
 
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         judge.submitMove(piece, D5);
 
         assertEquals(C4, piece.getCoordinates());

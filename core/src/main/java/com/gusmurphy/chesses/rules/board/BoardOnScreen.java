@@ -12,7 +12,6 @@ import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.rules.judge.BoardStateJudge;
 import com.gusmurphy.chesses.rules.judge.Judge;
 import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
 import com.gusmurphy.chesses.rules.piece.Piece;
@@ -52,7 +51,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         subscribeToEventsFromPieces(boardState);
 
         judge = new PlayerTurnRule(
-            new BoardStateJudge(boardState),
+            new Judge(boardState),
             PlayerColor.WHITE
         );
     }

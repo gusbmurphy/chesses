@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Judge {
+public class Judge {
 
     protected final List<TurnChangeListener> listeners = new ArrayList<>();
     protected final BoardState boardState;

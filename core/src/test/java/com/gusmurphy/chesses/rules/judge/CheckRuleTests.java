@@ -22,7 +22,7 @@ public class CheckRuleTests {
         Piece rook = DefaultPieces.rook(BLACK, D4);
 
         BoardState boardState = new BoardState(king, rook);
-        Judge judge = new BoardStateJudge(boardState);
+        Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
         List<PieceMove> movesForKing = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
