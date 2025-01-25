@@ -5,7 +5,6 @@ import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.strategy.PieceAwareMovementStrategy;
 import com.gusmurphy.chesses.rules.PlayerColor;
 
 import java.util.ArrayList;
@@ -21,17 +20,6 @@ public class Piece {
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
 
     // TODO: These constructors are ugly
-    public Piece(PieceColorAndMovement pieceColorAndMovement, Coordinates coordinates, PieceType type) {
-        this.color = pieceColorAndMovement.color();
-        this.movementStrategy = pieceColorAndMovement.movementStrategy();
-        this.coordinates = coordinates;
-        this.type = type;
-
-        if (this.movementStrategy instanceof PieceAwareMovementStrategy) {
-            ((PieceAwareMovementStrategy) this.movementStrategy).setRelevantPiece(this);
-        }
-    }
-
     public Piece(
         PlayerColor color,
         MovementStrategy movementStrategy,
@@ -40,12 +28,15 @@ public class Piece {
     ) {
         this.color = color;
         this.movementStrategy = movementStrategy;
+        this.movementStrategy.setRelevantPiece(this);
         this.coordinates = coordinates;
         this.type = type;
 
-        if (this.movementStrategy instanceof PieceAwareMovementStrategy) {
-            ((PieceAwareMovementStrategy) this.movementStrategy).setRelevantPiece(this);
-        }
+        eventListeners.add(movementStrategy);
+    }
+
+    public Piece(PieceColorAndMovement pieceColorAndMovement, Coordinates coordinates, PieceType type) {
+        this(pieceColorAndMovement.color(), pieceColorAndMovement.movementStrategy(), coordinates, type);
     }
 
     public Piece(MovementStrategy strategy, Coordinates coordinates) {

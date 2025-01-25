@@ -25,4 +25,9 @@ public abstract class MovementStrategyDecorator implements MovementStrategy {
         wrappedStrategy.onPieceEvent(event, piece);
     }
 
+    @Override
+    public void setRelevantPiece(Piece piece) {
+        wrappedStrategy.setRelevantPiece(piece);
+    }
+
 }

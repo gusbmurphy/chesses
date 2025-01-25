@@ -8,7 +8,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
+public class CompositeMovementStrategy implements MovementStrategy {
 
     private final List<MovementStrategy> strategies;
 
@@ -32,12 +32,7 @@ public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
 
     @Override
     public void setRelevantPiece(Piece piece) {
-        super.setRelevantPiece(piece);
-        strategies.forEach(strategy -> {
-            if (strategy instanceof PieceAwareMovementStrategy) {
-                ((PieceAwareMovementStrategy) strategy).setRelevantPiece(piece);
-            }
-        });
+        strategies.forEach(strategy -> strategy.setRelevantPiece(piece));
     }
 
 }

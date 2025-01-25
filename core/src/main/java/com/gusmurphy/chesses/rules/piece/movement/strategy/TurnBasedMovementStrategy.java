@@ -8,11 +8,12 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import java.util.Collections;
 import java.util.List;
 
-public class TurnBasedMovementStrategy extends PieceAwareMovementStrategy {
+public class TurnBasedMovementStrategy implements MovementStrategy {
 
+    private Piece relevantPiece;
+    private final MovementStrategy strategy;
     private int moveCount = 0;
     private final int expirationMoveCount;
-    private final MovementStrategy strategy;
 
     public TurnBasedMovementStrategy(int expirationMoveCount, MovementStrategy strategy) {
         this.expirationMoveCount = expirationMoveCount;
@@ -30,9 +31,14 @@ public class TurnBasedMovementStrategy extends PieceAwareMovementStrategy {
 
     @Override
     public void onPieceEvent(PieceEvent event, Piece piece) {
-        if (event == PieceEvent.MOVED && piece == super.relevantPiece) {
+        if (event == PieceEvent.MOVED && piece == relevantPiece) {
             moveCount++;
         }
+    }
+
+    @Override
+    public void setRelevantPiece(Piece piece) {
+        relevantPiece = piece;
     }
 
 }
