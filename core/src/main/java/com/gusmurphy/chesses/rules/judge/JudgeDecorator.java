@@ -11,6 +11,7 @@ public abstract class JudgeDecorator extends Judge {
     private final Judge wrappedJudge;
 
     JudgeDecorator(Judge judge) {
+        super(judge.boardState);
         wrappedJudge = judge;
     }
 
