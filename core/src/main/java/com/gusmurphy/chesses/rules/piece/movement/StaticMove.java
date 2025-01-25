@@ -26,4 +26,9 @@ public class StaticMove implements Move {
     public Optional<Piece> takes() {
         return Optional.empty();
     }
+
+    @Override
+    public boolean mustTake() {
+        return false;
+    }
 }

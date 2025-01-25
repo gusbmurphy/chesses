@@ -10,5 +10,6 @@ public interface Move {
     Coordinates spot();
     Optional<Move> next();
     Optional<Piece> takes();
+    boolean mustTake();
 
 }

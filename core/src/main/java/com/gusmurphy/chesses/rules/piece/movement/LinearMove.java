@@ -43,4 +43,9 @@ public class LinearMove implements Move {
         return Optional.empty();
     }
 
+    @Override
+    public boolean mustTake() {
+        return false;
+    }
+
 }

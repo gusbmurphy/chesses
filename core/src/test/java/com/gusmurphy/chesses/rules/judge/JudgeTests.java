@@ -286,6 +286,25 @@ public class JudgeTests {
         assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.spot() == C5));
     }
 
+    @Test
+    void weCanAlsoHaveMovementThatOnlyAllowsForTakingPieces() {
+        MovementStrategy strategy = new TakeOnlyMovementStrategy(
+            new LinearMovementStrategy(Arrays.asList(N, S), 1)
+        );
+        Piece takingPiece = new Piece(WHITE, strategy, D3, PieceType.BISHOP);
+        Piece someOtherPiece = new Piece(BLACK, new NullMovementStrategy(), D4, PieceType.QUEEN);
+
+        Judge judge = new Judge(new BoardState(takingPiece, someOtherPiece));
+        List<PieceMove> possibleMoves = judge.getPossibleMoves();
+
+        // The only possible move should be the one to take the other piece
+        assertEquals(1, possibleMoves.size());
+        PieceMove move = possibleMoves.get(0);
+        assertEquals(D4, move.spot());
+        assertEquals(someOtherPiece, move.takes().get());
+        assertEquals(takingPiece, move.getMovingPiece());
+    }
+
     @ParameterizedTest
     @MethodSource("oppositeColorPairs")
     void aMoveOntoASpotOccupiedByAnotherPieceOfTheOppositeColorTakesThatPiece(PlayerColor takingColor, PlayerColor takenColor) {

@@ -29,4 +29,9 @@ public class TakingMove implements Move {
     public Optional<Piece> takes() {
         return Optional.of(pieceToTake);
     }
+
+    @Override
+    public boolean mustTake() {
+        return false;
+    }
 }

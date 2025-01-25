@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Judge {
 
@@ -71,7 +72,16 @@ public class Judge {
         List<PieceMove> moves = piece.currentPossibleMoves();
         List<Move> legalMoves = new ArrayList<>();
 
-        moves.forEach(move -> legalMoves.addAll(getAllLegalMovesFor(move)));
+        for (PieceMove move : moves) {
+            legalMoves.addAll(getAllLegalMovesFor(move));
+        }
+
+        legalMoves = legalMoves.stream().filter(move -> {
+            if (move.mustTake()) {
+                return move.takes().isPresent();
+            }
+            return true;
+        }).collect(Collectors.toList());
 
         return Judge.uniqueMovesBySpot(legalMoves);
     }

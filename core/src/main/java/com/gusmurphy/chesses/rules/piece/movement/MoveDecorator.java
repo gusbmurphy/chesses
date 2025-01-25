@@ -28,4 +28,9 @@ public abstract class MoveDecorator implements Move {
         return wrappedMove.takes();
     }
 
+    @Override
+    public boolean mustTake() {
+        return wrappedMove.mustTake();
+    }
+
 }
