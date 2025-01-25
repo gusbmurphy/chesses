@@ -1,13 +1,11 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TakeOnlyMovementStrategy extends PieceAwareMovementStrategy {
+public class TakeOnlyMovementStrategy implements MovementStrategy {
 
     private final MovementStrategy wrappedStrategy;
 
@@ -22,10 +20,6 @@ public class TakeOnlyMovementStrategy extends PieceAwareMovementStrategy {
             .stream()
             .map(MustTakeMove::new)
             .collect(Collectors.toList());
-    }
-
-    @Override
-    public void onPieceEvent(PieceEvent event, Piece piece) {
     }
 
 }
