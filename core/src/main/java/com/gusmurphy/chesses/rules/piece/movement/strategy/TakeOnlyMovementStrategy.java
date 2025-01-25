@@ -7,12 +7,10 @@ import com.gusmurphy.chesses.rules.piece.movement.move.MustTakeMove;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TakeOnlyMovementStrategy implements MovementStrategy {
-
-    private final MovementStrategy wrappedStrategy;
+public class TakeOnlyMovementStrategy extends MovementStrategyDecorator {
 
     public TakeOnlyMovementStrategy(MovementStrategy strategy) {
-        wrappedStrategy = strategy;
+        super(strategy);
     }
 
     @Override

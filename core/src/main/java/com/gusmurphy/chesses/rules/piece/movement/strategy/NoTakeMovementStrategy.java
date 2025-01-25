@@ -7,12 +7,10 @@ import com.gusmurphy.chesses.rules.piece.movement.move.NoTakeMove;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NoTakeMovementStrategy implements MovementStrategy {
-
-    private final MovementStrategy wrappedStrategy;
+public class NoTakeMovementStrategy extends MovementStrategyDecorator {
 
     public NoTakeMovementStrategy(MovementStrategy strategy) {
-        wrappedStrategy = strategy;
+        super(strategy);
     }
 
     @Override

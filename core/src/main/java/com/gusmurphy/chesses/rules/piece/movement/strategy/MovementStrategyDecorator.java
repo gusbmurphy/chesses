@@ -5,18 +5,24 @@ import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
-import java.util.Collections;
 import java.util.List;
 
-public class NullMovementStrategy implements MovementStrategy {
+public abstract class MovementStrategyDecorator implements MovementStrategy {
+
+    protected final MovementStrategy wrappedStrategy;
+
+    MovementStrategyDecorator(MovementStrategy strategy) {
+        wrappedStrategy = strategy;
+    }
 
     @Override
     public List<Move> possibleMovesFrom(Coordinates position) {
-        return Collections.emptyList();
+        return wrappedStrategy.possibleMovesFrom(position);
     }
 
     @Override
     public void onPieceEvent(PieceEvent event, Piece piece) {
+        wrappedStrategy.onPieceEvent(event, piece);
     }
 
 }
