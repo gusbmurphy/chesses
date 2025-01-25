@@ -21,7 +21,7 @@ public class MatchScreen extends BaseScreen {
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
 
-        boardOnScreen = new BoardOnScreen(StartingBoards.demo(), game);
+        boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
     }
 
     @Override

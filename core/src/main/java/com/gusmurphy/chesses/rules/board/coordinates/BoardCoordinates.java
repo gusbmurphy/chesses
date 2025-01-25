@@ -37,6 +37,10 @@ public enum BoardCoordinates {
         return rank;
     }
 
+    public static BoardCoordinates with(File file, Rank rank) {
+        return Arrays.stream(values()).filter(spot -> spot.file == file && spot.rank == rank).findFirst().get();
+    }
+
     public Optional<BoardCoordinates> coordinatesToThe(Direction direction) {
         int shiftedFileOrdinal = file.ordinal() + direction.horizontalValue();
         int shiftedRankOrdinal = rank.ordinal() + direction.verticalValue();
