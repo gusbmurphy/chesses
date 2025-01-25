@@ -12,4 +12,8 @@ public interface Move {
     Optional<Piece> takes();
     boolean mustTake();
 
+    default boolean takeDisallowed() {
+        return false;
+    }
+
 }

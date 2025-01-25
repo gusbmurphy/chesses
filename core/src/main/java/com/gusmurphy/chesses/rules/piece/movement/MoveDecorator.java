@@ -29,6 +29,11 @@ public abstract class MoveDecorator implements Move {
     }
 
     @Override
+    public boolean takeDisallowed() {
+        return wrappedMove.takeDisallowed();
+    }
+
+    @Override
     public boolean mustTake() {
         return wrappedMove.mustTake();
     }

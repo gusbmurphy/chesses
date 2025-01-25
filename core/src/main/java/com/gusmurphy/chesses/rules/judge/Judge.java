@@ -22,38 +22,8 @@ public class Judge {
         this.boardState = boardState;
     }
 
-    private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
-        HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
-        for (Move move : actualMoves) {
-            movesBySpot.put(move.spot(), move);
-        }
-        return new ArrayList<>(movesBySpot.values());
-    }
-
-    private List<Move> getAllLegalMovesFor(PieceMove move) {
-        List<Move> legalMoves = new ArrayList<>();
-
-        Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
-        if (!pieceAtSpot.isPresent()) {
-            legalMoves.add(move);
-            legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
-        } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
-            legalMoves.add(new TakingMove(move.spot(), pieceAtSpot.get()));
-        }
-
-        return legalMoves;
-    }
-
-    private List<Move> getAllLegalMovesContinuingFrom(PieceMove move) {
-        List<Move> legalMoves = new ArrayList<>();
-
-        move.next().map(nextMove ->
-            legalMoves.addAll(
-                getAllLegalMovesFor(new PieceMove(nextMove, move.getMovingPiece()))
-            )
-        );
-
-        return legalMoves;
+    public void subscribeToTurnChange(TurnChangeListener listener) {
+        listeners.add(listener);
     }
 
     public void submitMove(Piece piece, Coordinates spot) {
@@ -66,6 +36,15 @@ public class Judge {
 
             piece.moveTo(spot);
         }
+    }
+
+    public List<PieceMove> getPossibleMoves() {
+        List<PieceMove> pieceMoves = new ArrayList<>();
+        boardState.getAllPieces().forEach(piece -> {
+            List<Move> moves = possibleMovesFor(piece);
+            moves.forEach(move -> pieceMoves.add(new PieceMove(move, piece)));
+        });
+        return pieceMoves;
     }
 
     protected List<Move> possibleMovesFor(Piece piece) {
@@ -83,20 +62,46 @@ public class Judge {
             return true;
         }).collect(Collectors.toList());
 
+        legalMoves = legalMoves
+            .stream()
+            .filter(move -> !move.takeDisallowed() || !move.takes().isPresent())
+            .collect(Collectors.toList());
+
         return Judge.uniqueMovesBySpot(legalMoves);
     }
 
-    public List<PieceMove> getPossibleMoves() {
-        List<PieceMove> pieceMoves = new ArrayList<>();
-        boardState.getAllPieces().forEach(piece -> {
-            List<Move> moves = possibleMovesFor(piece);
-            moves.forEach(move -> pieceMoves.add(new PieceMove(move, piece)));
-        });
-        return pieceMoves;
+    private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
+        HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
+        for (Move move : actualMoves) {
+            movesBySpot.put(move.spot(), move);
+        }
+        return new ArrayList<>(movesBySpot.values());
     }
 
-    public void subscribeToTurnChange(TurnChangeListener listener) {
-        listeners.add(listener);
+    private List<Move> getAllLegalMovesFor(PieceMove move) {
+        List<Move> legalMoves = new ArrayList<>();
+
+        Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
+        if (!pieceAtSpot.isPresent()) {
+            legalMoves.add(move);
+            legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
+        } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
+            legalMoves.add(new TakingMove(move, pieceAtSpot.get()));
+        }
+
+        return legalMoves;
+    }
+
+    private List<Move> getAllLegalMovesContinuingFrom(PieceMove move) {
+        List<Move> legalMoves = new ArrayList<>();
+
+        move.next().map(nextMove ->
+            legalMoves.addAll(
+                getAllLegalMovesFor(new PieceMove(nextMove, move.getMovingPiece()))
+            )
+        );
+
+        return legalMoves;
     }
 
 }
