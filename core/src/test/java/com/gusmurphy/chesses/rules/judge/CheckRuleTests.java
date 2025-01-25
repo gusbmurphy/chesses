@@ -31,6 +31,20 @@ public class CheckRuleTests {
     }
 
     @Test
+    void aPieceCanPutTheOpposingColorInCheck() {
+        Piece king = DefaultPieces.king(WHITE, C6);
+        Piece rook = DefaultPieces.rook(BLACK, D4);
+
+        BoardState boardState = new BoardState(king, rook);
+        Judge judge = new Judge(boardState);
+        judge = new CheckRule(judge);
+        List<PieceMove> movesForRook = judge
+            .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
+
+        assertTrue(movesForRook.stream().anyMatch(move -> move.spot() == D6));
+    }
+
+    @Test
     void theOnlyPossibleMoveMightBeForAnotherPieceToPreventCheck() {
         Piece king = DefaultPieces.king(WHITE, H1);
         Piece pawnA = DefaultPieces.pawn(WHITE, G1);

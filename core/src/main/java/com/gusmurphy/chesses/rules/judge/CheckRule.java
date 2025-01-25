@@ -24,7 +24,9 @@ public class CheckRule extends JudgeDecorator {
             futureJudge.submitMove(futurePiece, move.spot());
             List<PieceMove> possibleMovesAfter = futureJudge.getPossibleMoves();
             return possibleMovesAfter.stream().noneMatch(futureMove ->
-                    futureMove.takes().isPresent() && futureMove.takes().get().isCheckable()
+                    futureMove.takes().isPresent() &&
+                        futureMove.takes().get().isCheckable() &&
+                        futureMove.takes().get().color() == move.getMovingPiece().color()
             );
         }).collect(Collectors.toList());
     }
