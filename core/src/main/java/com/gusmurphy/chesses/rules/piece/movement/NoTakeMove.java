@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement;
 
 public class NoTakeMove extends MoveDecorator {
 
-    NoTakeMove(Move move) {
+    public NoTakeMove(Move move) {
         super(move);
     }
 

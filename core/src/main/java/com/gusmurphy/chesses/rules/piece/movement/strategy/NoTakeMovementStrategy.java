@@ -1,15 +1,17 @@
-package com.gusmurphy.chesses.rules.piece.movement;
+package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.piece.movement.Move;
+import com.gusmurphy.chesses.rules.piece.movement.NoTakeMove;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TakeOnlyMovementStrategy implements MovementStrategy {
+public class NoTakeMovementStrategy implements MovementStrategy {
 
     private final MovementStrategy wrappedStrategy;
 
-    public TakeOnlyMovementStrategy(MovementStrategy strategy) {
+    public NoTakeMovementStrategy(MovementStrategy strategy) {
         wrappedStrategy = strategy;
     }
 
@@ -18,8 +20,7 @@ public class TakeOnlyMovementStrategy implements MovementStrategy {
         return wrappedStrategy
             .possibleMovesFrom(position)
             .stream()
-            .map(MustTakeMove::new)
+            .map(NoTakeMove::new)
             .collect(Collectors.toList());
     }
-
 }

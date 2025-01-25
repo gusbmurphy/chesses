@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.piece.movement;
+package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.piece.Piece;

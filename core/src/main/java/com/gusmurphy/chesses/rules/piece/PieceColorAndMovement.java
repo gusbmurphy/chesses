@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece;
 
-import com.gusmurphy.chesses.rules.piece.movement.MovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.NullMovementStrategy;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.NullMovementStrategy;
 import com.gusmurphy.chesses.rules.PlayerColor;
 
 // TODO: This can't be like this...

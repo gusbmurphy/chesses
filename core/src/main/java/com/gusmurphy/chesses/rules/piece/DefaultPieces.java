@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.piece;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.piece.movement.*;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 
 import java.util.Arrays;
 import java.util.Collections;

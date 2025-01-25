@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.*;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
