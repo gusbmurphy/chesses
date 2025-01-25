@@ -31,8 +31,4 @@ public class BoardState {
         return piecesOnBoard;
     }
 
-    public boolean spotIsFree(BoardCoordinates spot) {
-        return piecesOnBoard.stream().noneMatch(piece -> piece.getCoordinates() == spot);
-    }
-
 }
