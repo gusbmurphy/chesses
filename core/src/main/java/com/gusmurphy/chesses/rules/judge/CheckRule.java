@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class CheckRule extends JudgeDecorator {
 
-    CheckRule(Judge judge) {
+    public CheckRule(Judge judge) {
         super(judge);
     }
 
