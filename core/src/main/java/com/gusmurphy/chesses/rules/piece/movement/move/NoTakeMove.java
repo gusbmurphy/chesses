@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.piece.movement;
+package com.gusmurphy.chesses.rules.piece.movement.move;
 
 public class NoTakeMove extends MoveDecorator {
 

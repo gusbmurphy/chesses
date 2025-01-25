@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.piece;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.PieceAwareMovementStrategy;
 import com.gusmurphy.chesses.rules.PlayerColor;

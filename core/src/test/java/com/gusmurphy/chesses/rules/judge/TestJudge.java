@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 
 import java.util.Collections;
 import java.util.List;

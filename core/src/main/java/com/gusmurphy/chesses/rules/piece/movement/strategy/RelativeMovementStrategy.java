@@ -2,8 +2,8 @@ package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.rules.piece.movement.Move;
-import com.gusmurphy.chesses.rules.piece.movement.StaticMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 
 import java.util.ArrayList;
 import java.util.List;
