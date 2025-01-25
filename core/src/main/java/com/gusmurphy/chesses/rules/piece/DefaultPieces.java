@@ -10,7 +10,7 @@ import java.util.Collections;
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 import static com.gusmurphy.chesses.rules.piece.PieceType.*;
 
-// TODO: Would probably be good to have a builder for these...
+// TODO: Would probably be good to have a builder for these, and some sort of "flyweight" implementation...
 public class DefaultPieces {
 
     public static Piece king(PlayerColor color, Coordinates position) {
