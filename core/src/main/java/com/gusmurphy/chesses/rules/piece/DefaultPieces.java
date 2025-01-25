@@ -5,7 +5,9 @@ import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.movement.*;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 import static com.gusmurphy.chesses.rules.piece.PieceType.*;
@@ -70,9 +72,22 @@ public class DefaultPieces {
     public static Piece pawn(PlayerColor color, Coordinates position) {
         Direction movementDirection = color == PlayerColor.WHITE ? N : S;
 
+        MovementStrategy firstMove = new TurnBasedMovementStrategy(
+            1, new LinearMovementStrategy(Collections.singletonList(movementDirection), 2)
+        );
+        MovementStrategy regular = new LinearMovementStrategy(
+            Collections.singletonList(movementDirection), 1
+        );
+
+        List<Direction> takingDirections = color == PlayerColor.WHITE ? Arrays.asList(NE, NW) : Arrays.asList(SE, SW);
+        MovementStrategy takingMovement = new TakeOnlyMovementStrategy(
+            new LinearMovementStrategy(takingDirections, 1)
+        );
+
         MovementStrategy movementStrategy = new CompositeMovementStrategy(
-            new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(movementDirection), 2)),
-            new LinearMovementStrategy(Collections.singletonList(movementDirection), 1)
+            new NoTakeMovementStrategy(firstMove),
+            new NoTakeMovementStrategy(regular),
+            new TakeOnlyMovementStrategy(takingMovement)
         );
 
         return new Piece(
