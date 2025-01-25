@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.Move;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
@@ -22,7 +22,7 @@ public class Judge {
     }
 
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
-        HashMap<BoardCoordinates, Move> movesBySpot = new HashMap<>();
+        HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
         for (Move move : actualMoves) {
             movesBySpot.put(move.spot(), move);
         }
@@ -48,7 +48,7 @@ public class Judge {
         return legalMoves;
     }
 
-    public void submitMove(Piece piece, BoardCoordinates spot) {
+    public void submitMove(Piece piece, Coordinates spot) {
         if (possibleMovesFor(piece).stream().anyMatch(move -> move.spot() == spot)) {
             Optional<Piece> pieceAtSpot = boardState.getPieceAt(spot);
             pieceAtSpot.ifPresent(otherPiece -> {

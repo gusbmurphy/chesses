@@ -6,9 +6,9 @@ public class BoardCoordinatesXyAdapter {
 
     private final int x;
     private final int y;
-    private final BoardCoordinates coordinates;
+    private final Coordinates coordinates;
 
-    public BoardCoordinatesXyAdapter(BoardCoordinates coordinates) {
+    public BoardCoordinatesXyAdapter(Coordinates coordinates) {
         this.x = coordinates.file.ordinal();
         this.y = coordinates.rank.ordinal();
         this.coordinates = coordinates;
@@ -18,7 +18,7 @@ public class BoardCoordinatesXyAdapter {
         this.x = x;
         this.y = y;
 
-        coordinates = Arrays.stream(BoardCoordinates.values())
+        coordinates = Arrays.stream(Coordinates.values())
             .filter(c -> c.file.ordinal() == x)
             .filter(c -> c.rank.ordinal() == y)
             .findFirst()
@@ -33,7 +33,7 @@ public class BoardCoordinatesXyAdapter {
         return y;
     }
 
-    public BoardCoordinates coordinates() {
+    public Coordinates coordinates() {
         return coordinates;
     }
 

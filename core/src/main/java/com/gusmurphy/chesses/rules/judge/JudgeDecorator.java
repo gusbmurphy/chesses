@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 
@@ -16,7 +16,7 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
-    public void submitMove(Piece piece, BoardCoordinates spot) {
+    public void submitMove(Piece piece, Coordinates spot) {
         wrappedJudge.submitMove(piece, spot);
     }
 

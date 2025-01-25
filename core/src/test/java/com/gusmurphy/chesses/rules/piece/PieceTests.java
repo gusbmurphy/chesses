@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PieceTests {

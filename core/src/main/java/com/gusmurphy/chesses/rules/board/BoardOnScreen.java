@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
 import com.gusmurphy.chesses.rules.judge.CheckRule;
 import com.gusmurphy.chesses.rules.judge.Judge;
@@ -32,7 +32,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     private final Texture darkSquareTexture = new Texture("dark_square.png");
     private final Texture lightSquareTexture = new Texture("light_square.png");
     private final Rectangle bounds = new Rectangle();
-    private final ArrayList<BoardCoordinates> highlightedSpaces = new ArrayList<>();
+    private final ArrayList<Coordinates> highlightedSpaces = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
     private final Map<Piece, PieceOnScreen> piecesOnScreen = new ConcurrentHashMap<>();
@@ -86,7 +86,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
-    public Optional<BoardCoordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
+    public Optional<Coordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
         if (bounds.contains(screenPosition)) {
             float xWithinBoard = screenPosition.x - bottomLeftX();
             float yWithinBoard = screenPosition.y - bottomLeftY();
@@ -104,7 +104,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     @Override
     public void onPieceSelected(Piece piece) {
         if (selectedPiece == null) {
-            List<BoardCoordinates> possibleMoves = judge
+            List<Coordinates> possibleMoves = judge
                 .getPossibleMoves()
                 .stream()
                 .filter(move -> move.getMovingPiece() == piece)
@@ -120,7 +120,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     @Override
     public void onPieceReleased(Piece piece, Vector2 screenPosition) {
         if (selectedPiece == piece) {
-            Optional<BoardCoordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
+            Optional<Coordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
             releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
             selectedPiece = null;
             PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
@@ -128,7 +128,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
-    public Vector2 getScreenPositionForCenterOf(BoardCoordinates coordinates) {
+    public Vector2 getScreenPositionForCenterOf(Coordinates coordinates) {
         BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(coordinates);
 
         float worldWidth = viewport.getWorldWidth();
@@ -165,7 +165,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     private void drawHighlightedSpaces() {
-        for (BoardCoordinates space : highlightedSpaces) {
+        for (Coordinates space : highlightedSpaces) {
             Vector2 center = getScreenPositionForCenterOf(space);
             float xPosition = center.x - SQUARE_SIZE / 2;
             float yPosition = center.y - SQUARE_SIZE / 2;
@@ -177,7 +177,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
-    private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, BoardCoordinates releaseSpot) {
+    private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, Coordinates releaseSpot) {
         if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.spot() == releaseSpot)) {
             judge.submitMove(piece, releaseSpot);
             highlightedSpaces.clear();

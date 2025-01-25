@@ -1,19 +1,19 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
 public class StaticMove implements Move {
-    private final BoardCoordinates spot;
+    private final Coordinates spot;
 
-    public StaticMove(BoardCoordinates spot) {
+    public StaticMove(Coordinates spot) {
         this.spot = spot;
     }
 
     @Override
-    public BoardCoordinates spot() {
+    public Coordinates spot() {
         return spot;
     }
 

@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.MovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.PieceAwareMovementStrategy;
@@ -16,12 +16,12 @@ public class Piece {
 
     private final PlayerColor color;
     private final MovementStrategy movementStrategy;
-    private BoardCoordinates coordinates;
+    private Coordinates coordinates;
     private final PieceType type;
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
 
     // TODO: These constructors are ugly
-    public Piece(PieceColorAndMovement pieceColorAndMovement, BoardCoordinates coordinates, PieceType type) {
+    public Piece(PieceColorAndMovement pieceColorAndMovement, Coordinates coordinates, PieceType type) {
         this.color = pieceColorAndMovement.color();
         this.movementStrategy = pieceColorAndMovement.movementStrategy();
         this.coordinates = coordinates;
@@ -35,7 +35,7 @@ public class Piece {
     public Piece(
         PlayerColor color,
         MovementStrategy movementStrategy,
-        BoardCoordinates coordinates,
+        Coordinates coordinates,
         PieceType type
     ) {
         this.color = color;
@@ -48,7 +48,7 @@ public class Piece {
         }
     }
 
-    public Piece(MovementStrategy strategy, BoardCoordinates coordinates) {
+    public Piece(MovementStrategy strategy, Coordinates coordinates) {
         this(
             new PieceColorAndMovement(PlayerColor.WHITE, strategy),
             coordinates,
@@ -79,7 +79,7 @@ public class Piece {
             .collect(Collectors.toList());
     }
 
-    public BoardCoordinates getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
@@ -91,7 +91,7 @@ public class Piece {
         return type;
     }
 
-    public void moveTo(BoardCoordinates coordinates) {
+    public void moveTo(Coordinates coordinates) {
         this.coordinates = coordinates;
         eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.MOVED, this));
     }

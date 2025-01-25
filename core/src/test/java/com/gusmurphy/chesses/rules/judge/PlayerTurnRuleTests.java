@@ -3,7 +3,6 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.Move;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.StaticMove;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTurnRuleTests {

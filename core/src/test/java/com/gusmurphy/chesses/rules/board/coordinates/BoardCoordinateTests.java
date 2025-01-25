@@ -7,17 +7,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.D4;
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.E5;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.D4;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.E5;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 
 public class BoardCoordinateTests {
 
     @ParameterizedTest
     @MethodSource("adjacentDirections")
-    void directionFromOneSpotToTheOtherIsCorrectlyDetermined(BoardCoordinates spot, Direction expected) {
+    void directionFromOneSpotToTheOtherIsCorrectlyDetermined(Coordinates spot, Direction expected) {
         assertEquals(D4.directionTo(spot), expected);
     }
 

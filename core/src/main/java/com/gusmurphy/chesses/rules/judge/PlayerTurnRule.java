@@ -1,11 +1,10 @@
 package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.PieceMove;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ public class PlayerTurnRule extends JudgeDecorator {
     }
 
     @Override
-    public void submitMove(Piece piece, BoardCoordinates spot) {
+    public void submitMove(Piece piece, Coordinates spot) {
         if (piece.color() == currentTurnColor) {
             super.submitMove(piece, spot);
             currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;

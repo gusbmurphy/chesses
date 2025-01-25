@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.Direction;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.movement.*;
 
@@ -13,7 +13,7 @@ import static com.gusmurphy.chesses.rules.piece.PieceType.*;
 // TODO: Would probably be good to have a builder for these...
 public class DefaultPieces {
 
-    public static Piece king(PlayerColor color, BoardCoordinates position) {
+    public static Piece king(PlayerColor color, Coordinates position) {
         return new Piece(
             color,
             new LinearMovementStrategy(every(), 1),
@@ -22,7 +22,7 @@ public class DefaultPieces {
         );
     }
 
-    public static Piece queen(PlayerColor color, BoardCoordinates position) {
+    public static Piece queen(PlayerColor color, Coordinates position) {
         return new Piece(
             color,
             new LinearMovementStrategy(every()),
@@ -31,7 +31,7 @@ public class DefaultPieces {
         );
     }
 
-    public static Piece rook(PlayerColor color, BoardCoordinates position) {
+    public static Piece rook(PlayerColor color, Coordinates position) {
         return new Piece(
             color,
             new LinearMovementStrategy(N, E, S, W),
@@ -40,7 +40,7 @@ public class DefaultPieces {
         );
     }
 
-    public static Piece bishop(PlayerColor color, BoardCoordinates position) {
+    public static Piece bishop(PlayerColor color, Coordinates position) {
         return new Piece(
             color,
             new LinearMovementStrategy(NE, SE, SW, NW),
@@ -49,7 +49,7 @@ public class DefaultPieces {
         );
     }
 
-    public static Piece knight(PlayerColor color, BoardCoordinates position) {
+    public static Piece knight(PlayerColor color, Coordinates position) {
         return new Piece(
             color,
             new RelativeMovementStrategy(
@@ -67,7 +67,7 @@ public class DefaultPieces {
         );
     }
 
-    public static Piece pawn(PlayerColor color, BoardCoordinates position) {
+    public static Piece pawn(PlayerColor color, Coordinates position) {
         Direction movementDirection = color == PlayerColor.WHITE ? N : S;
 
         MovementStrategy movementStrategy = new CompositeMovementStrategy(

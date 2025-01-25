@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.board;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
@@ -27,11 +27,11 @@ public class BoardState {
         piecesOnBoard.add(piece);
     }
 
-    public Optional<Piece> getPieceAt(BoardCoordinates coordinates) {
+    public Optional<Piece> getPieceAt(Coordinates coordinates) {
         return piecesOnBoard.stream().filter(piece -> piece.getCoordinates() == coordinates).findFirst();
     }
 
-    public Optional<Piece> removePieceAt(BoardCoordinates coordinates) {
+    public Optional<Piece> removePieceAt(Coordinates coordinates) {
         Optional<Piece> piece = getPieceAt(coordinates);
         piece.ifPresent(piecesOnBoard::remove);
         return piece;

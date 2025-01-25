@@ -3,8 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.Direction;
-import com.gusmurphy.chesses.rules.board.StartingBoards;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.*;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +43,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("okayMoves")
-    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(BoardCoordinates spot) {
+    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(Coordinates spot) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
         Piece piece = new Piece(pieceColorAndMovement, D4, PieceType.KING);
@@ -96,7 +95,7 @@ public class JudgeTests {
     @ParameterizedTest
     @MethodSource("blockedMoves")
     void aPieceCannotMovePastAnotherPieceOfTheSameColor(
-        BoardCoordinates otherPiecePosition, BoardCoordinates spot, PlayerColor color
+        Coordinates otherPiecePosition, Coordinates spot, PlayerColor color
     ) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
@@ -124,7 +123,7 @@ public class JudgeTests {
     @ParameterizedTest
     @MethodSource("singleSpotMoves")
     void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
-        Direction direction, BoardCoordinates expected
+        Direction direction, Coordinates expected
     ) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         Piece piece = new Piece(linear, D4);
@@ -153,7 +152,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("movesOffTheBoard")
-    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(BoardCoordinates from, Direction direction) {
+    void anEmptyListIsReturnedIfTheOnlyMoveIsOffTheBoard(Coordinates from, Direction direction) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(direction), 1);
         Piece piece = new Piece(linear, from);
 

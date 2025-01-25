@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.Direction;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class LinearMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+    public List<Move> possibleMovesFrom(Coordinates position) {
         ArrayList<Move> moves = new ArrayList<>();
 
         for (Direction direction : directions) {

@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
 
 import java.util.ArrayList;
@@ -22,16 +22,16 @@ public class RelativeMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+    public List<Move> possibleMovesFrom(Coordinates position) {
         List<Move> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
-            Optional<BoardCoordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
+            Optional<Coordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
             moveSpot.ifPresent(spot -> moves.add(new StaticMove(spot)));
         }
         return moves;
     }
 
-    private static Optional<BoardCoordinates> getPositionAtVectorFromOther(MovementVector vector, BoardCoordinates position) {
+    private static Optional<Coordinates> getPositionAtVectorFromOther(MovementVector vector, Coordinates position) {
         BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(position);
 
         try {

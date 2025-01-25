@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckRuleTests {

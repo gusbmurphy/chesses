@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement;
 
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
@@ -19,7 +19,7 @@ public class CompositeMovementStrategy extends PieceAwareMovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(BoardCoordinates position) {
+    public List<Move> possibleMovesFrom(Coordinates position) {
         List<Move> moves = new ArrayList<>();
         strategies.forEach(strategy -> moves.addAll(strategy.possibleMovesFrom(position)));
         return moves.stream().distinct().collect(Collectors.toList());

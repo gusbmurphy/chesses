@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import static com.gusmurphy.chesses.rules.board.Rank.*;
 
-public enum BoardCoordinates {
+public enum Coordinates {
 
     A1(File.A, ONE), A2(File.A, TWO), A3(File.A, THREE), A4(File.A, FOUR), A5(File.A, FIVE), A6(File.A, SIX), A7(File.A, SEVEN), A8(File.A, EIGHT),
     B1(File.B, ONE), B2(File.B, TWO), B3(File.B, THREE), B4(File.B, FOUR), B5(File.B, FIVE), B6(File.B, SIX), B7(File.B, SEVEN), B8(File.B, EIGHT),
@@ -23,7 +23,7 @@ public enum BoardCoordinates {
     final File file;
     final Rank rank;
 
-    BoardCoordinates(File file, Rank rank) {
+    Coordinates(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -32,21 +32,21 @@ public enum BoardCoordinates {
         return file;
     }
 
-    public static BoardCoordinates with(File file, Rank rank) {
+    public static Coordinates with(File file, Rank rank) {
         return Arrays.stream(values()).filter(spot -> spot.file == file && spot.rank == rank).findFirst().get();
     }
 
-    public Optional<BoardCoordinates> coordinatesToThe(Direction direction) {
+    public Optional<Coordinates> coordinatesToThe(Direction direction) {
         int shiftedFileOrdinal = file.ordinal() + direction.horizontalValue();
         int shiftedRankOrdinal = rank.ordinal() + direction.verticalValue();
 
         return Arrays
-            .stream(BoardCoordinates.values())
+            .stream(Coordinates.values())
             .filter(c -> c.file.ordinal() == shiftedFileOrdinal && c.rank.ordinal() == shiftedRankOrdinal)
             .findFirst();
     }
 
-    public Direction directionTo(BoardCoordinates move) {
+    public Direction directionTo(Coordinates move) {
         Direction directionOfMove;
 
         if (file == move.file) {

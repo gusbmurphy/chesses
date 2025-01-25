@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
@@ -14,7 +14,7 @@ public abstract class MoveDecorator implements Move {
     }
 
     @Override
-    public BoardCoordinates spot() {
+    public Coordinates spot() {
         return wrappedMove.spot();
     }
 

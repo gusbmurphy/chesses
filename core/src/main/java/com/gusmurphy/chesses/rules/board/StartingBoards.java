@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.board;
 
-import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
+import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
-import static com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates.*;
+import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 
 public class StartingBoards {
 
@@ -16,8 +16,8 @@ public class StartingBoards {
         List<Piece> pieces = new ArrayList<>();
 
         for (File file : File.values()) {
-            pieces.add(DefaultPieces.pawn(WHITE, BoardCoordinates.with(file, Rank.TWO)));
-            pieces.add(DefaultPieces.pawn(BLACK, BoardCoordinates.with(file, Rank.SEVEN)));
+            pieces.add(DefaultPieces.pawn(WHITE, Coordinates.with(file, Rank.TWO)));
+            pieces.add(DefaultPieces.pawn(BLACK, Coordinates.with(file, Rank.SEVEN)));
         }
 
         pieces.add(DefaultPieces.rook(WHITE, A1));
