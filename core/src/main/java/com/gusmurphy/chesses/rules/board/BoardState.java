@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BoardState {
 
@@ -11,6 +12,15 @@ public class BoardState {
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
+    }
+
+    public BoardState(BoardState other) {
+        piecesOnBoard.addAll(
+            other.piecesOnBoard
+                .stream()
+                .map(Piece::new)
+                .collect(Collectors.toList())
+        );
     }
 
     public void place(Piece piece) {

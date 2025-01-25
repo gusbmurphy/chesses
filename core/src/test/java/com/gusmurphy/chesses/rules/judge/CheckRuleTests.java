@@ -30,4 +30,24 @@ public class CheckRuleTests {
         assertFalse(movesForKing.stream().anyMatch(move -> move.spot().file() == File.D));
     }
 
+    @Test
+    void theOnlyPossibleMoveMightBeForAnotherPieceToPreventCheck() {
+        Piece king = DefaultPieces.king(WHITE, H1);
+        Piece pawnA = DefaultPieces.pawn(WHITE, G1);
+        Piece pawnB = DefaultPieces.pawn(WHITE, G2);
+        Piece savingRook = DefaultPieces.rook(WHITE, C4);
+        Piece attackingRook  = DefaultPieces.rook(BLACK, H6);
+
+
+        BoardState boardState = new BoardState(king, pawnA, pawnB, savingRook, attackingRook);
+        Judge judge = new Judge(boardState);
+        judge = new CheckRule(judge);
+        judge = new PlayerTurnRule(judge, WHITE);
+        List<PieceMove> moves = judge.getPossibleMoves();
+
+        assertEquals(1, moves.size());
+        assertEquals(savingRook, moves.get(0).getMovingPiece());
+        assertEquals(H4, moves.get(0).spot());
+    }
+
 }

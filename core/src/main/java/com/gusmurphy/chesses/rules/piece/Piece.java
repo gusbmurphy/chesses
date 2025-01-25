@@ -56,6 +56,17 @@ public class Piece {
         );
     }
 
+    public Piece(Piece other) {
+        color = other.color;
+        movementStrategy = other.movementStrategy;
+        coordinates = other.coordinates;
+        type = other.type;
+    }
+
+    public boolean isCheckable() {
+        return type == PieceType.KING;
+    }
+
     public void subscribeToEvents(PieceEventListener listener) {
         eventListeners.add(listener);
     }
