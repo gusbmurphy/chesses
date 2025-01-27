@@ -47,4 +47,18 @@ public class StartingBoards {
         return boardState;
     }
 
+    public static BoardState rookRoller() {
+        List<Piece> pieces = new ArrayList<>();
+
+        pieces.add(DefaultPieces.king(WHITE, B1));
+        pieces.add(DefaultPieces.king(BLACK, F8));
+        pieces.add(DefaultPieces.rook(WHITE, B7));
+        pieces.add(DefaultPieces.rook(WHITE, C6));
+
+        BoardState boardState = new BoardState();
+        pieces.forEach(boardState::place);
+
+        return boardState;
+    }
+
 }
