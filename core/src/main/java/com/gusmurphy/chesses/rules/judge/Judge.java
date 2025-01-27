@@ -75,6 +75,10 @@ public class Judge {
         return Judge.uniqueMovesBySpot(legalMoves);
     }
 
+    protected void notifyGameOverListeners(GameOverEvent event) {
+        gameOverListeners.forEach(listener -> listener.onGameOverEvent(event));
+    }
+
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
         HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
         for (Move move : actualMoves) {

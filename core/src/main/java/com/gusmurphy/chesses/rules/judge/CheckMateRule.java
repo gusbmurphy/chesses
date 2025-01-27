@@ -18,9 +18,7 @@ public class CheckMateRule extends JudgeDecorator {
 
         List<PieceMove> movesNow = getPossibleMoves();
         if (movesNow.isEmpty()) {
-            super.wrappedJudge.gameOverListeners.forEach(
-                listener -> listener.onGameOverEvent(new GameOverEvent(GameOverEventType.CHECKMATE, piece.color()))
-            );
+            notifyGameOverListeners(new GameOverEvent(GameOverEventType.CHECKMATE, piece.color()));
         }
     }
 

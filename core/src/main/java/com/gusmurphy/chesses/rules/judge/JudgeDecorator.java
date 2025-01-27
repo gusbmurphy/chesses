@@ -35,4 +35,9 @@ public abstract class JudgeDecorator extends Judge {
         wrappedJudge.subscribeToGameOver(listener);
     }
 
+    @Override
+    protected void notifyGameOverListeners(GameOverEvent event) {
+        wrappedJudge.notifyGameOverListeners(event);
+    }
+
 }
