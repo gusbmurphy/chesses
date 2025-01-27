@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 public class Judge {
 
-    protected final List<TurnChangeListener> listeners = new ArrayList<>();
+    protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
+    protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
     protected final BoardState boardState;
 
     public Judge(BoardState boardState) {
@@ -23,7 +24,11 @@ public class Judge {
     }
 
     public void subscribeToTurnChange(TurnChangeListener listener) {
-        listeners.add(listener);
+        turnChangeListeners.add(listener);
+    }
+
+    public void subscribeToGameOver(GameOverListener listener) {
+        gameOverListeners.add(listener);
     }
 
     public void submitMove(Piece piece, Coordinates spot) {

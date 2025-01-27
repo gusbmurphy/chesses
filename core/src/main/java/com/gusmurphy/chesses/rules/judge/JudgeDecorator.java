@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class JudgeDecorator extends Judge {
 
-    private final Judge wrappedJudge;
+    protected final Judge wrappedJudge;
 
     JudgeDecorator(Judge judge) {
         super(judge.boardState);
@@ -24,4 +24,15 @@ public abstract class JudgeDecorator extends Judge {
     public List<PieceMove> getPossibleMoves() {
         return wrappedJudge.getPossibleMoves();
     }
+
+    @Override
+    public void subscribeToTurnChange(TurnChangeListener listener) {
+        wrappedJudge.subscribeToTurnChange(listener);
+    }
+
+    @Override
+    public void subscribeToGameOver(GameOverListener listener) {
+        wrappedJudge.subscribeToGameOver(listener);
+    }
+
 }
