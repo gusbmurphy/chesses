@@ -1,9 +1,16 @@
 package com.gusmurphy.chesses;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -25,6 +32,10 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private boolean checkmate = false;
 
+    private final Stage stage;
+    private final Label checkmateLabel;
+    private final Skin skin;
+
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
@@ -34,12 +45,32 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
         boardOnScreen = new BoardOnScreen(StartingBoards.rookRoller(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
+
+        skin = new Skin(
+            Gdx.files.internal("uiskin.json"),
+            new TextureAtlas(
+                Gdx.files.internal("uiskin.atlas")
+            )
+        );
+
+        stage = new Stage();
+        checkmateLabel = new Label("Checkmate.", skin);
+        checkmateLabel.setVisible(false);
+        stage.addActor(checkmateLabel);
     }
 
     @Override
     public void render(float delta) {
         boardOnScreen.render();
         drawScreen();
+
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
     }
 
     private void drawScreen() {
@@ -51,12 +82,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         boardOnScreen.draw();
 
         if (checkmate) {
-            fontViewport.apply();
-            spriteBatch.setProjectionMatrix(fontViewport.getCamera().combined);
-            spriteBatch.begin();
-            font.setColor(Color.BLACK);
-            font.draw(spriteBatch, "Checkmate!", 0, 0);
-            spriteBatch.end();
+            checkmateLabel.setVisible(true);
         }
     }
 
