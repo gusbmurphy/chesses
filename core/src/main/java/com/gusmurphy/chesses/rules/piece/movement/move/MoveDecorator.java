@@ -38,4 +38,8 @@ public abstract class MoveDecorator implements Move {
         return wrappedMove.mustTake();
     }
 
+    @Override
+    public Optional<PieceMove> linkedMove() {
+        return wrappedMove.linkedMove();
+    }
 }

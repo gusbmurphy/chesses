@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -418,6 +419,24 @@ public class JudgeTests {
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
             Arguments.of(PlayerColor.BLACK, PlayerColor.WHITE)
         );
+    }
+
+    @Test
+    void aMoveCanMoveAnotherPiece() {
+        MovementStrategy base = new LinearMovementStrategy(Collections.singletonList(N), 1);
+        Piece otherPiece = new Piece(new NullMovementStrategy(), B2);
+        MovementStrategy linkedStrategy = new LinkedMovementStrategy(
+            base,
+            new PieceMove(new StaticMove(D5), otherPiece)
+        );
+
+        Piece targetPiece = new Piece(linkedStrategy, B3);
+        Judge judge = new Judge(new BoardState(otherPiece, targetPiece));
+
+        judge.submitMove(targetPiece, B4);
+
+        assertEquals(targetPiece.getCoordinates(), B4);
+        assertEquals(otherPiece.getCoordinates(), D5);
     }
 
 }

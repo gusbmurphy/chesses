@@ -32,7 +32,7 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates spot) {
-        if (possibleMovesFor(piece).stream().anyMatch(move -> move.spot() == spot)) {
+        possibleMovesFor(piece).stream().filter(move -> move.spot() == spot).findFirst().ifPresent(move -> {
             Optional<Piece> pieceAtSpot = boardState.getPieceAt(spot);
             pieceAtSpot.ifPresent(otherPiece -> {
                 otherPiece.take();
@@ -40,7 +40,11 @@ public class Judge {
             });
 
             piece.moveTo(spot);
-        }
+
+            move.linkedMove().ifPresent(linkedMove -> {
+                linkedMove.getMovingPiece().moveTo(linkedMove.spot());
+            });
+        });
     }
 
     public List<PieceMove> getPossibleMoves() {

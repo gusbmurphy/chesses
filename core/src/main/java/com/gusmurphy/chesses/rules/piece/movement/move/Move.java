@@ -16,4 +16,8 @@ public interface Move {
         return false;
     }
 
+    default Optional<PieceMove> linkedMove() {
+        return Optional.empty();
+    }
+
 }
