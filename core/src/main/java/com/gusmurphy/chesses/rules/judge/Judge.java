@@ -32,22 +32,24 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates spot) {
-        getLegalMove(piece, spot).ifPresent(move -> {
-            makeLegalMove(piece, move);
-        });
+        getLegalMove(piece, spot).ifPresent(this::makeLegalMove);
     }
 
-    private Optional<Move> getLegalMove(Piece piece, Coordinates spot) {
-        return possibleMovesFor(piece).stream().filter(move -> move.spot() == spot).findFirst();
+    private Optional<PieceMove> getLegalMove(Piece piece, Coordinates spot) {
+        return possibleMovesFor(piece)
+            .stream()
+            .filter(move -> move.spot() == spot)
+            .map(move -> new PieceMove(move, piece))
+            .findFirst();
     }
 
-    private void makeLegalMove(Piece piece, Move move) {
+    private void makeLegalMove(PieceMove move) {
         move.takes().ifPresent(otherPiece -> {
             otherPiece.take();
             boardState.removePieceAt(move.spot());
         });
 
-        piece.moveTo(move.spot());
+        move.getMovingPiece().moveTo(move.spot());
 
         move.linkedMove().ifPresent(linkedMove -> {
             linkedMove.getMovingPiece().moveTo(linkedMove.spot());
