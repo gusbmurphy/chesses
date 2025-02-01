@@ -53,17 +53,18 @@ public class DefaultPieceFactory {
 
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
         Piece leftRook = getLeftRook(color);
-        return new LinkedMovementStrategy(
-            new RelativeMovementStrategy(-2, 0),
-            new PieceMove(new StaticMove(Coordinates.with(File.D, rank)), leftRook)
-        );
+        return getLinkedMovementStrategy(-2, File.D, rank, leftRook);
     }
 
     private MovementStrategy createRightCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rightRook = getRightRook(color);
+        return getLinkedMovementStrategy(2, File.F, rank, rightRook);
+    }
+
+    private static LinkedMovementStrategy getLinkedMovementStrategy(int x, File f, Rank rank, Piece rook) {
         return new LinkedMovementStrategy(
-            new RelativeMovementStrategy(2, 0),
-            new PieceMove(new StaticMove(Coordinates.with(File.F, rank)), rightRook)
+            new RelativeMovementStrategy(x, 0),
+            new PieceMove(new StaticMove(Coordinates.with(f, rank)), rook)
         );
     }
 
