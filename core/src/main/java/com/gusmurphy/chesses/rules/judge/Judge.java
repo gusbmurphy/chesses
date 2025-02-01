@@ -33,18 +33,17 @@ public class Judge {
 
     public void submitMove(Piece piece, Coordinates spot) {
         possibleMovesFor(piece).stream().filter(move -> move.spot() == spot).findFirst().ifPresent(move -> {
-            makeLegalMove(piece, spot, move);
+            makeLegalMove(piece, move);
         });
     }
 
-    private void makeLegalMove(Piece piece, Coordinates spot, Move move) {
-        Optional<Piece> pieceAtSpot = boardState.getPieceAt(spot);
-        pieceAtSpot.ifPresent(otherPiece -> {
+    private void makeLegalMove(Piece piece, Move move) {
+        move.takes().ifPresent(otherPiece -> {
             otherPiece.take();
-            boardState.removePieceAt(spot);
+            boardState.removePieceAt(move.spot());
         });
 
-        piece.moveTo(spot);
+        piece.moveTo(move.spot());
 
         move.linkedMove().ifPresent(linkedMove -> {
             linkedMove.getMovingPiece().moveTo(linkedMove.spot());
