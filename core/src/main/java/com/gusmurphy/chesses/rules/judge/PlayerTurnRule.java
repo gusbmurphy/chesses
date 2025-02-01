@@ -24,7 +24,7 @@ public class PlayerTurnRule extends JudgeDecorator {
         if (piece.color() == currentTurnColor) {
             super.submitMove(piece, spot);
             currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
-            super.turnChangeListeners.forEach(listener -> listener.onTurnChange(currentTurnColor));
+            notifyTurnChangeListeners(currentTurnColor);
         }
     }
 

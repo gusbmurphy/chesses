@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
@@ -69,6 +70,10 @@ public class Judge {
 
     protected void notifyGameOverListeners(GameOverEvent event) {
         gameOverListeners.forEach(listener -> listener.onGameOverEvent(event));
+    }
+
+    protected void notifyTurnChangeListeners(PlayerColor newTurnColor) {
+        turnChangeListeners.forEach(listener -> listener.onTurnChange(newTurnColor));
     }
 
     private Optional<PieceMove> getLegalMove(Piece piece, Coordinates spot) {

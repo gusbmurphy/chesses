@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
@@ -40,4 +41,8 @@ public abstract class JudgeDecorator extends Judge {
         wrappedJudge.notifyGameOverListeners(event);
     }
 
+    @Override
+    protected void notifyTurnChangeListeners(PlayerColor newTurnColor) {
+        wrappedJudge.notifyTurnChangeListeners(newTurnColor);
+    }
 }
