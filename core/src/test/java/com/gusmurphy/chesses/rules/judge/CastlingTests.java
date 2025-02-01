@@ -15,7 +15,7 @@ public class CastlingTests {
     public void castlingMovesBothTheKingAndRelevantRook() {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
         Piece leftRook = pieceFactory.rook(WHITE, A1);
-        Piece king = pieceFactory.king(WHITE, E1);
+        Piece king = pieceFactory.king(WHITE);
 
         Judge judge = new Judge(new BoardState(leftRook, king));
         judge.submitMove(king, C1);
