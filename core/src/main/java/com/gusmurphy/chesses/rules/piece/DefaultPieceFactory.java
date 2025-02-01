@@ -29,6 +29,18 @@ public class DefaultPieceFactory {
     }
 
     public Piece king(PlayerColor playerColor) {
+        MovementStrategy strategy = createCastlingStrategy();
+
+        Coordinates position = playerColor == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
+        return new Piece(
+            playerColor,
+            strategy,
+            position,
+            KING
+        );
+    }
+
+    private MovementStrategy createCastlingStrategy() {
         Piece leftRook = getLeftRook();
         Piece rightRook = getRightRook();
 
@@ -42,15 +54,7 @@ public class DefaultPieceFactory {
             new PieceMove(new StaticMove(Coordinates.F1), rightRook)
         );
 
-        MovementStrategy strategy = new CompositeMovementStrategy(leftCastlingStrategy, rightCastlingStrategy);
-
-        Coordinates position = playerColor == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
-        return new Piece(
-            playerColor,
-            strategy,
-            position,
-            KING
-        );
+        return new CompositeMovementStrategy(leftCastlingStrategy, rightCastlingStrategy);
     }
 
     private Piece getLeftRook() {
