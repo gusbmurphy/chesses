@@ -63,11 +63,7 @@ public class DefaultPieceFactory {
             .filter(piece -> piece.getCoordinates() == Coordinates.A1)
             .findFirst();
 
-        if (leftRook.isPresent()) {
-            return leftRook.get();
-        } else {
-            return DefaultPieces.rook(PlayerColor.WHITE, Coordinates.A1);
-        }
+        return leftRook.orElseGet(() -> DefaultPieces.rook(PlayerColor.WHITE, Coordinates.A1));
     }
 
     private Piece getRightRook() {
@@ -76,11 +72,7 @@ public class DefaultPieceFactory {
             .filter(piece -> piece.getCoordinates() == Coordinates.H1)
             .findFirst();
 
-        if (rightRook.isPresent()) {
-            return rightRook.get();
-        } else {
-            return DefaultPieces.rook(PlayerColor.WHITE, Coordinates.H1);
-        }
+        return rightRook.orElseGet(() -> DefaultPieces.rook(PlayerColor.WHITE, Coordinates.H1));
     }
 
 }
