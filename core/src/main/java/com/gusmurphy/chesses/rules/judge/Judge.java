@@ -35,27 +35,6 @@ public class Judge {
         getLegalMove(piece, spot).ifPresent(this::makeLegalMove);
     }
 
-    private Optional<PieceMove> getLegalMove(Piece piece, Coordinates spot) {
-        return possibleMovesFor(piece)
-            .stream()
-            .filter(move -> move.spot() == spot)
-            .map(move -> new PieceMove(move, piece))
-            .findFirst();
-    }
-
-    private void makeLegalMove(PieceMove move) {
-        move.takes().ifPresent(otherPiece -> {
-            otherPiece.take();
-            boardState.removePieceAt(move.spot());
-        });
-
-        move.getMovingPiece().moveTo(move.spot());
-
-        move.linkedMove().ifPresent(linkedMove -> {
-            linkedMove.getMovingPiece().moveTo(linkedMove.spot());
-        });
-    }
-
     public List<PieceMove> getPossibleMoves() {
         List<PieceMove> pieceMoves = new ArrayList<>();
         boardState.getAllPieces().forEach(piece -> {
@@ -90,6 +69,27 @@ public class Judge {
 
     protected void notifyGameOverListeners(GameOverEvent event) {
         gameOverListeners.forEach(listener -> listener.onGameOverEvent(event));
+    }
+
+    private Optional<PieceMove> getLegalMove(Piece piece, Coordinates spot) {
+        return possibleMovesFor(piece)
+            .stream()
+            .filter(move -> move.spot() == spot)
+            .map(move -> new PieceMove(move, piece))
+            .findFirst();
+    }
+
+    private void makeLegalMove(PieceMove move) {
+        move.takes().ifPresent(otherPiece -> {
+            otherPiece.take();
+            boardState.removePieceAt(move.spot());
+        });
+
+        move.getMovingPiece().moveTo(move.spot());
+
+        move.linkedMove().ifPresent(linkedMove -> {
+            linkedMove.getMovingPiece().moveTo(linkedMove.spot());
+        });
     }
 
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
