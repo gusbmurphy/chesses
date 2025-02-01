@@ -56,20 +56,21 @@ public class DefaultPieceFactory {
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rook = getLeftRook(color);
         Coordinates rookMove = Coordinates.with(File.D, rank);
-        return createTurnLimitedStrategy(-2, rookMove, rook);
+        MovementStrategy strategy = createLinkedStrategy(-2, rookMove, rook);
+        return limitStrategyByMovements(strategy, rook);
     }
 
     private MovementStrategy createRightCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rook = getRightRook(color);
         Coordinates rookMove = Coordinates.with(File.F, rank);
-        return createTurnLimitedStrategy(2, rookMove, rook);
+        MovementStrategy strategy = createLinkedStrategy(2, rookMove, rook);
+        return limitStrategyByMovements(strategy, rook);
     }
 
-    private static MovementStrategy createTurnLimitedStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
-        MovementStrategy strategy = createLinkedStrategy(kingHorizontalMove, rookMove, rook);
-        strategy = new TurnBasedMovementStrategy(1, strategy, rook);
-        rook.subscribeToEvents(strategy);
-        return strategy;
+    private static MovementStrategy limitStrategyByMovements(MovementStrategy baseStrategy, Piece rook) {
+        MovementStrategy limitedStrategy = new TurnBasedMovementStrategy(1, baseStrategy, rook);
+        rook.subscribeToEvents(limitedStrategy);
+        return limitedStrategy;
     }
 
     private static LinkedMovementStrategy createLinkedStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
