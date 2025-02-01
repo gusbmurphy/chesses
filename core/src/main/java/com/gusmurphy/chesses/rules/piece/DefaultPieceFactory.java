@@ -30,7 +30,7 @@ public class DefaultPieceFactory {
 
     public Piece king(PlayerColor color) {
         MovementStrategy base = new LinearMovementStrategy(Direction.every(), 1);
-        MovementStrategy castlingStrategy = createCastlingStrategy(color);
+        MovementStrategy castlingStrategy = createFullCastlingStrategy(color);
 
         Coordinates position = color == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
         return new Piece(
@@ -41,7 +41,7 @@ public class DefaultPieceFactory {
         );
     }
 
-    private MovementStrategy createCastlingStrategy(PlayerColor color) {
+    private MovementStrategy createFullCastlingStrategy(PlayerColor color) {
         Rank rank = color == PlayerColor.WHITE ? Rank.ONE : Rank.EIGHT;
 
         MovementStrategy leftCastlingStrategy = createLeftCastlingStrategy(color, rank);
@@ -56,19 +56,23 @@ public class DefaultPieceFactory {
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rook = getLeftRook(color);
         Coordinates rookMove = Coordinates.with(File.D, rank);
-        MovementStrategy strategy = createCastlingStrategy(-2, rookMove, rook);
-        strategy = new TurnBasedMovementStrategy(1, strategy, rook);
-        rook.subscribeToEvents(strategy);
-        return strategy;
+        return createTurnLimitedStrategy(-2, rookMove, rook);
     }
 
     private MovementStrategy createRightCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rook = getRightRook(color);
         Coordinates rookMove = Coordinates.with(File.F, rank);
-        return createCastlingStrategy(2, rookMove, rook);
+        return createTurnLimitedStrategy(2, rookMove, rook);
     }
 
-    private static LinkedMovementStrategy createCastlingStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
+    private static MovementStrategy createTurnLimitedStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
+        MovementStrategy strategy = createLinkedStrategy(kingHorizontalMove, rookMove, rook);
+        strategy = new TurnBasedMovementStrategy(1, strategy, rook);
+        rook.subscribeToEvents(strategy);
+        return strategy;
+    }
+
+    private static LinkedMovementStrategy createLinkedStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
         return new LinkedMovementStrategy(
             new RelativeMovementStrategy(kingHorizontalMove, 0),
             new PieceMove(new StaticMove(rookMove), rook)
