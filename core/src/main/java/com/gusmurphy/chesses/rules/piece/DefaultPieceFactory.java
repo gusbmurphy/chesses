@@ -4,12 +4,14 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.CompositeMovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.LinkedMovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.RelativeMovementStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.gusmurphy.chesses.rules.piece.PieceType.KING;
 
@@ -28,23 +30,53 @@ public class DefaultPieceFactory {
 
     public Piece king(PlayerColor playerColor) {
         Piece leftRook = getLeftRook();
+        Piece rightRook = getRightRook();
 
-        MovementStrategy castlingStrategy = new LinkedMovementStrategy(
+        MovementStrategy leftCastlingStrategy = new LinkedMovementStrategy(
             new RelativeMovementStrategy(-2, 0),
             new PieceMove(new StaticMove(Coordinates.D1), leftRook)
         );
 
+        MovementStrategy rightCastlingStrategy = new LinkedMovementStrategy(
+            new RelativeMovementStrategy(2, 0),
+            new PieceMove(new StaticMove(Coordinates.F1), rightRook)
+        );
+
+        MovementStrategy strategy = new CompositeMovementStrategy(leftCastlingStrategy, rightCastlingStrategy);
+
         Coordinates position = playerColor == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
         return new Piece(
             playerColor,
-            castlingStrategy,
+            strategy,
             position,
             KING
         );
     }
 
     private Piece getLeftRook() {
-        return createdPieces.stream().filter(piece -> piece.getCoordinates() == Coordinates.A1).findFirst().get();
+        Optional<Piece> leftRook = createdPieces
+            .stream()
+            .filter(piece -> piece.getCoordinates() == Coordinates.A1)
+            .findFirst();
+
+        if (leftRook.isPresent()) {
+            return leftRook.get();
+        } else {
+            return DefaultPieces.rook(PlayerColor.WHITE, Coordinates.A1);
+        }
+    }
+
+    private Piece getRightRook() {
+        Optional<Piece> rightRook = createdPieces
+            .stream()
+            .filter(piece -> piece.getCoordinates() == Coordinates.H1)
+            .findFirst();
+
+        if (rightRook.isPresent()) {
+            return rightRook.get();
+        } else {
+            return DefaultPieces.rook(PlayerColor.WHITE, Coordinates.H1);
+        }
     }
 
 }

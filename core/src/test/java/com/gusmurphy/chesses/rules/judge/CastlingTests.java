@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CastlingTests {
 
     @Test
-    public void castlingMovesBothTheKingAndRelevantRook() {
+    public void castlingMovesBothTheWhiteKingAndLeftRook() {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
         Piece leftRook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
@@ -22,6 +22,19 @@ public class CastlingTests {
 
         assertEquals(C1, king.getCoordinates());
         assertEquals(D1, leftRook.getCoordinates());
+    }
+
+    @Test
+    public void castlingMovesBothTheWhiteKingAndRightRook() {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece rightRook = pieceFactory.rook(WHITE, H1);
+        Piece king = pieceFactory.king(WHITE);
+
+        Judge judge = new Judge(new BoardState(rightRook, king));
+        judge.submitMove(king, G1);
+
+        assertEquals(G1, king.getCoordinates());
+        assertEquals(F1, rightRook.getCoordinates());
     }
 
 }
