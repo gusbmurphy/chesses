@@ -1,15 +1,13 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
+import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.File;
 import com.gusmurphy.chesses.rules.board.Rank;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
-import com.gusmurphy.chesses.rules.piece.movement.strategy.CompositeMovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.strategy.LinkedMovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
-import com.gusmurphy.chesses.rules.piece.movement.strategy.RelativeMovementStrategy;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +29,13 @@ public class DefaultPieceFactory {
     }
 
     public Piece king(PlayerColor color) {
-        MovementStrategy strategy = createCastlingStrategy(color);
+        MovementStrategy base = new LinearMovementStrategy(Direction.every(), 1);
+        MovementStrategy castlingStrategy = createCastlingStrategy(color);
 
         Coordinates position = color == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
         return new Piece(
             color,
-            strategy,
+            new CompositeMovementStrategy(base, castlingStrategy),
             position,
             KING
         );
@@ -48,7 +47,10 @@ public class DefaultPieceFactory {
         MovementStrategy leftCastlingStrategy = createLeftCastlingStrategy(color, rank);
         MovementStrategy rightCastlingStrategy = createRightCastlingStrategy(color, rank);
 
-        return new CompositeMovementStrategy(leftCastlingStrategy, rightCastlingStrategy);
+        MovementStrategy compositeStrategy = new CompositeMovementStrategy(
+            leftCastlingStrategy, rightCastlingStrategy
+        );
+        return new TurnBasedMovementStrategy(1, compositeStrategy);
     }
 
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
