@@ -19,7 +19,7 @@ import static com.gusmurphy.chesses.rules.piece.PieceType.KING;
 
 public class DefaultPieceFactory {
 
-    private List<Piece> createdPieces = new ArrayList<>();
+    private final List<Piece> createdPieces = new ArrayList<>();
 
     public DefaultPieceFactory() {
     }
