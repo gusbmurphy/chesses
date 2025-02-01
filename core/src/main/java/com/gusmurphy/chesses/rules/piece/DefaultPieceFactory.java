@@ -52,19 +52,21 @@ public class DefaultPieceFactory {
     }
 
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
-        Piece leftRook = getLeftRook(color);
-        return getLinkedMovementStrategy(-2, File.D, rank, leftRook);
+        Piece rook = getLeftRook(color);
+        Coordinates rookMove = Coordinates.with(File.D, rank);
+        return createCastlingStrategy(-2, rookMove, rook);
     }
 
     private MovementStrategy createRightCastlingStrategy(PlayerColor color, Rank rank) {
-        Piece rightRook = getRightRook(color);
-        return getLinkedMovementStrategy(2, File.F, rank, rightRook);
+        Piece rook = getRightRook(color);
+        Coordinates rookMove = Coordinates.with(File.F, rank);
+        return createCastlingStrategy(2, rookMove, rook);
     }
 
-    private static LinkedMovementStrategy getLinkedMovementStrategy(int x, File f, Rank rank, Piece rook) {
+    private static LinkedMovementStrategy createCastlingStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
         return new LinkedMovementStrategy(
-            new RelativeMovementStrategy(x, 0),
-            new PieceMove(new StaticMove(Coordinates.with(f, rank)), rook)
+            new RelativeMovementStrategy(kingHorizontalMove, 0),
+            new PieceMove(new StaticMove(rookMove), rook)
         );
     }
 
