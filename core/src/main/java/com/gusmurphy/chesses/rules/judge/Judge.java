@@ -32,9 +32,13 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates spot) {
-        possibleMovesFor(piece).stream().filter(move -> move.spot() == spot).findFirst().ifPresent(move -> {
+        getLegalMove(piece, spot).ifPresent(move -> {
             makeLegalMove(piece, move);
         });
+    }
+
+    private Optional<Move> getLegalMove(Piece piece, Coordinates spot) {
+        return possibleMovesFor(piece).stream().filter(move -> move.spot() == spot).findFirst();
     }
 
     private void makeLegalMove(Piece piece, Move move) {
