@@ -48,6 +48,20 @@ public class CastlingTests {
         assertEquals(A1, leftRook.getCoordinates());
     }
 
+    @Test
+    public void castlingCannotHappenIfTheRookHasMoved() {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece leftRook = pieceFactory.rook(WHITE, A1);
+        Piece king = pieceFactory.king(WHITE);
+
+        Judge judge = new Judge(new BoardState(leftRook, king));
+        judge.submitMove(leftRook, A2);
+        judge.submitMove(king, C1);
+
+        assertEquals(E1, king.getCoordinates());
+        assertEquals(A2, leftRook.getCoordinates());
+    }
+
     private static Stream<Arguments> castlingTestCases() {
         return Stream.of(
             Arguments.of(WHITE, A1, C1, D1),

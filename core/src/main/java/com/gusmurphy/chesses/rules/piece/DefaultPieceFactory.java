@@ -56,7 +56,10 @@ public class DefaultPieceFactory {
     private MovementStrategy createLeftCastlingStrategy(PlayerColor color, Rank rank) {
         Piece rook = getLeftRook(color);
         Coordinates rookMove = Coordinates.with(File.D, rank);
-        return createCastlingStrategy(-2, rookMove, rook);
+        MovementStrategy strategy = createCastlingStrategy(-2, rookMove, rook);
+        strategy = new TurnBasedMovementStrategy(1, strategy, rook);
+        rook.subscribeToEvents(strategy);
+        return strategy;
     }
 
     private MovementStrategy createRightCastlingStrategy(PlayerColor color, Rank rank) {
