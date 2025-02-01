@@ -62,16 +62,15 @@ public class DefaultPieceFactory {
 
     private Piece getLeftRook(PlayerColor color) {
         Coordinates coordinates = color == PlayerColor.WHITE ? Coordinates.A1 : Coordinates.A8;
-        Optional<Piece> leftRook = createdPieces
-            .stream()
-            .filter(piece -> piece.getCoordinates() == coordinates)
-            .findFirst();
-
-        return leftRook.orElseGet(() -> DefaultPieces.rook(color, coordinates));
+        return getRook(color, coordinates);
     }
 
     private Piece getRightRook(PlayerColor color) {
         Coordinates coordinates = color == PlayerColor.WHITE ? Coordinates.H1 : Coordinates.H8;
+        return getRook(color, coordinates);
+    }
+
+    private Piece getRook(PlayerColor color, Coordinates coordinates) {
         Optional<Piece> rightRook = createdPieces
             .stream()
             .filter(piece -> piece.getCoordinates() == coordinates)
