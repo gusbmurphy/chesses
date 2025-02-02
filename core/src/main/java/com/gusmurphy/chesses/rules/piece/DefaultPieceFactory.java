@@ -91,12 +91,12 @@ public class DefaultPieceFactory {
     }
 
     private Piece getRook(PlayerColor color, Coordinates coordinates) {
-        Optional<Piece> rightRook = createdPieces
+        Optional<Piece> existingRook = createdPieces
             .stream()
             .filter(piece -> piece.getCoordinates() == coordinates)
             .findFirst();
 
-        return rightRook.orElseGet(() -> DefaultPieces.rook(color, coordinates));
+        return existingRook.orElseGet(() -> DefaultPieces.rook(color, coordinates));
     }
 
 }
