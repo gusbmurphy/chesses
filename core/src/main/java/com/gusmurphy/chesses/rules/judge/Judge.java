@@ -47,32 +47,39 @@ public class Judge {
 
     protected List<Move> possibleMovesFor(Piece piece) {
         List<PieceMove> moves = piece.currentPossibleMoves();
-        List<Move> legalMoves = new ArrayList<>();
+        List<Move> legalMoves = moves.stream().map(this::getAllLegalMovesFor).flatMap(List::stream).collect(Collectors.toList());
 
-        for (PieceMove move : moves) {
-            legalMoves.addAll(getAllLegalMovesFor(move));
-        }
+        legalMoves = filterMustTakeMoves(legalMoves);
+        legalMoves = filterRequiredUnoccupiedMoves(legalMoves);
+        legalMoves = filterTakeDisallowedMoves(legalMoves);
+        legalMoves = uniqueMovesBySpot(legalMoves);
 
-        legalMoves = legalMoves.stream().filter(move -> {
+        return legalMoves;
+    }
+
+    private static List<Move> filterMustTakeMoves(List<Move> legalMoves) {
+        return legalMoves.stream().filter(move -> {
             if (move.mustTake()) {
                 return move.takes().isPresent();
             }
             return true;
         }).collect(Collectors.toList());
+    }
 
-        legalMoves = legalMoves.stream().filter(move -> {
+    private List<Move> filterRequiredUnoccupiedMoves(List<Move> legalMoves) {
+        return legalMoves.stream().filter(move -> {
             for (Coordinates safeSpace : move.requiredUnoccupiedSpaces()) {
                 if (boardState.getPieceAt(safeSpace).isPresent()) return false;
             }
             return true;
         }).collect(Collectors.toList());
+    }
 
-        legalMoves = legalMoves
+    private static List<Move> filterTakeDisallowedMoves(List<Move> legalMoves) {
+        return legalMoves
             .stream()
             .filter(move -> !move.takeDisallowed() || !move.takes().isPresent())
             .collect(Collectors.toList());
-
-        return Judge.uniqueMovesBySpot(legalMoves);
     }
 
     protected void notifyGameOverListeners(GameOverEvent event) {
