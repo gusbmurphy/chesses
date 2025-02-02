@@ -9,9 +9,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.gusmurphy.chesses.rules.piece.PieceType.KING;
 
@@ -45,7 +43,19 @@ public class DefaultPieceFactory {
         Rank rank = color == PlayerColor.WHITE ? Rank.ONE : Rank.EIGHT;
 
         MovementStrategy leftCastlingStrategy = createLeftCastlingStrategy(color, rank);
+        List<Coordinates> leftUnoccupiedSpaces = Arrays.asList(
+            Coordinates.with(File.D, rank),
+            Coordinates.with(File.C, rank),
+            Coordinates.with(File.B, rank)
+        );
+        leftCastlingStrategy = new RequiredUnoccupiedSpaceStrategy(leftUnoccupiedSpaces, leftCastlingStrategy);
+
         MovementStrategy rightCastlingStrategy = createRightCastlingStrategy(color, rank);
+        List<Coordinates> rightUnoccupiedSpaces = Arrays.asList(
+            Coordinates.with(File.F, rank),
+            Coordinates.with(File.G, rank)
+        );
+        rightCastlingStrategy = new RequiredUnoccupiedSpaceStrategy(rightUnoccupiedSpaces, rightCastlingStrategy);
 
         MovementStrategy compositeStrategy = new CompositeMovementStrategy(
             leftCastlingStrategy, rightCastlingStrategy

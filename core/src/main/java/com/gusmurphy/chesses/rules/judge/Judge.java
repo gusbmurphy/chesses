@@ -60,6 +60,13 @@ public class Judge {
             return true;
         }).collect(Collectors.toList());
 
+        legalMoves = legalMoves.stream().filter(move -> {
+            for (Coordinates safeSpace : move.requiredUnoccupiedSpaces()) {
+                if (boardState.getPieceAt(safeSpace).isPresent()) return false;
+            }
+            return true;
+        }).collect(Collectors.toList());
+
         legalMoves = legalMoves
             .stream()
             .filter(move -> !move.takeDisallowed() || !move.takes().isPresent())

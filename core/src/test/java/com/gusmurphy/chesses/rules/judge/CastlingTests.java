@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
+import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,25 @@ public class CastlingTests {
         assertEquals(A2, leftRook.getCoordinates());
     }
 
+    @ParameterizedTest
+    @MethodSource("blockedCastlingTestCases")
+    public void castlingCannotHappenIfThereArePiecesInTheWay(
+        PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates blockingPosition
+    ) {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
+        Piece king = pieceFactory.king(color);
+        Piece blockingPiece = DefaultPieces.pawn(color, blockingPosition);
+
+        Coordinates initialKingPosition = king.getCoordinates();
+
+        Judge judge = new Judge(new BoardState(rightRook, king, blockingPiece));
+        judge.submitMove(king, kingMove);
+
+        assertEquals(initialKingPosition, king.getCoordinates());
+        assertEquals(rookStartingPosition, rightRook.getCoordinates());
+    }
+
     @Test
     @Disabled("Need to come back to this one...")
     public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSpot() {
@@ -84,6 +104,19 @@ public class CastlingTests {
             Arguments.of(WHITE, H1, G1, F1),
             Arguments.of(BLACK, A8, C8, D8),
             Arguments.of(BLACK, H8, G8, F8)
+        );
+    }
+
+    private static Stream<Arguments> blockedCastlingTestCases() {
+        return Stream.of(
+            Arguments.of(WHITE, A1, C1, B1),
+            Arguments.of(WHITE, A1, C1, D1),
+            Arguments.of(WHITE, H1, G1, F1),
+            Arguments.of(WHITE, H1, G1, G1),
+            Arguments.of(BLACK, A8, C8, B8),
+            Arguments.of(BLACK, A8, C8, D8),
+            Arguments.of(BLACK, H8, G8, F8),
+            Arguments.of(BLACK, H8, G8, G8)
         );
     }
 

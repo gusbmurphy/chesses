@@ -3,6 +3,7 @@ package com.gusmurphy.chesses.rules.piece.movement.move;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class MoveDecorator implements Move {
@@ -42,4 +43,10 @@ public abstract class MoveDecorator implements Move {
     public Optional<PieceMove> linkedMove() {
         return wrappedMove.linkedMove();
     }
+
+    @Override
+    public List<Coordinates> requiredUnoccupiedSpaces() {
+        return wrappedMove.requiredUnoccupiedSpaces();
+    }
+
 }
