@@ -5,6 +5,7 @@ import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -56,6 +57,21 @@ public class CastlingTests {
 
         Judge judge = new Judge(new BoardState(leftRook, king));
         judge.submitMove(leftRook, A2);
+        judge.submitMove(king, C1);
+
+        assertEquals(E1, king.getCoordinates());
+        assertEquals(A2, leftRook.getCoordinates());
+    }
+
+    @Test
+    @Disabled("Need to come back to this one...")
+    public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSpot() {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece leftRook = pieceFactory.rook(WHITE, A1);
+        Piece king = pieceFactory.king(WHITE);
+        Piece threat = pieceFactory.rook(BLACK, D5);
+
+        Judge judge = new Judge(new BoardState(leftRook, king, threat));
         judge.submitMove(king, C1);
 
         assertEquals(E1, king.getCoordinates());
