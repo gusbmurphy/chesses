@@ -35,13 +35,10 @@ public class Piece {
         eventListeners.add(movementStrategy);
     }
 
-    public Piece(PieceColorAndMovement pieceColorAndMovement, Coordinates coordinates, PieceType type) {
-        this(pieceColorAndMovement.color(), pieceColorAndMovement.movementStrategy(), coordinates, type);
-    }
-
     public Piece(MovementStrategy strategy, Coordinates coordinates) {
         this(
-            new PieceColorAndMovement(PlayerColor.WHITE, strategy),
+            PlayerColor.WHITE,
+            strategy,
             coordinates,
             PieceType.KING
         );

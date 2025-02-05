@@ -47,8 +47,7 @@ public class JudgeTests {
     @MethodSource("okayMoves")
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(Coordinates spot) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, D4, PieceType.KING);
+        Piece piece = new Piece(BLACK, movementStrategy, D4, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -74,8 +73,7 @@ public class JudgeTests {
     @Test
     void aPieceWithALinearMovementStrategyCannotMoveToAPositionNotInItsStrategy() {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 1);
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement(PlayerColor.BLACK, movementStrategy);
-        Piece piece = new Piece(pieceColorAndMovement, A2, PieceType.KING);
+        Piece piece = new Piece(BLACK, movementStrategy, A2, PieceType.KING);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
