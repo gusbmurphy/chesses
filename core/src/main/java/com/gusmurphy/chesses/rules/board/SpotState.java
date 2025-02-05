@@ -12,7 +12,7 @@ public class SpotState {
         this.piece = piece;
     }
 
-    public Optional<Piece> getPiece() {
+    public Optional<Piece> pieceTakeableBy(Piece other) {
         return Optional.ofNullable(piece);
     }
 

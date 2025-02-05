@@ -122,12 +122,12 @@ public class Judge {
     private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        Optional<Piece> pieceAtSpot = boardState.getSpotStateAt(move.spot()).getPiece();
-        if (!pieceAtSpot.isPresent()) {
+        Optional<Piece> takeablePiece = boardState.getSpotStateAt(move.spot()).pieceTakeableBy(move.getMovingPiece());
+        if (!takeablePiece.isPresent()) {
             legalMoves.add(move);
             legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
-        } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
-            legalMoves.add(new TakingMove(move, pieceAtSpot.get()));
+        } else if (takeablePiece.get().color() != move.getMovingPiece().color()) {
+            legalMoves.add(new TakingMove(move, takeablePiece.get()));
         }
 
         return legalMoves;
