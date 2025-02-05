@@ -122,7 +122,7 @@ public class Judge {
     private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
+        Optional<Piece> pieceAtSpot = boardState.getSpotStateAt(move.spot()).getPiece();
         if (!pieceAtSpot.isPresent()) {
             legalMoves.add(move);
             legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
