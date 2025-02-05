@@ -86,10 +86,8 @@ public class JudgeTests {
     }
 
     @Test
-    void noMoveIsPossibleForAPieceNotOnTheBoard() {
+    void noMoveIsPossibleWithNoPiecesOnTheBoard() {
         BoardState boardState = new BoardState();
-        PieceColorAndMovement pieceColorAndMovement = new PieceColorAndMovement();
-        Piece piece = new Piece(pieceColorAndMovement, A4, PieceType.KING);
         Judge judge = new Judge(boardState);
         assertTrue(judge.getPossibleMoves().isEmpty());
     }
