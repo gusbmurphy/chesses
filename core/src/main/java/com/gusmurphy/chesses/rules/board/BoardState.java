@@ -10,6 +10,7 @@ public class BoardState {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
     private final static SpotState EMPTY_SPOT = new EmptySpot();
+    private final HashMap<Coordinates, SpotState> specialStates = new HashMap<>();
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
@@ -38,7 +39,7 @@ public class BoardState {
             return new OccupiedSpot(piece.get());
         }
 
-        return EMPTY_SPOT;
+        return specialStates.getOrDefault(coordinates, EMPTY_SPOT);
     }
 
     public Optional<Piece> removePieceAt(Coordinates coordinates) {
@@ -54,6 +55,10 @@ public class BoardState {
 
     public List<Piece> getAllPieces() {
         return piecesOnBoard;
+    }
+
+    public void setSpotState(Coordinates coordinates, SpotState state) {
+        specialStates.put(coordinates, state);
     }
 
 }

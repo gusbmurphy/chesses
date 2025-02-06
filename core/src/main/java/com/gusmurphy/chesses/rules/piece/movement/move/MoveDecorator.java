@@ -1,9 +1,11 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
+import com.gusmurphy.chesses.rules.board.SpotState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class MoveDecorator implements Move {
@@ -49,4 +51,8 @@ public abstract class MoveDecorator implements Move {
         return wrappedMove.requiredUnoccupiedSpaces();
     }
 
+    @Override
+    public Map<Coordinates, SpotState> effectedSpots() {
+        return wrappedMove.effectedSpots();
+    }
 }

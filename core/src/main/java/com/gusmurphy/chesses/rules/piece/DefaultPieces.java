@@ -70,13 +70,9 @@ public class DefaultPieces {
     }
 
     public static Piece pawn(PlayerColor color, Coordinates position) {
-        Direction movementDirection = color == PlayerColor.WHITE ? N : S;
-        int verticalMovement = color == PlayerColor.WHITE ? 2 : -2;
-
-        MovementStrategy firstMove = new TurnBasedMovementStrategy(
-            1, new RelativeMovementStrategy(0, verticalMovement)
-        );
-        MovementStrategy movementStrategy = createPawnStrategy(color, movementDirection, firstMove);
+        Piece pawn = new Piece(color, position, PAWN);
+        MovementStrategy firstMove = new PawnFirstMoveStrategy(pawn);
+        MovementStrategy movementStrategy = createPawnStrategy(color, firstMove);
 
         return new Piece(
             color,
@@ -86,7 +82,9 @@ public class DefaultPieces {
         );
     }
 
-    private static MovementStrategy createPawnStrategy(PlayerColor color, Direction movementDirection, MovementStrategy firstMove) {
+    private static MovementStrategy createPawnStrategy(PlayerColor color, MovementStrategy firstMove) {
+        Direction movementDirection = color == PlayerColor.WHITE ? N : S;
+
         MovementStrategy regular = new LinearMovementStrategy(
             Collections.singletonList(movementDirection), 1
         );

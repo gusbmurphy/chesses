@@ -9,10 +9,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.TakingMove;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Judge {
@@ -110,6 +107,11 @@ public class Judge {
         move.linkedMove().ifPresent(linkedMove -> {
             linkedMove.getMovingPiece().moveTo(linkedMove.spot());
         });
+
+        Map<Coordinates, SpotState> effectedSpots = move.effectedSpots();
+        for (Map.Entry<Coordinates, SpotState> entry : effectedSpots.entrySet()) {
+            boardState.setSpotState(entry.getKey(), entry.getValue());
+        }
     }
 
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
@@ -124,13 +126,11 @@ public class Judge {
         List<Move> legalMoves = new ArrayList<>();
 
         SpotState spotState = boardState.getStateAt(move.spot());
-        if (!spotState.occupyingPiece().isPresent()) {
+        if (spotState.pieceTakeableBy(move.getMovingPiece()).isPresent()) {
+            legalMoves.add(new TakingMove(move, spotState.pieceTakeableBy(move.getMovingPiece()).get()));
+        } else if (!spotState.occupyingPiece().isPresent()) {
             legalMoves.add(move);
             legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
-        } else {
-            spotState.pieceTakeableBy(move.getMovingPiece()).ifPresent(takeablePiece -> {
-                legalMoves.add(new TakingMove(move, takeablePiece));
-            });
         }
 
         return legalMoves;

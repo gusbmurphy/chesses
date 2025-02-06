@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Piece {
 
     private final PlayerColor color;
-    private final MovementStrategy movementStrategy;
+    private MovementStrategy movementStrategy;
     private Coordinates coordinates;
     private final PieceType type;
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
@@ -42,6 +42,12 @@ public class Piece {
             coordinates,
             PieceType.KING
         );
+    }
+
+    public Piece(PlayerColor color, Coordinates coordinates, PieceType type) {
+        this.color = color;
+        this.coordinates = coordinates;
+        this.type = type;
     }
 
     public Piece(Piece other) {
@@ -86,6 +92,10 @@ public class Piece {
 
     public void take() {
         eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.TAKEN, this));
+    }
+
+    protected void setMovementStrategy(MovementStrategy strategy) {
+        this.movementStrategy = strategy;
     }
 
 }
