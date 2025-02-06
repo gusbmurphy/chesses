@@ -17,4 +17,11 @@ public class OccupiedSpot implements SpotState {
         return Optional.of(occupyingPiece);
     }
 
+    @Override
+    public Optional<Piece> pieceTakeableBy(Piece other) {
+        if (occupyingPiece.color() != other.color()) {
+            return Optional.of(occupyingPiece);
+        }
+        return Optional.empty();
+    }
 }

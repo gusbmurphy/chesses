@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.board.SpotState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
@@ -122,12 +123,14 @@ public class Judge {
     private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        Optional<Piece> pieceAtSpot = boardState.getStateAt(move.spot()).occupyingPiece();
-        if (!pieceAtSpot.isPresent()) {
+        SpotState spotState = boardState.getStateAt(move.spot());
+        if (!spotState.occupyingPiece().isPresent()) {
             legalMoves.add(move);
             legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
-        } else if (pieceAtSpot.get().color() != move.getMovingPiece().color()) {
-            legalMoves.add(new TakingMove(move, pieceAtSpot.get()));
+        } else {
+            spotState.pieceTakeableBy(move.getMovingPiece()).ifPresent(takeablePiece -> {
+                legalMoves.add(new TakingMove(move, takeablePiece));
+            });
         }
 
         return legalMoves;

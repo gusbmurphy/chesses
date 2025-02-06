@@ -7,5 +7,6 @@ import java.util.Optional;
 public interface SpotState {
 
     Optional<Piece> occupyingPiece();
+    Optional<Piece> pieceTakeableBy(Piece other);
 
 }

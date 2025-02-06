@@ -14,4 +14,8 @@ public class EmptySpot implements SpotState {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Piece> pieceTakeableBy(Piece other) {
+        return Optional.empty();
+    }
 }
