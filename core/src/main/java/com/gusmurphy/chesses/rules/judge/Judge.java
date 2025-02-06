@@ -97,17 +97,28 @@ public class Judge {
     }
 
     private void makeLegalMove(PieceMove move) {
+        takeOtherPieceIfPresent(move);
+        moveMovingPiece(move);
+        makeLinkedMoveIfPresent(move);
+        distributeAnyEffectedSpots(move);
+    }
+
+    private void takeOtherPieceIfPresent(PieceMove move) {
         move.takes().ifPresent(otherPiece -> {
             otherPiece.take();
             boardState.removePieceAt(move.spot());
         });
+    }
 
+    private static void moveMovingPiece(PieceMove move) {
         move.getMovingPiece().moveTo(move.spot());
+    }
 
-        move.linkedMove().ifPresent(linkedMove -> {
-            linkedMove.getMovingPiece().moveTo(linkedMove.spot());
-        });
+    private static void makeLinkedMoveIfPresent(PieceMove move) {
+        move.linkedMove().ifPresent(Judge::moveMovingPiece);
+    }
 
+    private void distributeAnyEffectedSpots(PieceMove move) {
         Map<Coordinates, SpotState> effectedSpots = move.effectedSpots();
         for (Map.Entry<Coordinates, SpotState> entry : effectedSpots.entrySet()) {
             boardState.setSpotState(entry.getKey(), entry.getValue());
