@@ -31,11 +31,6 @@ public class BoardState {
         return piecesOnBoard.stream().filter(piece -> piece.getCoordinates() == coordinates).findFirst();
     }
 
-    public SpotState getSpotStateAt(Coordinates coordinates) {
-        Optional<Piece> piece = piecesOnBoard.stream().filter(p -> p.getCoordinates() == coordinates).findFirst();
-        return new SpotState(piece.orElse(null));
-    }
-
     public Optional<Piece> removePieceAt(Coordinates coordinates) {
         Optional<Piece> piece = getPieceAt(coordinates);
         piece.ifPresent(piecesOnBoard::remove);
