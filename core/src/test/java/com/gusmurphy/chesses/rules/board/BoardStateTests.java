@@ -75,4 +75,14 @@ public class BoardStateTests {
         Assertions.assertEquals(result.size(), 3);
     }
 
+    @Test
+    void creatingABoardFromAnotherOneCreatesDuplicatesOfThePieces() {
+        Piece originalPiece = DefaultPieces.rook(PlayerColor.BLACK, A2);
+        BoardState original = new BoardState(originalPiece);
+        BoardState copy = new BoardState(original);
+
+        Assertions.assertEquals(1, copy.getAllPieces().size());
+        Assertions.assertNotEquals(originalPiece, copy.getAllPieces().get(0));
+    }
+
 }
