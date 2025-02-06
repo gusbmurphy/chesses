@@ -69,7 +69,7 @@ public class Judge {
     private List<Move> filterRequiredUnoccupiedMoves(List<Move> legalMoves) {
         return legalMoves.stream().filter(move -> {
             for (Coordinates safeSpace : move.requiredUnoccupiedSpaces()) {
-                if (boardState.getPieceAt(safeSpace).isPresent()) return false;
+                if (boardState.getStateAt(safeSpace).occupyingPiece().isPresent()) return false;
             }
             return true;
         }).collect(Collectors.toList());
@@ -122,7 +122,7 @@ public class Judge {
     private List<Move> getAllLegalMovesFor(PieceMove move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        Optional<Piece> pieceAtSpot = boardState.getPieceAt(move.spot());
+        Optional<Piece> pieceAtSpot = boardState.getStateAt(move.spot()).occupyingPiece();
         if (!pieceAtSpot.isPresent()) {
             legalMoves.add(move);
             legalMoves.addAll(getAllLegalMovesContinuingFrom(move));

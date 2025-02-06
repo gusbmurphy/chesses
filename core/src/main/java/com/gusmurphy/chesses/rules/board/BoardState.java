@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class BoardState {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
+    private final static SpotState EMPTY_SPOT = new EmptySpot();
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
@@ -27,13 +28,27 @@ public class BoardState {
         piecesOnBoard.add(piece);
     }
 
-    public Optional<Piece> getPieceAt(Coordinates coordinates) {
-        return piecesOnBoard.stream().filter(piece -> piece.getCoordinates() == coordinates).findFirst();
+    public SpotState getStateAt(Coordinates coordinates) {
+        Optional<Piece> piece = piecesOnBoard
+            .stream()
+            .filter(p -> p.getCoordinates() == coordinates)
+            .findFirst();
+
+        if (piece.isPresent()) {
+            return new OccupiedSpot(piece.get());
+        }
+
+        return EMPTY_SPOT;
     }
 
     public Optional<Piece> removePieceAt(Coordinates coordinates) {
-        Optional<Piece> piece = getPieceAt(coordinates);
+        Optional<Piece> piece = piecesOnBoard
+            .stream()
+            .filter(p -> p.getCoordinates() == coordinates)
+            .findFirst();
+
         piece.ifPresent(piecesOnBoard::remove);
+
         return piece;
     }
 

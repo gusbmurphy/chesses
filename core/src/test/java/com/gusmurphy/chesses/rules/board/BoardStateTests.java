@@ -21,7 +21,7 @@ public class BoardStateTests {
 
         boardState.place(piece);
 
-        Optional<Piece> pieceOnBoard = boardState.getPieceAt(B5);
+        Optional<Piece> pieceOnBoard = boardState.getStateAt(B5).occupyingPiece();
 
         Assertions.assertEquals(pieceOnBoard.get(), piece);
     }
@@ -30,7 +30,7 @@ public class BoardStateTests {
     void anEmptyOptionalIsReturnedForAnEmptyPosition() {
         BoardState boardState = new BoardState();
 
-        Optional<Piece> result = boardState.getPieceAt(B5);
+        Optional<Piece> result = boardState.getStateAt(B5).occupyingPiece();
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -46,7 +46,7 @@ public class BoardStateTests {
         Optional<Piece> removedPiece = boardState.removePieceAt(coordinates);
         Assertions.assertEquals(removedPiece.get(), piece);
 
-        Optional<Piece> pieceOnBoard = boardState.getPieceAt(coordinates);
+        Optional<Piece> pieceOnBoard = boardState.getStateAt(coordinates).occupyingPiece();
         Assertions.assertFalse(pieceOnBoard.isPresent());
     }
 
