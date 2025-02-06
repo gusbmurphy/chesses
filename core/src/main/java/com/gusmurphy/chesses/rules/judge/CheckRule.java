@@ -20,6 +20,7 @@ public class CheckRule extends JudgeDecorator {
         return moves.stream().filter(move -> {
             BoardState boardCopy = new BoardState(this.boardState);
             Judge futureJudge = new Judge(boardCopy);
+            // TODO: This doesn't feel like a great way to get this "futurePiece"...
             Piece futurePiece = futureJudge.boardState.getStateAt(move.getMovingPiece().getCoordinates()).occupyingPiece().get();
             futureJudge.submitMove(futurePiece, move.spot());
             List<PieceMove> possibleMovesAfter = futureJudge.getPossibleMoves();
