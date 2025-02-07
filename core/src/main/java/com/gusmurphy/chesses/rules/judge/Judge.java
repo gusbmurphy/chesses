@@ -106,7 +106,7 @@ public class Judge {
     private void takeOtherPieceIfPresent(PieceMove move) {
         move.takes().ifPresent(otherPiece -> {
             otherPiece.take();
-            boardState.removePieceAt(move.spot());
+            boardState.removePieceAt(otherPiece.getCoordinates());
         });
     }
 

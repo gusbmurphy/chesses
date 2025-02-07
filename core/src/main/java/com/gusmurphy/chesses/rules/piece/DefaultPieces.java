@@ -73,13 +73,9 @@ public class DefaultPieces {
         Piece pawn = new Piece(color, position, PAWN);
         MovementStrategy firstMove = new PawnFirstMoveStrategy(pawn);
         MovementStrategy movementStrategy = createPawnStrategy(color, firstMove);
+        pawn.setMovementStrategy(movementStrategy);
 
-        return new Piece(
-            color,
-            movementStrategy,
-            position,
-            PAWN
-        );
+        return pawn;
     }
 
     private static MovementStrategy createPawnStrategy(PlayerColor color, MovementStrategy firstMove) {
