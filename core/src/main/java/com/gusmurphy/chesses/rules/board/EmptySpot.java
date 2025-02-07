@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.board;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
@@ -18,4 +19,9 @@ public class EmptySpot implements SpotState {
     public Optional<Piece> pieceTakeableBy(Piece other) {
         return Optional.empty();
     }
+
+    @Override
+    public void onTurnChange(PlayerColor newTurnColor) {
+    }
+
 }

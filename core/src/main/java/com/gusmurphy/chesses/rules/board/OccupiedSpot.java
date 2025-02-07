@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.board;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
@@ -24,4 +25,9 @@ public class OccupiedSpot implements SpotState {
         }
         return Optional.empty();
     }
+
+    @Override
+    public void onTurnChange(PlayerColor newTurnColor) {
+    }
+
 }

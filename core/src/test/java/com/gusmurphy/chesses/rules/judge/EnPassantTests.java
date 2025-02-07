@@ -72,4 +72,23 @@ public class EnPassantTests {
         assertFalse(boardState.getStateAt(E4).occupyingPiece().isPresent());
     }
 
+    @Test
+    public void theEnPassantMoveCannotBeTakenOnATurnBeyondTheOneImmediatelyFollowing() {
+        Piece whitePawn = DefaultPieces.pawn(WHITE, E2);
+        Piece blackPawn = DefaultPieces.pawn(BLACK, D4);
+        Piece whiteBishop = DefaultPieces.bishop(WHITE, H6);
+        Piece blackBishop = DefaultPieces.bishop(BLACK, H4);
+
+        BoardState boardState = new BoardState(whitePawn, blackPawn);
+        Judge judge = new PlayerTurnRule(new Judge(boardState), WHITE);
+
+        judge.submitMove(whitePawn, E4);
+        judge.submitMove(blackBishop, G3);
+        judge.submitMove(whiteBishop, F8);
+        judge.submitMove(blackPawn, E3);
+
+        // The black pawn should not have moved...
+        assertEquals(D4, blackPawn.getCoordinates());
+    }
+
 }

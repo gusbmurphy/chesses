@@ -1,16 +1,19 @@
 package com.gusmurphy.chesses.rules.board;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.judge.TurnChangeListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BoardState {
+public class BoardState implements TurnChangeListener {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
     private final static SpotState EMPTY_SPOT = new EmptySpot();
     private final HashMap<Coordinates, SpotState> specialStates = new HashMap<>();
+    private final List<TurnChangeListener> childTurnChangeListeners = new ArrayList<>();
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
@@ -58,7 +61,12 @@ public class BoardState {
     }
 
     public void setSpotState(Coordinates coordinates, SpotState state) {
+        childTurnChangeListeners.add(state);
         specialStates.put(coordinates, state);
     }
 
+    @Override
+    public void onTurnChange(PlayerColor newTurnColor) {
+        childTurnChangeListeners.forEach(listener -> listener.onTurnChange(newTurnColor));
+    }
 }

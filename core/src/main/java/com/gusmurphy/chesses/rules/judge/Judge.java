@@ -20,6 +20,7 @@ public class Judge {
 
     public Judge(BoardState boardState) {
         this.boardState = boardState;
+        turnChangeListeners.add(boardState);
     }
 
     public void subscribeToTurnChange(TurnChangeListener listener) {
