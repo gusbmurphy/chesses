@@ -48,10 +48,6 @@ public class RelativeMovementStrategy implements MovementStrategy {
         }
     }
 
-    @Override
-    public void onPieceEvent(PieceEvent event, Piece piece) {
-    }
-
     static class MovementVector {
         public final int x;
         public final int y;
