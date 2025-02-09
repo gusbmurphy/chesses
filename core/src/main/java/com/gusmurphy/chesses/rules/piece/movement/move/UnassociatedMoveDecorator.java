@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class MoveDecorator implements UnassociatedMove {
+public abstract class UnassociatedMoveDecorator implements UnassociatedMove {
 
     private final UnassociatedMove wrappedMove;
 
-    MoveDecorator(UnassociatedMove move) {
+    UnassociatedMoveDecorator(UnassociatedMove move) {
         wrappedMove = move;
     }
 

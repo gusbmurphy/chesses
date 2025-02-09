@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequiredUnoccupiedSpaceMove extends MoveDecorator {
+public class RequiredUnoccupiedSpaceMove extends UnassociatedMoveDecorator {
 
     private final List<Coordinates> requiredSafeSpaces;
 

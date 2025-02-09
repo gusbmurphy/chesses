@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement.move;
 
 import com.gusmurphy.chesses.rules.piece.Piece;
 
-public class Move extends MoveDecorator {
+public class Move extends UnassociatedMoveDecorator {
 
     private final Piece movingPiece;
 

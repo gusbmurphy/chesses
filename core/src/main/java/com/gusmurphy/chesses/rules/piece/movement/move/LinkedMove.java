@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement.move;
 
 import java.util.Optional;
 
-public class LinkedMove extends MoveDecorator {
+public class LinkedMove extends UnassociatedMoveDecorator {
 
     private final Move linkedMove;
 
