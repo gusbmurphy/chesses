@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.Optional;
 public class TestJudge extends Judge {
 
     private Piece lastMovedPiece;
-    private List<PieceMove> possibleMoves = Collections.emptyList();
+    private List<Move> possibleMoves = Collections.emptyList();
 
     public TestJudge() {
         super(new BoardState());
     }
 
-    public void setPossibleMoves(List<PieceMove> moves) {
+    public void setPossibleMoves(List<Move> moves) {
         possibleMoves = moves;
     }
 
@@ -28,7 +28,7 @@ public class TestJudge extends Judge {
     }
 
     @Override
-    public List<PieceMove> getPossibleMoves() {
+    public List<Move> getPossibleMoves() {
         return possibleMoves;
     }
 

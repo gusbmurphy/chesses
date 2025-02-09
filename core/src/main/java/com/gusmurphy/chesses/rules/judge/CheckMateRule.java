@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class CheckMateRule extends JudgeDecorator {
     public void submitMove(Piece piece, Coordinates spot) {
         super.submitMove(piece, spot);
 
-        List<PieceMove> movesNow = getPossibleMoves();
+        List<Move> movesNow = getPossibleMoves();
         if (movesNow.isEmpty()) {
             notifyGameOverListeners(new GameOverEvent(GameOverEventType.CHECKMATE, piece.color()));
         }

@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
-    public List<PieceMove> getPossibleMoves() {
+    public List<Move> getPossibleMoves() {
         return wrappedJudge.getPossibleMoves();
     }
 

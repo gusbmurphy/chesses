@@ -20,7 +20,7 @@ public interface UnassociatedMove {
         return false;
     }
 
-    default Optional<PieceMove> linkedMove() {
+    default Optional<Move> linkedMove() {
         return Optional.empty();
     }
 

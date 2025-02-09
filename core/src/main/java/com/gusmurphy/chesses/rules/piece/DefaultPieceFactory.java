@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.board.File;
 import com.gusmurphy.chesses.rules.board.Rank;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 
@@ -86,7 +86,7 @@ public class DefaultPieceFactory {
     private static LinkedMovementStrategy createLinkedStrategy(int kingHorizontalMove, Coordinates rookMove, Piece rook) {
         return new LinkedMovementStrategy(
             new RelativeMovementStrategy(kingHorizontalMove, 0),
-            new PieceMove(new StaticMove(rookMove), rook)
+            new Move(new StaticMove(rookMove), rook)
         );
     }
 

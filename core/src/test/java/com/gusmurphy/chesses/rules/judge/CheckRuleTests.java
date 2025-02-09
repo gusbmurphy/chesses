@@ -4,7 +4,7 @@ import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.File;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class CheckRuleTests {
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
-        List<PieceMove> movesForKing = judge
+        List<Move> movesForKing = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
         assertFalse(movesForKing.stream().anyMatch(move -> move.spot().file() == File.D));
@@ -38,7 +38,7 @@ public class CheckRuleTests {
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
-        List<PieceMove> movesForRook = judge
+        List<Move> movesForRook = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
 
         assertTrue(movesForRook.stream().anyMatch(move -> move.spot() == D6));
@@ -57,7 +57,7 @@ public class CheckRuleTests {
         Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
         judge = new PlayerTurnRule(judge, WHITE);
-        List<PieceMove> moves = judge.getPossibleMoves();
+        List<Move> moves = judge.getPossibleMoves();
 
         assertEquals(1, moves.size());
         assertEquals(savingRook, moves.get(0).getMovingPiece());

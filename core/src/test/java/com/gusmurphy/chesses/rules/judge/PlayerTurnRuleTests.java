@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.PieceMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -66,13 +66,13 @@ public class PlayerTurnRuleTests {
     @MethodSource("oppositeColorPairs")
     void noMovesArePossibleForAPieceWithoutTheCurrentTurnColor(PlayerColor currentTurnColor, PlayerColor pieceColor) {
         TestJudge testJudge = new TestJudge();
-        testJudge.setPossibleMoves(Collections.singletonList(new PieceMove(new StaticMove(C5), DefaultPieces.king(pieceColor, C4))));
+        testJudge.setPossibleMoves(Collections.singletonList(new Move(new StaticMove(C5), DefaultPieces.king(pieceColor, C4))));
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
         TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
         turnAwareJudge.subscribeToTurnChange(turnEventListener);
 
-        List<PieceMove> possibleMoves = turnAwareJudge.getPossibleMoves();
+        List<Move> possibleMoves = turnAwareJudge.getPossibleMoves();
 
         assertTrue(possibleMoves.isEmpty());
     }

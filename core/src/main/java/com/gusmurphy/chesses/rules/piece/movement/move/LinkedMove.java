@@ -4,15 +4,15 @@ import java.util.Optional;
 
 public class LinkedMove extends MoveDecorator {
 
-    private final PieceMove linkedMove;
+    private final Move linkedMove;
 
-    public LinkedMove(UnassociatedMove wrappedMove, PieceMove linkedMove) {
+    public LinkedMove(UnassociatedMove wrappedMove, Move linkedMove) {
         super(wrappedMove);
         this.linkedMove = linkedMove;
     }
 
     @Override
-    public Optional<PieceMove> linkedMove() {
+    public Optional<Move> linkedMove() {
         return Optional.of(linkedMove);
     }
 

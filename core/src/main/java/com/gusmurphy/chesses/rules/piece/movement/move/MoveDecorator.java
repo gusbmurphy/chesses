@@ -42,7 +42,7 @@ public abstract class MoveDecorator implements UnassociatedMove {
     }
 
     @Override
-    public Optional<PieceMove> linkedMove() {
+    public Optional<Move> linkedMove() {
         return wrappedMove.linkedMove();
     }
 

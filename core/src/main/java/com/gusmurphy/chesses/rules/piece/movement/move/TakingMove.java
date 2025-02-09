@@ -4,7 +4,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class TakingMove extends PieceMove {
+public class TakingMove extends Move {
 
     private final Piece pieceToTake;
 
