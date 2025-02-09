@@ -137,7 +137,7 @@ public class Judge {
         List<Move> legalMoves = new ArrayList<>();
 
         SpotState spotState = boardState.getStateAt(move.spot());
-        if (spotState.pieceTakeableBy(move.getMovingPiece()).isPresent()) {
+        if (moveCanTake(move, spotState)) {
             legalMoves.add(new TakingMove(move.getMovingPiece(), move, spotState.pieceTakeableBy(move.getMovingPiece()).get()));
         } else if (!spotState.occupyingPiece().isPresent()) {
             legalMoves.add(move);
@@ -153,6 +153,10 @@ public class Judge {
         }
 
         return legalMoves;
+    }
+
+    private static boolean moveCanTake(Move move, SpotState spotState) {
+        return spotState.pieceTakeableBy(move.getMovingPiece()).isPresent();
     }
 
 }
