@@ -19,7 +19,7 @@ import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceOnScreen;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
-import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -114,7 +114,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
                 .getPossibleMoves()
                 .stream()
                 .filter(move -> move.getMovingPiece() == piece)
-                .map(UnassociatedMove::spot)
+                .map(Move::spot)
                 .collect(Collectors.toList());
             highlightedSpaces.addAll(possibleMoves);
             selectedPiece = piece;
