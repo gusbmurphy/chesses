@@ -6,7 +6,7 @@ public class PieceMove extends MoveDecorator {
 
     private final Piece movingPiece;
 
-    public PieceMove(Move move, Piece piece) {
+    public PieceMove(UnassociatedMove move, Piece piece) {
         super(move);
         movingPiece = piece;
     }

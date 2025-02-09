@@ -8,13 +8,13 @@ public class TakingMove extends PieceMove {
 
     private final Piece pieceToTake;
 
-    public TakingMove(Piece movingPiece, Move move, Piece pieceToTake) {
+    public TakingMove(Piece movingPiece, UnassociatedMove move, Piece pieceToTake) {
         super(move, movingPiece);
         this.pieceToTake = pieceToTake;
     }
 
     @Override
-    public Optional<Move> next() {
+    public Optional<UnassociatedMove> next() {
         return Optional.empty();
     }
 

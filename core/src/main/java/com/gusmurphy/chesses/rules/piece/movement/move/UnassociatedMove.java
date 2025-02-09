@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface Move {
+public interface UnassociatedMove {
 
     Coordinates spot();
-    Optional<Move> next();
+    Optional<UnassociatedMove> next();
     Optional<Piece> takes();
     boolean mustTake();
 

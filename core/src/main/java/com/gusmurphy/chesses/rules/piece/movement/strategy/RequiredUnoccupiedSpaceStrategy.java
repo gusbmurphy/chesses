@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.RequiredUnoccupiedSpaceMove;
 
 import java.util.List;
@@ -17,15 +17,15 @@ public class RequiredUnoccupiedSpaceStrategy extends MovementStrategyDecorator {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(Coordinates position) {
-        List<Move> moves = super.possibleMovesFrom(position);
+    public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
+        List<UnassociatedMove> moves = super.possibleMovesFrom(position);
         return moves
             .stream()
             .map(this::createSafeSpaceMove)
             .collect(Collectors.toList());
     }
 
-    private RequiredUnoccupiedSpaceMove createSafeSpaceMove(Move move) {
+    private RequiredUnoccupiedSpaceMove createSafeSpaceMove(UnassociatedMove move) {
         return new RequiredUnoccupiedSpaceMove(move, requiredSafeSpaces);
     }
 

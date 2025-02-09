@@ -6,7 +6,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class LinearMove implements Move {
+public class LinearMove implements UnassociatedMove {
 
     private final Coordinates from;
     private final Direction direction;
@@ -24,7 +24,7 @@ public class LinearMove implements Move {
     }
 
     @Override
-    public Optional<Move> next() {
+    public Optional<UnassociatedMove> next() {
         int remainingDistance = distance - 1;
 
         if (remainingDistance >= 0) {

@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class StaticMove implements Move {
+public class StaticMove implements UnassociatedMove {
     private final Coordinates spot;
 
     public StaticMove(Coordinates spot) {
@@ -18,7 +18,7 @@ public class StaticMove implements Move {
     }
 
     @Override
-    public Optional<Move> next() {
+    public Optional<UnassociatedMove> next() {
         return Optional.empty();
     }
 

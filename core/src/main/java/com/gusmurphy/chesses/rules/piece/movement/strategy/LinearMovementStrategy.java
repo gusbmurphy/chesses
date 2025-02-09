@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.Direction;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.LinearMove;
-import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,12 +32,12 @@ public class LinearMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(Coordinates position) {
-        ArrayList<Move> moves = new ArrayList<>();
+    public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
+        ArrayList<UnassociatedMove> moves = new ArrayList<>();
 
         for (Direction direction : directions) {
             position.coordinatesToThe(direction).ifPresent(moveStart -> {
-                Move move = new LinearMove(moveStart, direction, maxDistance - 1);
+                UnassociatedMove move = new LinearMove(moveStart, direction, maxDistance - 1);
                 moves.add(move);
             });
         }

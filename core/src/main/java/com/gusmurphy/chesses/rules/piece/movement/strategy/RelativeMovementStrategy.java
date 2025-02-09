@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.coordinates.BoardCoordinatesXyAdapter;
-import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class RelativeMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(Coordinates position) {
-        List<Move> moves = new ArrayList<>();
+    public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
+        List<UnassociatedMove> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
             Optional<Coordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
             moveSpot.ifPresent(spot -> moves.add(new StaticMove(spot)));

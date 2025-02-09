@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class EnPassantMove implements Move {
+public class EnPassantMove implements UnassociatedMove {
 
     private final Coordinates to;
     private final Coordinates effectedCoordinates;
@@ -33,7 +33,7 @@ public class EnPassantMove implements Move {
     }
 
     @Override
-    public Optional<Move> next() {
+    public Optional<UnassociatedMove> next() {
         return Optional.empty();
     }
 

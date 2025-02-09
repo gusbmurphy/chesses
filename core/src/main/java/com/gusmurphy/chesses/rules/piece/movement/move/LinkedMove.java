@@ -6,7 +6,7 @@ public class LinkedMove extends MoveDecorator {
 
     private final PieceMove linkedMove;
 
-    public LinkedMove(Move wrappedMove, PieceMove linkedMove) {
+    public LinkedMove(UnassociatedMove wrappedMove, PieceMove linkedMove) {
         super(wrappedMove);
         this.linkedMove = linkedMove;
     }

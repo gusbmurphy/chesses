@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class MoveDecorator implements Move {
+public abstract class MoveDecorator implements UnassociatedMove {
 
-    private final Move wrappedMove;
+    private final UnassociatedMove wrappedMove;
 
-    MoveDecorator(Move move) {
+    MoveDecorator(UnassociatedMove move) {
         wrappedMove = move;
     }
 
@@ -22,7 +22,7 @@ public abstract class MoveDecorator implements Move {
     }
 
     @Override
-    public Optional<Move> next() {
+    public Optional<UnassociatedMove> next() {
         return wrappedMove.next();
     }
 

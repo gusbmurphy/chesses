@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.piece.movement.move;
 
 public class MustTakeMove extends MoveDecorator {
 
-    public MustTakeMove(Move move) {
+    public MustTakeMove(UnassociatedMove move) {
         super(move);
     }
 

@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.piece.movement.strategy;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,8 +19,8 @@ public class CompositeMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public List<Move> possibleMovesFrom(Coordinates position) {
-        List<Move> moves = new ArrayList<>();
+    public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
+        List<UnassociatedMove> moves = new ArrayList<>();
         strategies.forEach(strategy -> moves.addAll(strategy.possibleMovesFrom(position)));
         return moves.stream().distinct().collect(Collectors.toList());
     }

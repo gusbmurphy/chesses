@@ -9,7 +9,7 @@ public class RequiredUnoccupiedSpaceMove extends MoveDecorator {
 
     private final List<Coordinates> requiredSafeSpaces;
 
-    public RequiredUnoccupiedSpaceMove(Move move, List<Coordinates> requiredUnoccupiedSpaces) {
+    public RequiredUnoccupiedSpaceMove(UnassociatedMove move, List<Coordinates> requiredUnoccupiedSpaces) {
         super(move);
         this.requiredSafeSpaces = requiredUnoccupiedSpaces;
     }
