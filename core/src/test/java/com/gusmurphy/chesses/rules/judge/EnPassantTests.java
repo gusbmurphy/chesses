@@ -79,7 +79,7 @@ public class EnPassantTests {
         Piece whiteBishop = DefaultPieces.bishop(WHITE, H6);
         Piece blackBishop = DefaultPieces.bishop(BLACK, H4);
 
-        BoardState boardState = new BoardState(whitePawn, blackPawn);
+        BoardState boardState = new BoardState(whitePawn, blackPawn, whiteBishop, blackBishop);
         Judge judge = new PlayerTurnRule(new Judge(boardState), WHITE);
 
         judge.submitMove(whitePawn, E4);

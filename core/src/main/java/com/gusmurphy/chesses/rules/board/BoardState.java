@@ -17,6 +17,7 @@ public class BoardState implements TurnChangeListener {
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
+        piecesOnBoard.forEach(piece -> piece.setBoardState(this));
     }
 
     public BoardState(BoardState other) {
@@ -26,9 +27,11 @@ public class BoardState implements TurnChangeListener {
                 .map(Piece::new)
                 .collect(Collectors.toList())
         );
+        piecesOnBoard.forEach(piece -> piece.setBoardState(this));
     }
 
     public void place(Piece piece) {
+        piece.setBoardState(this);
         piecesOnBoard.add(piece);
     }
 

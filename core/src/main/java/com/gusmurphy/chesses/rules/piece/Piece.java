@@ -1,13 +1,17 @@
 package com.gusmurphy.chesses.rules.piece;
 
+import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
+import com.gusmurphy.chesses.rules.board.SpotState;
 import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.rules.piece.movement.move.TakingMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
 import com.gusmurphy.chesses.rules.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,7 @@ public class Piece {
     private Coordinates coordinates;
     private final PieceType type;
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
+    private BoardState boardState;
 
     // TODO: These constructors are ugly
     public Piece(
@@ -57,6 +62,10 @@ public class Piece {
         type = other.type;
     }
 
+    public void setBoardState(BoardState boardState) {
+        this.boardState = boardState;
+    }
+
     public boolean isCheckable() {
         return type == PieceType.KING;
     }
@@ -66,11 +75,20 @@ public class Piece {
     }
 
     public List<Move> currentPossibleMoves() {
-        return movementStrategy
+        List<Move> moves = movementStrategy
             .possibleMovesFrom(coordinates)
             .stream()
             .map(move -> new Move(move, this))
             .collect(Collectors.toList());
+
+        List<Move> legalMoves = moves.stream().map(this::getAllLegalMovesFor).flatMap(List::stream).collect(Collectors.toList());
+
+        legalMoves = filterMustTakeMoves(legalMoves);
+        legalMoves = filterRequiredUnoccupiedMoves(legalMoves);
+        legalMoves = filterTakeDisallowedMoves(legalMoves);
+        legalMoves = uniqueMovesBySpot(legalMoves);
+
+        return legalMoves;
     }
 
     public Coordinates getCoordinates() {
@@ -96,6 +114,77 @@ public class Piece {
 
     protected void setMovementStrategy(MovementStrategy strategy) {
         this.movementStrategy = strategy;
+    }
+
+    private List<Move> getAllLegalMovesFor(Move move) {
+        List<Move> legalMoves = new ArrayList<>();
+
+        SpotState spotState = boardState.getStateAt(move.spot());
+        if (moveCanTake(move, spotState)) {
+            addTakingMove(move, legalMoves, spotState);
+        } else if (noPieceAt(spotState)) {
+            addMoveAndAnyContinuedMoves(move, legalMoves);
+        }
+
+        return legalMoves;
+    }
+
+    private static boolean moveCanTake(Move move, SpotState spotState) {
+        return spotState.pieceTakeableBy(move.getMovingPiece()).isPresent();
+    }
+
+    private static void addTakingMove(Move move, List<Move> legalMoves, SpotState spotState) {
+        legalMoves.add(new TakingMove(move.getMovingPiece(), move, spotState.pieceTakeableBy(move.getMovingPiece()).get()));
+    }
+
+    private static boolean noPieceAt(SpotState spotState) {
+        return !spotState.occupyingPiece().isPresent();
+    }
+
+    private void addMoveAndAnyContinuedMoves(Move move, List<Move> legalMoves) {
+        legalMoves.add(move);
+        List<Move> continuedMoves = new ArrayList<>();
+
+        move.next().map(nextMove ->
+            continuedMoves.addAll(
+                getAllLegalMovesFor(new Move(nextMove, move.getMovingPiece()))
+            )
+        );
+
+        legalMoves.addAll(continuedMoves);
+    }
+
+    private static List<Move> filterMustTakeMoves(List<Move> legalMoves) {
+        return legalMoves.stream().filter(move -> {
+            if (move.mustTake()) {
+                return move.takes().isPresent();
+            }
+            return true;
+        }).collect(Collectors.toList());
+    }
+
+    private List<Move> filterRequiredUnoccupiedMoves(List<Move> legalMoves) {
+        return legalMoves.stream().filter(move -> {
+            for (Coordinates safeSpace : move.requiredUnoccupiedSpaces()) {
+                if (boardState.getStateAt(safeSpace).occupyingPiece().isPresent()) return false;
+            }
+            return true;
+        }).collect(Collectors.toList());
+    }
+
+    private static List<Move> filterTakeDisallowedMoves(List<Move> legalMoves) {
+        return legalMoves
+            .stream()
+            .filter(move -> !move.takeDisallowed() || !move.takes().isPresent())
+            .collect(Collectors.toList());
+    }
+
+    private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
+        HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
+        for (Move move : actualMoves) {
+            movesBySpot.put(move.spot(), move);
+        }
+        return new ArrayList<>(movesBySpot.values());
     }
 
 }
