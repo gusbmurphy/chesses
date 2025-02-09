@@ -4,12 +4,12 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class TakingMove extends MoveDecorator {
+public class TakingMove extends PieceMove {
 
     private final Piece pieceToTake;
 
-    public TakingMove(Move move, Piece pieceToTake) {
-        super(move);
+    public TakingMove(Piece movingPiece, Move move, Piece pieceToTake) {
+        super(move, movingPiece);
         this.pieceToTake = pieceToTake;
     }
 
