@@ -141,20 +141,16 @@ public class Judge {
             legalMoves.add(new TakingMove(move.getMovingPiece(), move, spotState.pieceTakeableBy(move.getMovingPiece()).get()));
         } else if (!spotState.occupyingPiece().isPresent()) {
             legalMoves.add(move);
-            legalMoves.addAll(getAllLegalMovesContinuingFrom(move));
+            List<Move> continuedMoves = new ArrayList<>();
+
+            move.next().map(nextMove ->
+                continuedMoves.addAll(
+                    getAllLegalMovesFor(new Move(nextMove, move.getMovingPiece()))
+                )
+            );
+
+            legalMoves.addAll(continuedMoves);
         }
-
-        return legalMoves;
-    }
-
-    private List<Move> getAllLegalMovesContinuingFrom(Move move) {
-        List<Move> legalMoves = new ArrayList<>();
-
-        move.next().map(nextMove ->
-            legalMoves.addAll(
-                getAllLegalMovesFor(new Move(nextMove, move.getMovingPiece()))
-            )
-        );
 
         return legalMoves;
     }
