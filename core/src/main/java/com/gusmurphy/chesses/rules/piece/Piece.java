@@ -93,12 +93,14 @@ public class Piece {
     }
 
     public boolean threatens(PlayerColor otherColor, Coordinates coordinates) {
-        Optional<Move> moveAtSpot = currentPossibleMoves()
+        if (otherColor == color) {
+            return false;
+        }
+
+        return currentPossibleMoves()
             .stream()
             .filter(move -> move.spot() == coordinates)
-            .findFirst();
-
-        return moveAtSpot.isPresent() && otherColor != color && !moveAtSpot.get().takeDisallowed();
+            .anyMatch(move -> !move.takeDisallowed());
     }
 
     public Coordinates getCoordinates() {
