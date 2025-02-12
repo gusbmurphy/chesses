@@ -49,13 +49,19 @@ public class DefaultPieceFactory {
             Coordinates.with(File.B, rank)
         );
         leftCastlingStrategy = new RequiredUnoccupiedSpaceStrategy(leftUnoccupiedSpaces, leftCastlingStrategy);
+        List<Coordinates> leftSafeSpaces = Arrays.asList(
+            Coordinates.with(File.D, rank),
+            Coordinates.with(File.C, rank)
+        );
+        leftCastlingStrategy = new RequiredSafeSpaceStrategy(leftSafeSpaces, leftCastlingStrategy);
 
         MovementStrategy rightCastlingStrategy = createRightCastlingStrategy(color, rank);
-        List<Coordinates> rightUnoccupiedSpaces = Arrays.asList(
+        List<Coordinates> rightUnoccupiedAndSafeSpaces = Arrays.asList(
             Coordinates.with(File.F, rank),
             Coordinates.with(File.G, rank)
         );
-        rightCastlingStrategy = new RequiredUnoccupiedSpaceStrategy(rightUnoccupiedSpaces, rightCastlingStrategy);
+        rightCastlingStrategy = new RequiredUnoccupiedSpaceStrategy(rightUnoccupiedAndSafeSpaces, rightCastlingStrategy);
+        rightCastlingStrategy = new RequiredSafeSpaceStrategy(rightUnoccupiedAndSafeSpaces, rightCastlingStrategy);
 
         MovementStrategy compositeStrategy = new CompositeMovementStrategy(
             leftCastlingStrategy, rightCastlingStrategy

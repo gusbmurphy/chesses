@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 
 public class RequiredUnoccupiedSpaceStrategy extends MovementStrategyDecorator {
 
-    private final List<Coordinates> requiredSafeSpaces;
+    private final List<Coordinates> requiredUnoccupiedSpaces;
 
-    public RequiredUnoccupiedSpaceStrategy(List<Coordinates> requiredSafeSpaces, MovementStrategy base) {
+    public RequiredUnoccupiedSpaceStrategy(List<Coordinates> requiredUnoccupiedSpaces, MovementStrategy base) {
         super(base);
-        this.requiredSafeSpaces = requiredSafeSpaces;
+        this.requiredUnoccupiedSpaces = requiredUnoccupiedSpaces;
     }
 
     @Override
@@ -21,12 +21,12 @@ public class RequiredUnoccupiedSpaceStrategy extends MovementStrategyDecorator {
         List<UnassociatedMove> moves = super.possibleMovesFrom(position);
         return moves
             .stream()
-            .map(this::createSafeSpaceMove)
+            .map(this::createUnoccupiedSpaceMove)
             .collect(Collectors.toList());
     }
 
-    private RequiredUnoccupiedSpaceMove createSafeSpaceMove(UnassociatedMove move) {
-        return new RequiredUnoccupiedSpaceMove(move, requiredSafeSpaces);
+    private RequiredUnoccupiedSpaceMove createUnoccupiedSpaceMove(UnassociatedMove move) {
+        return new RequiredUnoccupiedSpaceMove(move, requiredUnoccupiedSpaces);
     }
 
 }

@@ -52,6 +52,11 @@ public abstract class UnassociatedMoveDecorator implements UnassociatedMove {
     }
 
     @Override
+    public List<Coordinates> requiredSafeSpaces() {
+        return wrappedMove.requiredSafeSpaces();
+    }
+
+    @Override
     public Map<Coordinates, SpotState> effectedSpots() {
         return wrappedMove.effectedSpots();
     }

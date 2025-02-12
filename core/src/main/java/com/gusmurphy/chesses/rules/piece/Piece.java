@@ -86,6 +86,7 @@ public class Piece {
 
         legalMoves = filterMustTakeMoves(legalMoves);
         legalMoves = filterRequiredUnoccupiedMoves(legalMoves);
+        legalMoves = filterSafeSpaceMoves(legalMoves);
         legalMoves = filterTakeDisallowedMoves(legalMoves);
         legalMoves = uniqueMovesBySpot(legalMoves);
 
@@ -182,6 +183,18 @@ public class Piece {
             }
             return true;
         }).collect(Collectors.toList());
+    }
+
+    private List<Move> filterSafeSpaceMoves(List<Move> moves) {
+        return moves
+            .stream()
+            .filter(move -> {
+                for (Coordinates safeSpace : move.requiredSafeSpaces()) {
+                    if (boardState.getAllPieces().stream().anyMatch(piece -> piece.threatens(color, safeSpace))) return false;
+                }
+                return true;
+            })
+            .collect(Collectors.toList());
     }
 
     private static List<Move> filterTakeDisallowedMoves(List<Move> legalMoves) {

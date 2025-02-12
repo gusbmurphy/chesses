@@ -28,6 +28,10 @@ public interface UnassociatedMove {
         return Collections.emptyList();
     }
 
+    default List<Coordinates> requiredSafeSpaces() {
+        return Collections.emptyList();
+    }
+
     default Map<Coordinates, SpotState> effectedSpots() {
         return Collections.emptyMap();
     }
