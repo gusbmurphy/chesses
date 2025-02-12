@@ -7,8 +7,7 @@ import java.util.Optional;
 
 import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PieceTests {
 
@@ -35,6 +34,14 @@ public class PieceTests {
         BoardState board = new BoardState(piece);
 
         assertTrue(piece.threatens(WHITE, D5));
+    }
+
+    @Test
+    void aPieceDoesNotThreatenASpotOfTheSameColorThatItCanTake() {
+        Piece piece = DefaultPieces.rook(BLACK, D4);
+        BoardState board = new BoardState(piece);
+
+        assertFalse(piece.threatens(BLACK, D5));
     }
 
 }
