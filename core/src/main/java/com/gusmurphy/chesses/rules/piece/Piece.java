@@ -40,6 +40,7 @@ public class Piece {
         eventListeners.add(movementStrategy);
     }
 
+    // TODO: Remove these other constructors
     public Piece(MovementStrategy strategy, Coordinates coordinates) {
         this(
             PlayerColor.WHITE,
