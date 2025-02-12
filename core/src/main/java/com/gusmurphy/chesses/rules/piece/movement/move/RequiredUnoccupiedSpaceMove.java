@@ -7,17 +7,17 @@ import java.util.List;
 
 public class RequiredUnoccupiedSpaceMove extends UnassociatedMoveDecorator {
 
-    private final List<Coordinates> requiredSafeSpaces;
+    private final List<Coordinates> requiredUnoccupiedSpaces;
 
     public RequiredUnoccupiedSpaceMove(UnassociatedMove move, List<Coordinates> requiredUnoccupiedSpaces) {
         super(move);
-        this.requiredSafeSpaces = requiredUnoccupiedSpaces;
+        this.requiredUnoccupiedSpaces = requiredUnoccupiedSpaces;
     }
 
     @Override
     public List<Coordinates> requiredUnoccupiedSpaces() {
         ArrayList<Coordinates> allRequiredUnoccupiedSpaces = new ArrayList<>(super.requiredUnoccupiedSpaces());
-        allRequiredUnoccupiedSpaces.addAll(requiredSafeSpaces);
+        allRequiredUnoccupiedSpaces.addAll(requiredUnoccupiedSpaces);
         return allRequiredUnoccupiedSpaces;
     }
 
