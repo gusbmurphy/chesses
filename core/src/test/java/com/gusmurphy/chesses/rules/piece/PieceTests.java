@@ -31,7 +31,7 @@ public class PieceTests {
     @Test
     void aPieceThreatensASpotOfTheOppositeColorThatItCanTake() {
         Piece piece = DefaultPieces.rook(BLACK, D4);
-        BoardState board = new BoardState(piece);
+        new BoardState(piece);
 
         assertTrue(piece.threatens(WHITE, D5));
     }
@@ -39,7 +39,7 @@ public class PieceTests {
     @Test
     void aPieceDoesNotThreatenASpotOfTheSameColorThatItCanTake() {
         Piece piece = DefaultPieces.rook(BLACK, D4);
-        BoardState board = new BoardState(piece);
+        new BoardState(piece);
 
         assertFalse(piece.threatens(BLACK, D5));
     }
