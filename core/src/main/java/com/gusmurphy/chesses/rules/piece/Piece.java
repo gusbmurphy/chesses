@@ -13,6 +13,7 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Piece {
@@ -89,6 +90,15 @@ public class Piece {
         legalMoves = uniqueMovesBySpot(legalMoves);
 
         return legalMoves;
+    }
+
+    public boolean threatens(PlayerColor otherColor, Coordinates coordinates) {
+        Optional<Move> moveAtSpot = currentPossibleMoves()
+            .stream()
+            .filter(move -> move.spot() == coordinates)
+            .findFirst();
+
+        return moveAtSpot.isPresent() && otherColor != color;
     }
 
     public Coordinates getCoordinates() {
