@@ -31,12 +31,12 @@ public class DefaultPieceFactory {
         MovementStrategy castlingStrategy = createFullCastlingStrategy(color);
 
         Coordinates position = color == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
-        return new Piece(
-            color,
-            new CompositeMovementStrategy(base, castlingStrategy),
-            position,
-            KING
-        );
+        return new PieceBuilder()
+            .color(color)
+            .movementStrategy(new CompositeMovementStrategy(base, castlingStrategy))
+            .startingCoordinates(position)
+            .type(KING)
+            .build();
     }
 
     private MovementStrategy createFullCastlingStrategy(PlayerColor color) {

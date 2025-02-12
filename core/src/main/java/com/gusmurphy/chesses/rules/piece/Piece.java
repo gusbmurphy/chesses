@@ -25,7 +25,7 @@ public class Piece {
     private BoardState boardState;
 
     // TODO: These constructors are ugly
-    public Piece(
+    protected Piece(
         PlayerColor color,
         MovementStrategy movementStrategy,
         Coordinates coordinates,
