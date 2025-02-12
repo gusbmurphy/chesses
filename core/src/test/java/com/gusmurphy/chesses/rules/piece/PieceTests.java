@@ -44,4 +44,12 @@ public class PieceTests {
         assertFalse(piece.threatens(BLACK, D5));
     }
 
+    @Test
+    void aPieceDoesNotThreatenASpotItCantTake() {
+        Piece piece = DefaultPieces.rook(BLACK, D4);
+        new BoardState(piece);
+
+        assertFalse(piece.threatens(WHITE, E7));
+    }
+
 }
