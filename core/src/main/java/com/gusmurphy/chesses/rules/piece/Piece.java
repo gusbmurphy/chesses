@@ -98,7 +98,7 @@ public class Piece {
             .filter(move -> move.spot() == coordinates)
             .findFirst();
 
-        return moveAtSpot.isPresent() && otherColor != color;
+        return moveAtSpot.isPresent() && otherColor != color && !moveAtSpot.get().takeDisallowed();
     }
 
     public Coordinates getCoordinates() {

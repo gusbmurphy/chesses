@@ -1,6 +1,9 @@
 package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.NoTakeMovementStrategy;
+import com.gusmurphy.chesses.rules.piece.movement.strategy.RelativeMovementStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -50,6 +53,17 @@ public class PieceTests {
         new BoardState(piece);
 
         assertFalse(piece.threatens(WHITE, E7));
+    }
+
+    @Test
+    void aPieceDoesNotThreatenASpotItCanMoveToButNotTake() {
+        MovementStrategy movementStrategy = new NoTakeMovementStrategy(
+            new RelativeMovementStrategy(1, 0)
+        );
+        Piece piece = new Piece(WHITE, movementStrategy, D3, PieceType.BISHOP);
+        new BoardState(piece);
+
+        assertFalse(piece.threatens(BLACK, E3));
     }
 
 }
