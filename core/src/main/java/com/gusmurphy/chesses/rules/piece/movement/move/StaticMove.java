@@ -6,15 +6,15 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 import java.util.Optional;
 
 public class StaticMove implements UnassociatedMove {
-    private final Coordinates spot;
+    private final Coordinates coordinates;
 
-    public StaticMove(Coordinates spot) {
-        this.spot = spot;
+    public StaticMove(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override
     public Coordinates coordinates() {
-        return spot;
+        return coordinates;
     }
 
     @Override

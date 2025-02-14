@@ -20,9 +20,9 @@ public class PlayerTurnRule extends JudgeDecorator {
     }
 
     @Override
-    public void submitMove(Piece piece, Coordinates spot) {
+    public void submitMove(Piece piece, Coordinates coordinates) {
         if (piece.color() == currentTurnColor) {
-            super.submitMove(piece, spot);
+            super.submitMove(piece, coordinates);
             currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
             notifyTurnChangeListeners(currentTurnColor);
         }

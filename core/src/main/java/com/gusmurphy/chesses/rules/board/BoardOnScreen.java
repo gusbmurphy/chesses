@@ -126,8 +126,8 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     @Override
     public void onPieceReleased(Piece piece, Vector2 screenPosition) {
         if (selectedPiece == piece) {
-            Optional<Coordinates> releaseSpot = getBoardCoordinatesOfScreenPosition(screenPosition);
-            releaseSpot.ifPresent(spot -> movePieceToSpotIfLegalAndClearHighlights(piece, releaseSpot.get()));
+            Optional<Coordinates> releaseCoordinates = getBoardCoordinatesOfScreenPosition(screenPosition);
+            releaseCoordinates.ifPresent(coordinates -> movePieceToCoordinatesIfLegalAndClearHighlights(piece, releaseCoordinates.get()));
             selectedPiece = null;
             PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
             pieceOnScreen.setDragStatus(false);
@@ -183,9 +183,9 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
-    private void movePieceToSpotIfLegalAndClearHighlights(Piece piece, Coordinates releaseSpot) {
-        if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.coordinates() == releaseSpot)) {
-            judge.submitMove(piece, releaseSpot);
+    private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
+        if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.coordinates() == coordinates)) {
+            judge.submitMove(piece, coordinates);
             highlightedSpaces.clear();
         }
     }

@@ -32,7 +32,7 @@ public class PieceTests {
     }
 
     @Test
-    void aPieceThreatensASpotOfTheOppositeColorThatItCanTake() {
+    void aPieceThreatensAcoordinatesOfTheOppositeColorThatItCanTake() {
         Piece piece = DefaultPieces.rook(BLACK, D4);
         new BoardState(piece);
 
@@ -40,7 +40,7 @@ public class PieceTests {
     }
 
     @Test
-    void aPieceDoesNotThreatenASpotOfTheSameColorThatItCanTake() {
+    void aPieceDoesNotThreatenAcoordinatesOfTheSameColorThatItCanTake() {
         Piece piece = DefaultPieces.rook(BLACK, D4);
         new BoardState(piece);
 
@@ -48,7 +48,7 @@ public class PieceTests {
     }
 
     @Test
-    void aPieceDoesNotThreatenASpotItCantTake() {
+    void aPieceDoesNotThreatenAcoordinatesItCantTake() {
         Piece piece = DefaultPieces.rook(BLACK, D4);
         new BoardState(piece);
 
@@ -56,7 +56,7 @@ public class PieceTests {
     }
 
     @Test
-    void aPieceDoesNotThreatenASpotItCanMoveToButNotTake() {
+    void aPieceDoesNotThreatenAcoordinatesItCanMoveToButNotTake() {
         MovementStrategy movementStrategy = new NoTakeMovementStrategy(
             new RelativeMovementStrategy(1, 0)
         );

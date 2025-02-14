@@ -17,8 +17,8 @@ public class CoordinateTests {
 
     @ParameterizedTest
     @MethodSource("adjacentDirections")
-    void directionFromOneSpotToTheOtherIsCorrectlyDetermined(Coordinates spot, Direction expected) {
-        assertEquals(D4.directionTo(spot), expected);
+    void directionFromOnecoordinatesToTheOtherIsCorrectlyDetermined(Coordinates coordinates, Direction expected) {
+        assertEquals(D4.directionTo(coordinates), expected);
     }
 
     private static Stream<Arguments> adjacentDirections() {

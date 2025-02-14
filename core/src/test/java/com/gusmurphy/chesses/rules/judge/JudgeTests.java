@@ -45,7 +45,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("okayMoves")
-    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(Coordinates spot) {
+    void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(Coordinates coordinates) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(Arrays.asList(Direction.values()), 1);
         Piece piece = new PieceBuilder()
             .color(BLACK)
@@ -59,7 +59,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == spot));
+        assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == coordinates));
     }
 
     private static Stream<Arguments> okayMoves() {
@@ -103,7 +103,7 @@ public class JudgeTests {
     @ParameterizedTest
     @MethodSource("blockedMoves")
     void aPieceCannotMovePastAnotherPieceOfTheSameColor(
-        Coordinates otherPiecePosition, Coordinates spot, PlayerColor color
+        Coordinates otherPiecePosition, Coordinates coordinates, PlayerColor color
     ) {
         MovementStrategy movementStrategy = new LinearMovementStrategy(
             Arrays.asList(Direction.N, Direction.E), 5
@@ -126,7 +126,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == spot));
+        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == coordinates));
     }
 
     private static Stream<Arguments> blockedMoves() {
@@ -137,7 +137,7 @@ public class JudgeTests {
     }
 
     @ParameterizedTest
-    @MethodSource("singleSpotMoves")
+    @MethodSource("singlecoordinatesMoves")
     void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
         Direction direction, Coordinates expected
     ) {
@@ -153,7 +153,7 @@ public class JudgeTests {
         assertEquals(expected, possibleMoves.get(0).coordinates());
     }
 
-    private static Stream<Arguments> singleSpotMoves() {
+    private static Stream<Arguments> singlecoordinatesMoves() {
         return Stream.of(
             Arguments.of(Direction.N, D5),
             Arguments.of(Direction.NE, E5),
@@ -195,7 +195,7 @@ public class JudgeTests {
     }
 
     @Test
-    void weCouldAlsoMoveTwoSpotsInOneDirection() {
+    void weCouldAlsoMoveTwocoordinatessInOneDirection() {
         MovementStrategy strategy = new LinearMovementStrategy(Collections.singletonList(Direction.N), 2);
         Piece piece = new Piece(strategy, B2);
 
@@ -247,7 +247,7 @@ public class JudgeTests {
     }
 
     @Test
-    void aRelativeStrategyOnlyGoesToCertainSpotsRelativeToTheCurrentOne() {
+    void aRelativeStrategyOnlyGoesToCertaincoordinatessRelativeToTheCurrentOne() {
         RelativeMovementStrategy partOne = new RelativeMovementStrategy(1, 2);
         RelativeMovementStrategy partTwo = new RelativeMovementStrategy(-2, 3);
         MovementStrategy fullStrategy = new RelativeMovementStrategy(partOne, partTwo);
@@ -354,7 +354,7 @@ public class JudgeTests {
 
     @ParameterizedTest
     @MethodSource("oppositeColorPairs")
-    void aMoveOntoASpotOccupiedByAnotherPieceOfTheOppositeColorTakesThatPiece(PlayerColor takingColor, PlayerColor takenColor) {
+    void aMoveOntoAcoordinatesOccupiedByAnotherPieceOfTheOppositeColorTakesThatPiece(PlayerColor takingColor, PlayerColor takenColor) {
         MovementStrategy linear = new LinearMovementStrategy(Collections.singletonList(S), 1);
 
         Piece piece = new PieceBuilder()

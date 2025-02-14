@@ -32,7 +32,7 @@ public interface UnassociatedMove {
         return Collections.emptyList();
     }
 
-    default Map<Coordinates, SquareState> effectedSpots() {
+    default Map<Coordinates, SquareState> effectedcoordinatess() {
         return Collections.emptyMap();
     }
 

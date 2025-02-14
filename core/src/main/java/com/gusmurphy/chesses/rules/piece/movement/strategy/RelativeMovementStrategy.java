@@ -27,8 +27,8 @@ public class RelativeMovementStrategy implements MovementStrategy {
     public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
         List<UnassociatedMove> moves = new ArrayList<>();
         for (MovementVector vector : movementVectors) {
-            Optional<Coordinates> moveSpot = getPositionAtVectorFromOther(vector, position);
-            moveSpot.ifPresent(spot -> moves.add(new StaticMove(spot)));
+            Optional<Coordinates> movecoordinates = getPositionAtVectorFromOther(vector, position);
+            movecoordinates.ifPresent(coordinates -> moves.add(new StaticMove(coordinates)));
         }
         return moves;
     }

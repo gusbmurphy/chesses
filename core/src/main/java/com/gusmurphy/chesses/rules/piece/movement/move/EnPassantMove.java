@@ -21,10 +21,10 @@ public class EnPassantMove implements UnassociatedMove {
     }
 
     @Override
-    public Map<Coordinates, SquareState> effectedSpots() {
-        Map<Coordinates, SquareState> effectedSpots = new HashMap<>();
-        effectedSpots.put(effectedCoordinates, effectedState);
-        return effectedSpots;
+    public Map<Coordinates, SquareState> effectedcoordinatess() {
+        Map<Coordinates, SquareState> effectedcoordinatess = new HashMap<>();
+        effectedcoordinatess.put(effectedCoordinates, effectedState);
+        return effectedcoordinatess;
     }
 
     @Override

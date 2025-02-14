@@ -28,8 +28,8 @@ public class Judge {
         gameOverListeners.add(listener);
     }
 
-    public void submitMove(Piece piece, Coordinates spot) {
-        piece.currentPossibleMoves().stream().filter(move -> move.coordinates() == spot).findFirst().ifPresent(this::makeLegalMove);
+    public void submitMove(Piece piece, Coordinates coordinates) {
+        piece.currentPossibleMoves().stream().filter(move -> move.coordinates() == coordinates).findFirst().ifPresent(this::makeLegalMove);
     }
 
     public List<Move> getPossibleMoves() {
@@ -52,7 +52,7 @@ public class Judge {
         takeOtherPieceIfPresent(move);
         moveMovingPiece(move);
         makeLinkedMoveIfPresent(move);
-        distributeAnyEffectedSpots(move);
+        distributeAnyEffectedcoordinatess(move);
     }
 
     private void takeOtherPieceIfPresent(Move move) {
@@ -70,10 +70,10 @@ public class Judge {
         move.linkedMove().ifPresent(Judge::moveMovingPiece);
     }
 
-    private void distributeAnyEffectedSpots(Move move) {
-        Map<Coordinates, SquareState> effectedSpots = move.effectedSpots();
-        for (Map.Entry<Coordinates, SquareState> entry : effectedSpots.entrySet()) {
-            boardState.setSpotState(entry.getKey(), entry.getValue());
+    private void distributeAnyEffectedcoordinatess(Move move) {
+        Map<Coordinates, SquareState> effectedcoordinatess = move.effectedcoordinatess();
+        for (Map.Entry<Coordinates, SquareState> entry : effectedcoordinatess.entrySet()) {
+            boardState.setSquareState(entry.getKey(), entry.getValue());
         }
     }
 

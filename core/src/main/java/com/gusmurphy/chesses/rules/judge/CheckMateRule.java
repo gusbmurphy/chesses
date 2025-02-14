@@ -13,8 +13,8 @@ public class CheckMateRule extends JudgeDecorator {
     }
 
     @Override
-    public void submitMove(Piece piece, Coordinates spot) {
-        super.submitMove(piece, spot);
+    public void submitMove(Piece piece, Coordinates coordinates) {
+        super.submitMove(piece, coordinates);
 
         List<Move> movesNow = getPossibleMoves();
         if (movesNow.isEmpty()) {

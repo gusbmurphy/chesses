@@ -88,7 +88,7 @@ public class Piece {
         legalMoves = filterRequiredUnoccupiedMoves(legalMoves);
         legalMoves = filterSafeSpaceMoves(legalMoves);
         legalMoves = filterTakeDisallowedMoves(legalMoves);
-        legalMoves = uniqueMovesBySpot(legalMoves);
+        legalMoves = uniqueMovesBycoordinates(legalMoves);
 
         return legalMoves;
     }
@@ -204,12 +204,12 @@ public class Piece {
             .collect(Collectors.toList());
     }
 
-    private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
-        HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
+    private static ArrayList<Move> uniqueMovesBycoordinates(List<Move> actualMoves) {
+        HashMap<Coordinates, Move> movesBycoordinates = new HashMap<>();
         for (Move move : actualMoves) {
-            movesBySpot.put(move.coordinates(), move);
+            movesBycoordinates.put(move.coordinates(), move);
         }
-        return new ArrayList<>(movesBySpot.values());
+        return new ArrayList<>(movesBycoordinates.values());
     }
 
 }

@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class BoardState implements TurnChangeListener {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
-    private final static SquareState EMPTY_SPOT = new EmptySquare();
-    private final HashMap<Coordinates, SquareState> specialStates = new HashMap<>();
+    private final static SquareState EMPTY_SQUARE = new EmptySquare();
+    private final HashMap<Coordinates, SquareState> specialSquares = new HashMap<>();
     private final List<TurnChangeListener> childTurnChangeListeners = new ArrayList<>();
 
     public BoardState(Piece... pieces) {
@@ -48,7 +48,7 @@ public class BoardState implements TurnChangeListener {
             return new OccupiedSquare(piece.get());
         }
 
-        return specialStates.getOrDefault(coordinates, EMPTY_SPOT);
+        return specialSquares.getOrDefault(coordinates, EMPTY_SQUARE);
     }
 
     public Optional<Piece> removePieceAt(Coordinates coordinates) {
@@ -66,9 +66,9 @@ public class BoardState implements TurnChangeListener {
         return piecesOnBoard;
     }
 
-    public void setSpotState(Coordinates coordinates, SquareState state) {
+    public void setSquareState(Coordinates coordinates, SquareState state) {
         childTurnChangeListeners.add(state);
-        specialStates.put(coordinates, state);
+        specialSquares.put(coordinates, state);
     }
 
     @Override

@@ -31,7 +31,7 @@ public enum Coordinates {
     }
 
     public static Coordinates with(File file, Rank rank) {
-        return Arrays.stream(values()).filter(spot -> spot.file == file && spot.rank == rank).findFirst().get();
+        return Arrays.stream(values()).filter(coordinates -> coordinates.file == file && coordinates.rank == rank).findFirst().get();
     }
 
     public Optional<Coordinates> coordinatesToThe(Direction direction) {

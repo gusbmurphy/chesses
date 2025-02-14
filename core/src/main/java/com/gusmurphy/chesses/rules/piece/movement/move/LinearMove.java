@@ -28,10 +28,10 @@ public class LinearMove implements UnassociatedMove {
         int remainingDistance = distance - 1;
 
         if (remainingDistance >= 0) {
-            Optional<Coordinates> nextSpot = from.coordinatesToThe(direction);
+            Optional<Coordinates> nextcoordinates = from.coordinatesToThe(direction);
 
-            if (nextSpot.isPresent()) {
-                return Optional.of(new LinearMove(nextSpot.get(), direction, remainingDistance));
+            if (nextcoordinates.isPresent()) {
+                return Optional.of(new LinearMove(nextcoordinates.get(), direction, remainingDistance));
             }
         }
 

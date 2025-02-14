@@ -17,8 +17,8 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
-    public void submitMove(Piece piece, Coordinates spot) {
-        wrappedJudge.submitMove(piece, spot);
+    public void submitMove(Piece piece, Coordinates coordinates) {
+        wrappedJudge.submitMove(piece, coordinates);
     }
 
     @Override

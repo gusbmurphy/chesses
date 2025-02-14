@@ -23,7 +23,7 @@ public class TestJudge extends Judge {
     }
 
     @Override
-    public void submitMove(Piece piece, Coordinates spot) {
+    public void submitMove(Piece piece, Coordinates coordinates) {
         lastMovedPiece = piece;
     }
 
