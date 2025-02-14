@@ -127,6 +127,8 @@ public class Piece {
 
     protected void setMovementStrategy(MovementStrategy strategy) {
         this.movementStrategy = strategy;
+        movementStrategy.setRelevantPiece(this);
+        eventListeners.add(movementStrategy);
     }
 
     private List<Move> getAllLegalMovesFor(Move move) {

@@ -278,14 +278,10 @@ public class JudgeTests {
     }
 
     @Test
-    void theCompositeStrategyCanBeUsedToGetPawnStyleMovement() {
-        MovementStrategy strategy = new CompositeMovementStrategy(
-            new TurnBasedMovementStrategy(1, new LinearMovementStrategy(Collections.singletonList(N), 2)),
-            new LinearMovementStrategy(Collections.singletonList(N), 1)
-        );
-        Piece piece = new Piece(strategy, C2);
+    void pawnsCanOnlyMoveTwoSquaresOnTheFirstMove() {
+        Piece pawn = DefaultPieces.pawn(WHITE, C2);
         BoardState boardState = new BoardState();
-        boardState.place(piece);
+        boardState.place(pawn);
 
         Judge judge = new Judge(boardState);
         List<Move> possibleMoves = judge.getPossibleMoves();
@@ -296,7 +292,7 @@ public class JudgeTests {
         assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == C4));
 
         // After moving, there should only be one possible move.
-        piece.moveTo(C4);
+        pawn.moveTo(C4);
         List<Move> possibleMovesAfterFirst = judge.getPossibleMoves();
         assertEquals(1, possibleMovesAfterFirst.size());
         assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.coordinates() == C5));
