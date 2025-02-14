@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.board.coordinates;
+package com.gusmurphy.chesses.rules.board.square.coordinates;
 
 import java.util.Arrays;
 

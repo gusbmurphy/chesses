@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.File;
+import com.gusmurphy.chesses.rules.board.square.coordinates.File;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckRuleTests {

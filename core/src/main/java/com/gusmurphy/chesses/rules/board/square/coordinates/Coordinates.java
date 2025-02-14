@@ -1,13 +1,11 @@
-package com.gusmurphy.chesses.rules.board.coordinates;
+package com.gusmurphy.chesses.rules.board.square.coordinates;
 
 import com.gusmurphy.chesses.rules.board.Direction;
-import com.gusmurphy.chesses.rules.board.File;
-import com.gusmurphy.chesses.rules.board.Rank;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.rules.board.Rank.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Rank.*;
 
 public enum Coordinates {
 

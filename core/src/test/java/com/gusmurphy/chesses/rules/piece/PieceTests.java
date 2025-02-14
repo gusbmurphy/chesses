@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 

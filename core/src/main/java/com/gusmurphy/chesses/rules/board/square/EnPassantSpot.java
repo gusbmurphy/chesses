@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.board;
+package com.gusmurphy.chesses.rules.board.square;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.judge.TurnChangeListener;

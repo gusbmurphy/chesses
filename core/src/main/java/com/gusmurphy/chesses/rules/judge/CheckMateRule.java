@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 

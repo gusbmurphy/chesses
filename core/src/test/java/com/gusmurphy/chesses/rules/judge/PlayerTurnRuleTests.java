@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTurnRuleTests {

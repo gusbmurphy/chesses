@@ -1,7 +1,10 @@
 package com.gusmurphy.chesses.rules.board;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.EmptySpot;
+import com.gusmurphy.chesses.rules.board.square.OccupiedSpot;
+import com.gusmurphy.chesses.rules.board.square.SpotState;
 import com.gusmurphy.chesses.rules.judge.TurnChangeListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 

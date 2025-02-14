@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.board.coordinates;
+package com.gusmurphy.chesses.rules.board.square.coordinates;
 
 import com.gusmurphy.chesses.rules.board.Direction;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -7,10 +7,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.D4;
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.E5;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.D4;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.E5;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 
 public class BoardCoordinateTests {

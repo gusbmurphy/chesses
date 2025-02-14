@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.NoTakeMove;
 

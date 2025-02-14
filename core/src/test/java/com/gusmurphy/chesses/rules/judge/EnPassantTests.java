@@ -6,7 +6,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
-import static com.gusmurphy.chesses.rules.board.coordinates.Coordinates.*;
+import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

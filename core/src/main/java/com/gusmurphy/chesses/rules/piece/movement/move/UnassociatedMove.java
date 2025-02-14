@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
-import com.gusmurphy.chesses.rules.board.SpotState;
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Collections;

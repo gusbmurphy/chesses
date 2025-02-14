@@ -2,9 +2,9 @@ package com.gusmurphy.chesses.rules.piece;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.Direction;
-import com.gusmurphy.chesses.rules.board.File;
-import com.gusmurphy.chesses.rules.board.Rank;
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.coordinates.File;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Rank;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.*;

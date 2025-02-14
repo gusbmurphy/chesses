@@ -2,8 +2,8 @@ package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.board.EnPassantSpot;
-import com.gusmurphy.chesses.rules.board.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.EnPassantSpot;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.EnPassantMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
