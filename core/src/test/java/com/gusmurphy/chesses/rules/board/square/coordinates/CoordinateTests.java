@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
 import static com.gusmurphy.chesses.rules.board.Direction.*;
 
-public class BoardCoordinateTests {
+public class CoordinateTests {
 
     @ParameterizedTest
     @MethodSource("adjacentDirections")
