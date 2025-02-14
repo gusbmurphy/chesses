@@ -2,9 +2,9 @@ package com.gusmurphy.chesses.rules.board;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.board.square.EmptySpot;
-import com.gusmurphy.chesses.rules.board.square.OccupiedSpot;
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.EmptySquare;
+import com.gusmurphy.chesses.rules.board.square.OccupiedSquare;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.judge.TurnChangeListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class BoardState implements TurnChangeListener {
 
     private final List<Piece> piecesOnBoard = new ArrayList<>();
-    private final static SpotState EMPTY_SPOT = new EmptySpot();
-    private final HashMap<Coordinates, SpotState> specialStates = new HashMap<>();
+    private final static SquareState EMPTY_SPOT = new EmptySquare();
+    private final HashMap<Coordinates, SquareState> specialStates = new HashMap<>();
     private final List<TurnChangeListener> childTurnChangeListeners = new ArrayList<>();
 
     public BoardState(Piece... pieces) {
@@ -38,14 +38,14 @@ public class BoardState implements TurnChangeListener {
         piecesOnBoard.add(piece);
     }
 
-    public SpotState getStateAt(Coordinates coordinates) {
+    public SquareState getStateAt(Coordinates coordinates) {
         Optional<Piece> piece = piecesOnBoard
             .stream()
             .filter(p -> p.getCoordinates() == coordinates)
             .findFirst();
 
         if (piece.isPresent()) {
-            return new OccupiedSpot(piece.get());
+            return new OccupiedSquare(piece.get());
         }
 
         return specialStates.getOrDefault(coordinates, EMPTY_SPOT);
@@ -66,7 +66,7 @@ public class BoardState implements TurnChangeListener {
         return piecesOnBoard;
     }
 
-    public void setSpotState(Coordinates coordinates, SpotState state) {
+    public void setSpotState(Coordinates coordinates, SquareState state) {
         childTurnChangeListeners.add(state);
         specialStates.put(coordinates, state);
     }

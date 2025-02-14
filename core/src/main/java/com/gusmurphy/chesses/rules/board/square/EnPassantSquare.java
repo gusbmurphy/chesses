@@ -7,12 +7,12 @@ import com.gusmurphy.chesses.rules.piece.PieceType;
 
 import java.util.Optional;
 
-public class EnPassantSpot implements SpotState, TurnChangeListener {
+public class EnPassantSquare implements SquareState, TurnChangeListener {
 
     private final Piece takeablePiece;
     private boolean expired = false;
 
-    public EnPassantSpot(Piece takeablePiece) {
+    public EnPassantSquare(Piece takeablePiece) {
         this.takeablePiece = takeablePiece;
     }
 

@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -32,7 +32,7 @@ public interface UnassociatedMove {
         return Collections.emptyList();
     }
 
-    default Map<Coordinates, SpotState> effectedSpots() {
+    default Map<Coordinates, SquareState> effectedSpots() {
         return Collections.emptyMap();
     }
 

@@ -5,11 +5,11 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class OccupiedSpot implements SpotState {
+public class OccupiedSquare implements SquareState {
 
     private final Piece occupyingPiece;
 
-    public OccupiedSpot(Piece occupyingPiece) {
+    public OccupiedSquare(Piece occupyingPiece) {
         this.occupyingPiece = occupyingPiece;
     }
 

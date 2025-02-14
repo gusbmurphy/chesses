@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.piece;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.TakingMove;
@@ -132,26 +132,26 @@ public class Piece {
     private List<Move> getAllLegalMovesFor(Move move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        SpotState spotState = boardState.getStateAt(move.spot());
-        if (moveCanTake(move, spotState)) {
-            addTakingMove(move, legalMoves, spotState);
-        } else if (noPieceAt(spotState)) {
+        SquareState squareState = boardState.getStateAt(move.spot());
+        if (moveCanTake(move, squareState)) {
+            addTakingMove(move, legalMoves, squareState);
+        } else if (noPieceAt(squareState)) {
             addMoveAndAnyContinuedMoves(move, legalMoves);
         }
 
         return legalMoves;
     }
 
-    private static boolean moveCanTake(Move move, SpotState spotState) {
-        return spotState.pieceTakeableBy(move.getMovingPiece()).isPresent();
+    private static boolean moveCanTake(Move move, SquareState squareState) {
+        return squareState.pieceTakeableBy(move.getMovingPiece()).isPresent();
     }
 
-    private static void addTakingMove(Move move, List<Move> legalMoves, SpotState spotState) {
-        legalMoves.add(new TakingMove(move.getMovingPiece(), move, spotState.pieceTakeableBy(move.getMovingPiece()).get()));
+    private static void addTakingMove(Move move, List<Move> legalMoves, SquareState squareState) {
+        legalMoves.add(new TakingMove(move.getMovingPiece(), move, squareState.pieceTakeableBy(move.getMovingPiece()).get()));
     }
 
-    private static boolean noPieceAt(SpotState spotState) {
-        return !spotState.occupyingPiece().isPresent();
+    private static boolean noPieceAt(SquareState squareState) {
+        return !squareState.occupyingPiece().isPresent();
     }
 
     private void addMoveAndAnyContinuedMoves(Move move, List<Move> legalMoves) {

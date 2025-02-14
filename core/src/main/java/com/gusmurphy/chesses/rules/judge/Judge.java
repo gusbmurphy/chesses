@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
@@ -71,8 +71,8 @@ public class Judge {
     }
 
     private void distributeAnyEffectedSpots(Move move) {
-        Map<Coordinates, SpotState> effectedSpots = move.effectedSpots();
-        for (Map.Entry<Coordinates, SpotState> entry : effectedSpots.entrySet()) {
+        Map<Coordinates, SquareState> effectedSpots = move.effectedSpots();
+        for (Map.Entry<Coordinates, SquareState> entry : effectedSpots.entrySet()) {
             boardState.setSpotState(entry.getKey(), entry.getValue());
         }
     }

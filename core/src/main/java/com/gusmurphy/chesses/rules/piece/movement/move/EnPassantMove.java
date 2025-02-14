@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -12,17 +12,17 @@ public class EnPassantMove implements UnassociatedMove {
 
     private final Coordinates to;
     private final Coordinates effectedCoordinates;
-    private final SpotState effectedState;
+    private final SquareState effectedState;
 
-    public EnPassantMove(Coordinates to, Coordinates effectedCoordinates, SpotState effectedState) {
+    public EnPassantMove(Coordinates to, Coordinates effectedCoordinates, SquareState effectedState) {
         this.to = to;
         this.effectedCoordinates = effectedCoordinates;
         this.effectedState = effectedState;
     }
 
     @Override
-    public Map<Coordinates, SpotState> effectedSpots() {
-        Map<Coordinates, SpotState> effectedSpots = new HashMap<>();
+    public Map<Coordinates, SquareState> effectedSpots() {
+        Map<Coordinates, SquareState> effectedSpots = new HashMap<>();
         effectedSpots.put(effectedCoordinates, effectedState);
         return effectedSpots;
     }

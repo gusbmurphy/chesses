@@ -5,7 +5,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public interface SpotState extends TurnChangeListener {
+public interface SquareState extends TurnChangeListener {
 
     Optional<Piece> occupyingPiece();
     Optional<Piece> pieceTakeableBy(Piece other);

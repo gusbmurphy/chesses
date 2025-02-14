@@ -5,9 +5,9 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.Optional;
 
-public class EmptySpot implements SpotState {
+public class EmptySquare implements SquareState {
 
-    public EmptySpot() {
+    public EmptySquare() {
     }
 
     @Override

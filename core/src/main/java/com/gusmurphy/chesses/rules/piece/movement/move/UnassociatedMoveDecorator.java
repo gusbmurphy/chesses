@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
-import com.gusmurphy.chesses.rules.board.square.SpotState;
+import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
@@ -57,7 +57,7 @@ public abstract class UnassociatedMoveDecorator implements UnassociatedMove {
     }
 
     @Override
-    public Map<Coordinates, SpotState> effectedSpots() {
+    public Map<Coordinates, SquareState> effectedSpots() {
         return wrappedMove.effectedSpots();
     }
 }
