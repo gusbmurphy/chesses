@@ -33,7 +33,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     private final Texture darkSquareTexture = new Texture("dark_square.png");
     private final Texture lightSquareTexture = new Texture("light_square.png");
     private final Rectangle bounds = new Rectangle();
-    private final ArrayList<Coordinates> highlightedSpaces = new ArrayList<>();
+    private final ArrayList<Coordinates> highlightedCoordinates = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
     private final Map<Piece, PieceOnScreen> piecesOnScreen = new ConcurrentHashMap<>();
@@ -116,7 +116,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
                 .filter(move -> move.getMovingPiece() == piece)
                 .map(Move::coordinates)
                 .collect(Collectors.toList());
-            highlightedSpaces.addAll(possibleMoves);
+            highlightedCoordinates.addAll(possibleMoves);
             selectedPiece = piece;
             PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
             pieceOnScreen.setDragStatus(true);
@@ -171,7 +171,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     private void drawHighlightedSpaces() {
-        for (Coordinates space : highlightedSpaces) {
+        for (Coordinates space : highlightedCoordinates) {
             Vector2 center = getScreenPositionForCenterOf(space);
             float xPosition = center.x - SQUARE_SIZE / 2;
             float yPosition = center.y - SQUARE_SIZE / 2;
@@ -186,7 +186,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
         if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.coordinates() == coordinates)) {
             judge.submitMove(piece, coordinates);
-            highlightedSpaces.clear();
+            highlightedCoordinates.clear();
         }
     }
 
