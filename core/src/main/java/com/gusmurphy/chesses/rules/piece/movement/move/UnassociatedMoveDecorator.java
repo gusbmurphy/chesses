@@ -57,7 +57,7 @@ public abstract class UnassociatedMoveDecorator implements UnassociatedMove {
     }
 
     @Override
-    public Map<Coordinates, SquareState> effectedcoordinatess() {
-        return wrappedMove.effectedcoordinatess();
+    public Map<Coordinates, SquareState> effectedSquares() {
+        return wrappedMove.effectedSquares();
     }
 }

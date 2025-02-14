@@ -52,7 +52,7 @@ public class Judge {
         takeOtherPieceIfPresent(move);
         moveMovingPiece(move);
         makeLinkedMoveIfPresent(move);
-        distributeAnyEffectedcoordinatess(move);
+        distributeAnyEffectedSquares(move);
     }
 
     private void takeOtherPieceIfPresent(Move move) {
@@ -70,9 +70,9 @@ public class Judge {
         move.linkedMove().ifPresent(Judge::moveMovingPiece);
     }
 
-    private void distributeAnyEffectedcoordinatess(Move move) {
-        Map<Coordinates, SquareState> effectedcoordinatess = move.effectedcoordinatess();
-        for (Map.Entry<Coordinates, SquareState> entry : effectedcoordinatess.entrySet()) {
+    private void distributeAnyEffectedSquares(Move move) {
+        Map<Coordinates, SquareState> effectedSquares = move.effectedSquares();
+        for (Map.Entry<Coordinates, SquareState> entry : effectedSquares.entrySet()) {
             boardState.setSquareState(entry.getKey(), entry.getValue());
         }
     }
