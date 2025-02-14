@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.board.square.coordinates.BoardCoordinatesXyAdapter;
+import com.gusmurphy.chesses.rules.board.square.coordinates.CoordinatesXyAdapter;
 import com.gusmurphy.chesses.rules.judge.CheckMateRule;
 import com.gusmurphy.chesses.rules.judge.CheckRule;
 import com.gusmurphy.chesses.rules.judge.Judge;
@@ -100,7 +100,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
             int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
             int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
 
-            BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(x, y);
+            CoordinatesXyAdapter adapter = new CoordinatesXyAdapter(x, y);
             return Optional.of(adapter.coordinates());
         }
 
@@ -135,7 +135,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     public Vector2 getScreenPositionForCenterOf(Coordinates coordinates) {
-        BoardCoordinatesXyAdapter xyAdapter = new BoardCoordinatesXyAdapter(coordinates);
+        CoordinatesXyAdapter xyAdapter = new CoordinatesXyAdapter(coordinates);
 
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();

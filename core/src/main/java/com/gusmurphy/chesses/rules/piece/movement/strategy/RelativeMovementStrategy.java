@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.piece.movement.strategy;
 
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.board.square.coordinates.BoardCoordinatesXyAdapter;
+import com.gusmurphy.chesses.rules.board.square.coordinates.CoordinatesXyAdapter;
 import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 
@@ -34,10 +34,10 @@ public class RelativeMovementStrategy implements MovementStrategy {
     }
 
     private static Optional<Coordinates> getPositionAtVectorFromOther(MovementVector vector, Coordinates position) {
-        BoardCoordinatesXyAdapter adapter = new BoardCoordinatesXyAdapter(position);
+        CoordinatesXyAdapter adapter = new CoordinatesXyAdapter(position);
 
         try {
-            return Optional.of(new BoardCoordinatesXyAdapter(
+            return Optional.of(new CoordinatesXyAdapter(
                 adapter.x() + vector.x,
                 adapter.y() + vector.y
             ).coordinates());

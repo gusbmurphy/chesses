@@ -2,19 +2,19 @@ package com.gusmurphy.chesses.rules.board.square.coordinates;
 
 import java.util.Arrays;
 
-public class BoardCoordinatesXyAdapter {
+public class CoordinatesXyAdapter {
 
     private final int x;
     private final int y;
     private final Coordinates coordinates;
 
-    public BoardCoordinatesXyAdapter(Coordinates coordinates) {
+    public CoordinatesXyAdapter(Coordinates coordinates) {
         this.x = coordinates.file.ordinal();
         this.y = coordinates.rank.ordinal();
         this.coordinates = coordinates;
     }
 
-    public BoardCoordinatesXyAdapter(int x, int y) {
+    public CoordinatesXyAdapter(int x, int y) {
         this.x = x;
         this.y = y;
 
