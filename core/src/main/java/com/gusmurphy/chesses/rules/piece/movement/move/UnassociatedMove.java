@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UnassociatedMove {
 
-    Coordinates spot();
+    Coordinates coordinates();
     Optional<UnassociatedMove> next();
     Optional<Piece> takes();
     boolean mustTake();

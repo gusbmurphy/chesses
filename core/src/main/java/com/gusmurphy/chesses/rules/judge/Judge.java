@@ -29,7 +29,7 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates spot) {
-        piece.currentPossibleMoves().stream().filter(move -> move.spot() == spot).findFirst().ifPresent(this::makeLegalMove);
+        piece.currentPossibleMoves().stream().filter(move -> move.coordinates() == spot).findFirst().ifPresent(this::makeLegalMove);
     }
 
     public List<Move> getPossibleMoves() {
@@ -63,7 +63,7 @@ public class Judge {
     }
 
     private static void moveMovingPiece(Move move) {
-        move.getMovingPiece().moveTo(move.spot());
+        move.getMovingPiece().moveTo(move.coordinates());
     }
 
     private static void makeLinkedMoveIfPresent(Move move) {

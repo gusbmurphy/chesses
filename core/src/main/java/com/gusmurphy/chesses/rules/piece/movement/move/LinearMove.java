@@ -19,7 +19,7 @@ public class LinearMove implements UnassociatedMove {
     }
 
     @Override
-    public Coordinates spot() {
+    public Coordinates coordinates() {
         return from;
     }
 

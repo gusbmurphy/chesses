@@ -100,7 +100,7 @@ public class Piece {
 
         return currentPossibleMoves()
             .stream()
-            .filter(move -> move.spot() == coordinates)
+            .filter(move -> move.coordinates() == coordinates)
             .anyMatch(move -> !move.takeDisallowed());
     }
 
@@ -132,7 +132,7 @@ public class Piece {
     private List<Move> getAllLegalMovesFor(Move move) {
         List<Move> legalMoves = new ArrayList<>();
 
-        SquareState squareState = boardState.getStateAt(move.spot());
+        SquareState squareState = boardState.getStateAt(move.coordinates());
         if (moveCanTake(move, squareState)) {
             addTakingMove(move, legalMoves, squareState);
         } else if (noPieceAt(squareState)) {
@@ -207,7 +207,7 @@ public class Piece {
     private static ArrayList<Move> uniqueMovesBySpot(List<Move> actualMoves) {
         HashMap<Coordinates, Move> movesBySpot = new HashMap<>();
         for (Move move : actualMoves) {
-            movesBySpot.put(move.spot(), move);
+            movesBySpot.put(move.coordinates(), move);
         }
         return new ArrayList<>(movesBySpot.values());
     }

@@ -59,7 +59,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
+        assertTrue(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == spot));
     }
 
     private static Stream<Arguments> okayMoves() {
@@ -90,7 +90,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == A4));
+        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == A4));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.spot() == spot));
+        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == spot));
     }
 
     private static Stream<Arguments> blockedMoves() {
@@ -150,7 +150,7 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
 
         List<Move> possibleMoves = judge.getPossibleMoves();
-        assertEquals(expected, possibleMoves.get(0).spot());
+        assertEquals(expected, possibleMoves.get(0).coordinates());
     }
 
     private static Stream<Arguments> singleSpotMoves() {
@@ -206,8 +206,8 @@ public class JudgeTests {
         List<Move> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B4));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B4));
     }
 
     @Test
@@ -222,13 +222,13 @@ public class JudgeTests {
         List<Move> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(7, possibleMoves.size());
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B2));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B4));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B5));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B6));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B7));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B8));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B2));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B4));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B5));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B6));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B7));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B8));
     }
 
     @Test
@@ -242,8 +242,8 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
         List<Move> possibleMoves = judge.getPossibleMoves();
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B3));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == B1));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == B1));
     }
 
     @Test
@@ -260,8 +260,8 @@ public class JudgeTests {
         List<Move> possibleMoves = judge.getPossibleMoves();
 
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == F6));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C7));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == F6));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == C7));
     }
 
     @Test
@@ -292,14 +292,14 @@ public class JudgeTests {
 
         // At first, we can move up to two spaces...
         assertEquals(2, possibleMoves.size());
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C3));
-        assertTrue(possibleMoves.stream().anyMatch(m -> m.spot() == C4));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == C3));
+        assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == C4));
 
         // After moving, there should only be one possible move.
         piece.moveTo(C4);
         List<Move> possibleMovesAfterFirst = judge.getPossibleMoves();
         assertEquals(1, possibleMovesAfterFirst.size());
-        assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.spot() == C5));
+        assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.coordinates() == C5));
     }
 
     @Test
@@ -323,7 +323,7 @@ public class JudgeTests {
         // The only possible move should be the one to take the other piece
         assertEquals(1, possibleMoves.size());
         Move move = possibleMoves.get(0);
-        assertEquals(D4, move.spot());
+        assertEquals(D4, move.coordinates());
         assertEquals(someOtherPiece, move.takes().get());
         assertEquals(takingPiece, move.getMovingPiece());
     }
@@ -349,7 +349,7 @@ public class JudgeTests {
         // The only possible move should be the one to take the other piece
         assertEquals(1, possibleMoves.size());
         Move move = possibleMoves.get(0);
-        assertEquals(D2, move.spot());
+        assertEquals(D2, move.coordinates());
     }
 
     @ParameterizedTest
@@ -386,7 +386,7 @@ public class JudgeTests {
         Judge judge = new Judge(boardState);
 
         List<Move> moves = judge.getPossibleMoves();
-        assertTrue(moves.stream().anyMatch(move -> move.spot() == B7 && move.takes().get() == pawn));
+        assertTrue(moves.stream().anyMatch(move -> move.coordinates() == B7 && move.takes().get() == pawn));
     }
 
     @Test

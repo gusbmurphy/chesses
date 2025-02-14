@@ -27,7 +27,7 @@ public class CheckRuleTests {
         List<Move> movesForKing = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
-        assertFalse(movesForKing.stream().anyMatch(move -> move.spot().file() == File.D));
+        assertFalse(movesForKing.stream().anyMatch(move -> move.coordinates().file() == File.D));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CheckRuleTests {
         List<Move> movesForRook = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
 
-        assertTrue(movesForRook.stream().anyMatch(move -> move.spot() == D6));
+        assertTrue(movesForRook.stream().anyMatch(move -> move.coordinates() == D6));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CheckRuleTests {
 
         assertEquals(1, moves.size());
         assertEquals(savingRook, moves.get(0).getMovingPiece());
-        assertEquals(H4, moves.get(0).spot());
+        assertEquals(H4, moves.get(0).coordinates());
     }
 
 }

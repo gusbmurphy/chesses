@@ -17,8 +17,8 @@ public abstract class UnassociatedMoveDecorator implements UnassociatedMove {
     }
 
     @Override
-    public Coordinates spot() {
-        return wrappedMove.spot();
+    public Coordinates coordinates() {
+        return wrappedMove.coordinates();
     }
 
     @Override

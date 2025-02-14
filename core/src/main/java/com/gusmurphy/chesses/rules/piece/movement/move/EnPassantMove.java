@@ -28,7 +28,7 @@ public class EnPassantMove implements UnassociatedMove {
     }
 
     @Override
-    public Coordinates spot() {
+    public Coordinates coordinates() {
         return to;
     }
 

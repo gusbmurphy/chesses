@@ -13,7 +13,7 @@ public class StaticMove implements UnassociatedMove {
     }
 
     @Override
-    public Coordinates spot() {
+    public Coordinates coordinates() {
         return spot;
     }
 

@@ -36,7 +36,7 @@ public class PawnFirstMoveStrategy extends TurnBasedMovementStrategy {
 
         return super.possibleMovesFrom(position)
             .stream()
-            .map(move -> new EnPassantMove(move.spot(), enPassantSpot, new EnPassantSquare(piece)))
+            .map(move -> new EnPassantMove(move.coordinates(), enPassantSpot, new EnPassantSquare(piece)))
             .collect(Collectors.toList());
     }
 
