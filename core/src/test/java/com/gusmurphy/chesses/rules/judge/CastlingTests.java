@@ -82,18 +82,22 @@ public class CastlingTests {
         assertEquals(rookStartingPosition, rightRook.getCoordinates());
     }
 
-    @Test
-    public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSpot() {
+    @ParameterizedTest
+    @MethodSource("threatenedCastlingTestCases")
+    public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSpot(
+        PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates threateningPosition
+    ) {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
-        Piece leftRook = pieceFactory.rook(WHITE, A1);
-        Piece king = pieceFactory.king(WHITE);
-        Piece threat = pieceFactory.rook(BLACK, D5);
+        Piece leftRook = pieceFactory.rook(color, rookStartingPosition);
+        Piece king = pieceFactory.king(color);
+        Coordinates initialKingPosition = king.getCoordinates();
+        Piece threat = pieceFactory.rook(color.opposite(), threateningPosition);
 
         Judge judge = new Judge(new BoardState(leftRook, king, threat));
-        judge.submitMove(king, C1);
+        judge.submitMove(king, kingMove);
 
-        assertEquals(E1, king.getCoordinates());
-        assertEquals(A1, leftRook.getCoordinates());
+        assertEquals(initialKingPosition, king.getCoordinates());
+        assertEquals(rookStartingPosition, leftRook.getCoordinates());
     }
 
     private static Stream<Arguments> castlingTestCases() {
@@ -115,6 +119,19 @@ public class CastlingTests {
             Arguments.of(BLACK, A8, C8, D8),
             Arguments.of(BLACK, H8, G8, F8),
             Arguments.of(BLACK, H8, G8, G8)
+        );
+    }
+
+    private static Stream<Arguments> threatenedCastlingTestCases() {
+        return Stream.of(
+            Arguments.of(WHITE, A1, C1, D4),
+            Arguments.of(WHITE, A1, C1, C4),
+            Arguments.of(WHITE, H1, G1, F4),
+            Arguments.of(WHITE, H1, G1, G4),
+            Arguments.of(BLACK, A8, C8, D5),
+            Arguments.of(BLACK, A8, C8, C5),
+            Arguments.of(BLACK, H8, G8, G5),
+            Arguments.of(BLACK, H8, G8, F5)
         );
     }
 
