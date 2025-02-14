@@ -112,7 +112,11 @@ public class DefaultPieceFactory {
             .filter(piece -> piece.getCoordinates() == coordinates)
             .findFirst();
 
-        return existingRook.orElseGet(() -> DefaultPieces.rook(color, coordinates));
+        return existingRook.orElseGet(() -> {
+            Piece newRook = DefaultPieces.rook(color, coordinates);
+            createdPieces.add(newRook);
+            return newRook;
+        });
     }
 
 }
