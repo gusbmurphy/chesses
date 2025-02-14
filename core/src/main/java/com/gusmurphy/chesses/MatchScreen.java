@@ -1,19 +1,15 @@
 package com.gusmurphy.chesses;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gusmurphy.chesses.rules.board.BoardOnScreen;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.judge.GameOverEvent;
@@ -23,10 +19,8 @@ import com.gusmurphy.chesses.rules.judge.GameOverListener;
 public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private final SpriteBatch spriteBatch;
-    private final BitmapFont font;
     private final ShapeRenderer shapeRenderer;
     private final FitViewport viewport;
-    private final ScreenViewport fontViewport;
 
     private final BoardOnScreen boardOnScreen;
 
@@ -34,19 +28,16 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private final Stage stage;
     private final Label checkmateLabel;
-    private final Skin skin;
 
     public MatchScreen(final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
-        fontViewport = new ScreenViewport();
-        font = new BitmapFont();
 
         boardOnScreen = new BoardOnScreen(StartingBoards.rookRoller(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
 
-        skin = new Skin(
+        Skin skin = new Skin(
             Gdx.files.internal("uiskin.json"),
             new TextureAtlas(
                 Gdx.files.internal("uiskin.atlas")
