@@ -40,6 +40,10 @@ public class Judge {
         return moves;
     }
 
+    public List<Move> getPossibleMovesFor(Piece piece) {
+        return piece.currentPossibleMoves();
+    }
+
     protected void notifyGameOverListeners(GameOverEvent event) {
         gameOverListeners.forEach(listener -> listener.onGameOverEvent(event));
     }

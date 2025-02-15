@@ -43,6 +43,18 @@ public class JudgeTests {
         assertEquals(14, movesForRook.size());
     }
 
+    @Test
+    void weCanGetMovesForJustOnePiece() {
+        Piece king = DefaultPieces.king(WHITE, C4);
+        Piece rook = DefaultPieces.rook(WHITE, G3);
+        BoardState boardState = new BoardState(king, rook);
+
+        Judge judge = new Judge(boardState);
+        List<Move> moves = judge.getPossibleMovesFor(king);
+
+        assertEquals(8, moves.size());
+    }
+
     @ParameterizedTest
     @MethodSource("okayMoves")
     void aPieceWithALinearMovementStrategyCanMoveToAnUnobstructedPositionInItsStrategy(Coordinates coordinates) {
