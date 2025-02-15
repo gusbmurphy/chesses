@@ -66,4 +66,13 @@ public class PieceTests {
         assertFalse(piece.threatens(BLACK, E3));
     }
 
+    @Test
+    void aPieceDoesNotThreatenCoordinatesBlockedByAnotherPiece() {
+        Piece piece = DefaultPieces.rook(BLACK, D4);
+        Piece blocker = DefaultPieces.rook(BLACK, D5);
+        new BoardState(piece, blocker);
+
+        assertFalse(piece.threatens(WHITE, D6));
+    }
+
 }
