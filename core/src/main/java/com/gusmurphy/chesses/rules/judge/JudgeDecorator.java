@@ -27,6 +27,11 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
+    public List<Move> getPossibleMovesFor(Piece piece) {
+        return wrappedJudge.getPossibleMovesFor(piece);
+    }
+
+    @Override
     public void subscribeToTurnChange(TurnChangeListener listener) {
         wrappedJudge.subscribeToTurnChange(listener);
     }
