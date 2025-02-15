@@ -6,11 +6,13 @@ import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
@@ -33,6 +35,19 @@ public class CastlingTests {
 
         assertEquals(kingMove, king.getCoordinates());
         assertEquals(expectedRookMove, rightRook.getCoordinates());
+    }
+
+    @ParameterizedTest
+    @MethodSource("castlingTestCases")
+    public void castlingMovesShowUpWhenWeAskForAllMoves(PlayerColor color, Coordinates rookStartingPosition) {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
+        Piece king = pieceFactory.king(color);
+
+        Judge judge = new Judge(new BoardState(rightRook, king));
+        List<Move> kingMoves = judge.getPossibleMovesFor(king);
+
+        assertEquals(7, kingMoves.size());
     }
 
     @Test
