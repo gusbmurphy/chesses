@@ -32,6 +32,7 @@ public class Judge {
         piece.currentPossibleMoves().stream().filter(move -> move.coordinates() == coordinates).findFirst().ifPresent(this::makeLegalMove);
     }
 
+    // TODO: Feels like we shouldn't be asking the Judge for moves...
     public List<Move> getPossibleMoves() {
         List<Move> moves = new ArrayList<>();
         boardState.getAllPieces().forEach(piece -> {
