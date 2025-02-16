@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
@@ -113,6 +114,36 @@ public class CastlingTests {
 
         assertEquals(initialKingPosition, king.getCoordinates());
         assertEquals(rookStartingPosition, leftRook.getCoordinates());
+    }
+
+    @Test
+    public void castlingWorksInAKindOfRealScenarioThatWasGivingIssues() {
+        BoardState board = StartingBoards.regular();
+        Judge judge = new CheckMateRule( // TODO: This feels a little ridiculous.
+            new CheckRule(
+                new PlayerTurnRule(
+                    new Judge(board),
+                    PlayerColor.WHITE
+                )));
+
+        Piece king = board.getStateAt(E1).occupyingPiece().get();
+        Piece rook = board.getStateAt(A1).occupyingPiece().get();
+
+        // TODO: What if we could just submit moves with two coordinates?
+        judge.submitMove(board.getStateAt(B2).occupyingPiece().get(), B3);
+        judge.submitMove(board.getStateAt(B7).occupyingPiece().get(), B6);
+        judge.submitMove(board.getStateAt(C1).occupyingPiece().get(), C3);
+        judge.submitMove(board.getStateAt(E7).occupyingPiece().get(), E6);
+        judge.submitMove(board.getStateAt(B1).occupyingPiece().get(), B3);
+        judge.submitMove(board.getStateAt(H7).occupyingPiece().get(), H6);
+        judge.submitMove(board.getStateAt(D2).occupyingPiece().get(), D3);
+        judge.submitMove(board.getStateAt(H6).occupyingPiece().get(), H5);
+        judge.submitMove(board.getStateAt(D1).occupyingPiece().get(), D2);
+        judge.submitMove(board.getStateAt(H5).occupyingPiece().get(), H4);
+        judge.submitMove(board.getStateAt(E1).occupyingPiece().get(), C1);
+
+        assertEquals(king.getCoordinates(), C1);
+        assertEquals(rook.getCoordinates(), D1);
     }
 
     private static Stream<Arguments> castlingTestCases() {
