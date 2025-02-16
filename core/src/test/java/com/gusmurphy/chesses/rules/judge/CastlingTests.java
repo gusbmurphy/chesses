@@ -80,19 +80,18 @@ public class CastlingTests {
     }
 
     @Test
-    public void castlingCanHappenOnASlightlyMoreComplicatedBoard() {
+    public void castlingCanHappenWithCheckRules() {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
         Piece rook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
         Piece whitePawn = DefaultPieces.pawn(WHITE, B2);
         Piece blackPawn = DefaultPieces.pawn(BLACK, B7);
 
-        Judge judge = new CheckMateRule( // TODO: This feels a little ridiculous.
+        Judge judge = new CheckMateRule(
             new CheckRule(
-                new PlayerTurnRule(
-                    new Judge(new BoardState(rook, king, whitePawn, blackPawn)),
-                    PlayerColor.WHITE
-                )));
+                new Judge(new BoardState(rook, king, whitePawn, blackPawn))
+            )
+        );
 
         judge.submitMove(whitePawn, B3);
         judge.submitMove(blackPawn, B6);
