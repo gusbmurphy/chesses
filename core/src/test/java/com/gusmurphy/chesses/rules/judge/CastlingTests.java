@@ -99,7 +99,7 @@ public class CastlingTests {
 
     @ParameterizedTest
     @MethodSource("threatenedCastlingTestCases")
-    public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedcoordinates(
+    public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSquare(
         PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates threateningPosition
     ) {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
