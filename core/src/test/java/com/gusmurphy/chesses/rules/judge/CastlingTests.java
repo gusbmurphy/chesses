@@ -79,6 +79,29 @@ public class CastlingTests {
         assertEquals(A2, leftRook.getCoordinates());
     }
 
+    @Test
+    public void castlingCanHappenOnASlightlyMoreComplicatedBoard() {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece rook = pieceFactory.rook(WHITE, A1);
+        Piece king = pieceFactory.king(WHITE);
+        Piece whitePawn = DefaultPieces.pawn(WHITE, B2);
+        Piece blackPawn = DefaultPieces.pawn(BLACK, B7);
+
+        Judge judge = new CheckMateRule( // TODO: This feels a little ridiculous.
+            new CheckRule(
+                new PlayerTurnRule(
+                    new Judge(new BoardState(rook, king, whitePawn, blackPawn)),
+                    PlayerColor.WHITE
+                )));
+
+        judge.submitMove(whitePawn, B3);
+        judge.submitMove(blackPawn, B6);
+        judge.submitMove(king, C1);
+
+        assertEquals(C1, king.getCoordinates());
+        assertEquals(D1, rook.getCoordinates());
+    }
+
     @ParameterizedTest
     @MethodSource("blockedCastlingTestCases")
     public void castlingCannotHappenIfThereArePiecesInTheWay(
@@ -114,36 +137,6 @@ public class CastlingTests {
 
         assertEquals(initialKingPosition, king.getCoordinates());
         assertEquals(rookStartingPosition, leftRook.getCoordinates());
-    }
-
-    @Test
-    public void castlingWorksInAKindOfRealScenarioThatWasGivingIssues() {
-        BoardState board = StartingBoards.regular();
-        Judge judge = new CheckMateRule( // TODO: This feels a little ridiculous.
-            new CheckRule(
-                new PlayerTurnRule(
-                    new Judge(board),
-                    PlayerColor.WHITE
-                )));
-
-        Piece king = board.getStateAt(E1).occupyingPiece().get();
-        Piece rook = board.getStateAt(A1).occupyingPiece().get();
-
-        // TODO: What if we could just submit moves with two coordinates?
-        judge.submitMove(board.getStateAt(B2).occupyingPiece().get(), B3);
-        judge.submitMove(board.getStateAt(B7).occupyingPiece().get(), B6);
-        judge.submitMove(board.getStateAt(C1).occupyingPiece().get(), A3);
-        judge.submitMove(board.getStateAt(E7).occupyingPiece().get(), E6);
-        judge.submitMove(board.getStateAt(B1).occupyingPiece().get(), B3);
-        judge.submitMove(board.getStateAt(H7).occupyingPiece().get(), H6);
-        judge.submitMove(board.getStateAt(D2).occupyingPiece().get(), D3);
-        judge.submitMove(board.getStateAt(H6).occupyingPiece().get(), H5);
-        judge.submitMove(board.getStateAt(D1).occupyingPiece().get(), D2);
-        judge.submitMove(board.getStateAt(H5).occupyingPiece().get(), H4);
-        judge.submitMove(board.getStateAt(E1).occupyingPiece().get(), C1);
-
-        assertEquals(king.getCoordinates(), C1);
-        assertEquals(rook.getCoordinates(), D1);
     }
 
     private static Stream<Arguments> castlingTestCases() {
