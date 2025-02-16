@@ -9,12 +9,14 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.TakingMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.MovementStrategy;
 import com.gusmurphy.chesses.rules.PlayerColor;
+import org.jetbrains.annotations.Debug.Renderer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Renderer(text = "color.toString() + \" \" + type.toString() + \" \" + coordinates.toString()")
 public class Piece {
 
     private final PlayerColor color;
