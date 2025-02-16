@@ -80,20 +80,18 @@ public class CastlingTests {
     }
 
     @Test
-    public void castlingCanHappenWithCheckRules() {
+    public void castlingCanHappenWithCheckRulesIfAnotherPieceHasAlreadyMoved() {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
         Piece rook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
-        Piece whitePawn = DefaultPieces.pawn(WHITE, B2);
         Piece blackPawn = DefaultPieces.pawn(BLACK, B7);
 
         Judge judge = new CheckMateRule(
             new CheckRule(
-                new Judge(new BoardState(rook, king, whitePawn, blackPawn))
+                new Judge(new BoardState(rook, king, blackPawn))
             )
         );
 
-        judge.submitMove(whitePawn, B3);
         judge.submitMove(blackPawn, B6);
         judge.submitMove(king, C1);
 
