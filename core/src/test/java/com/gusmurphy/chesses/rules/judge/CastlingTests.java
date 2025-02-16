@@ -132,7 +132,7 @@ public class CastlingTests {
         // TODO: What if we could just submit moves with two coordinates?
         judge.submitMove(board.getStateAt(B2).occupyingPiece().get(), B3);
         judge.submitMove(board.getStateAt(B7).occupyingPiece().get(), B6);
-        judge.submitMove(board.getStateAt(C1).occupyingPiece().get(), C3);
+        judge.submitMove(board.getStateAt(C1).occupyingPiece().get(), A3);
         judge.submitMove(board.getStateAt(E7).occupyingPiece().get(), E6);
         judge.submitMove(board.getStateAt(B1).occupyingPiece().get(), B3);
         judge.submitMove(board.getStateAt(H7).occupyingPiece().get(), H6);
