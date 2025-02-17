@@ -24,7 +24,8 @@ public class CheckRuleTests {
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
-        List<Move> movesForKing = judge.getPossibleMovesFor(king);
+        List<Move> movesForKing =
+            judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
         assertFalse(movesForKing.stream().anyMatch(move -> move.coordinates().file() == File.D));
     }
@@ -37,7 +38,8 @@ public class CheckRuleTests {
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
         judge = new CheckRule(judge);
-        List<Move> movesForRook = judge.getPossibleMovesFor(rook);
+        List<Move> movesForRook =
+            judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
 
         assertTrue(movesForRook.stream().anyMatch(move -> move.coordinates() == D6));
     }

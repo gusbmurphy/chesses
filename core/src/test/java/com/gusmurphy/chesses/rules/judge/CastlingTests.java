@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
@@ -46,7 +47,8 @@ public class CastlingTests {
         Piece king = pieceFactory.king(color);
 
         Judge judge = new Judge(new BoardState(rightRook, king));
-        List<Move> kingMoves = judge.getPossibleMovesFor(king);
+        List<Move> kingMoves = judge
+            .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
         assertEquals(7, kingMoves.size());
     }

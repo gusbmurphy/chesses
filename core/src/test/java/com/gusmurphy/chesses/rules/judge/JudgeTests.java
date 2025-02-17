@@ -50,7 +50,8 @@ public class JudgeTests {
         BoardState boardState = new BoardState(king, rook);
 
         Judge judge = new Judge(boardState);
-        List<Move> moves = judge.getPossibleMovesFor(king);
+        List<Move> moves =
+            judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
         assertEquals(8, moves.size());
     }

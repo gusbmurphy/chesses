@@ -38,13 +38,4 @@ public class PlayerTurnRule extends JudgeDecorator {
             .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Move> getPossibleMovesFor(Piece piece) {
-        if (piece.color() == currentTurnColor) {
-            return piece.currentPossibleMoves();
-        }
-
-        return Collections.emptyList();
-    }
-
 }
