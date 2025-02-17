@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Debug.Renderer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Renderer(text = "color.toString() + \" \" + type.toString() + \" \" + coordinates.toString()")
@@ -25,6 +26,7 @@ public class Piece {
     private final PieceType type;
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
     private BoardState boardState;
+    private Integer boardId;
 
     // TODO: These constructors are ugly
     protected Piece(
@@ -63,10 +65,15 @@ public class Piece {
         movementStrategy = other.movementStrategy;
         coordinates = other.coordinates;
         type = other.type;
+        boardId = other.boardId;
     }
 
     public void setBoardState(BoardState boardState) {
         this.boardState = boardState;
+
+        if (boardId == null) {
+            boardId = boardState.getNextId();
+        }
     }
 
     public boolean isCheckable() {
@@ -128,7 +135,7 @@ public class Piece {
     }
 
     public boolean sameBoardIdAs(Piece other) {
-        return true;
+        return Objects.equals(boardId, other.boardId);
     }
 
     protected void setMovementStrategy(MovementStrategy strategy) {

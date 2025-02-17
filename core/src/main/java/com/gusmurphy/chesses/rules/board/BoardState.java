@@ -17,6 +17,7 @@ public class BoardState implements TurnChangeListener {
     private final static SquareState EMPTY_SQUARE = new EmptySquare();
     private final HashMap<Coordinates, SquareState> specialSquares = new HashMap<>();
     private final List<TurnChangeListener> childTurnChangeListeners = new ArrayList<>();
+    private int latestBoardId = 0;
 
     public BoardState(Piece... pieces) {
         piecesOnBoard.addAll(Arrays.asList(pieces));
@@ -74,5 +75,11 @@ public class BoardState implements TurnChangeListener {
     @Override
     public void onTurnChange(PlayerColor newTurnColor) {
         childTurnChangeListeners.forEach(listener -> listener.onTurnChange(newTurnColor));
+    }
+
+    public int getNextId() {
+        int idToReturn = latestBoardId;
+        latestBoardId++;
+        return idToReturn;
     }
 }
