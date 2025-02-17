@@ -79,17 +79,17 @@ public class CastlingTests {
         assertEquals(A2, leftRook.getCoordinates());
     }
 
-    @Disabled
     @Test
     public void castlingCanHappenWithCheckRulesIfAnotherPieceHasAlreadyMoved() {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
         Piece rook = pieceFactory.rook(WHITE, A1);
+        Piece otherRook = pieceFactory.rook(WHITE, H1);
         Piece king = pieceFactory.king(WHITE);
         Piece blackPawn = DefaultPieces.pawn(BLACK, B7);
 
         Judge judge = new CheckMateRule(
             new CheckRule(
-                new Judge(new BoardState(rook, king, blackPawn))
+                new Judge(new BoardState(rook, otherRook, king, blackPawn))
             )
         );
 
