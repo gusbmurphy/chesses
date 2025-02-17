@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -38,6 +39,10 @@ public class Judge {
 
     // TODO: Feels like we shouldn't be asking the Judge for moves...
     public List<Move> getPossibleMoves() {
+        return getLatestPossibleMoves();
+    }
+
+    private @NotNull List<Move> getLatestPossibleMoves() {
         List<Move> moves = new ArrayList<>();
         boardState.getAllPieces().forEach(piece -> {
             moves.addAll(piece.currentPossibleMoves());
