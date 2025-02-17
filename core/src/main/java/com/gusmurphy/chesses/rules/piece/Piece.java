@@ -127,6 +127,10 @@ public class Piece {
         eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.TAKEN, this));
     }
 
+    public boolean sameBoardIdAs(Piece other) {
+        return true;
+    }
+
     protected void setMovementStrategy(MovementStrategy strategy) {
         this.movementStrategy = strategy;
         movementStrategy.setRelevantPiece(this);

@@ -75,4 +75,13 @@ public class PieceTests {
         assertFalse(piece.threatens(WHITE, D6));
     }
 
+    @Test
+    void whenCopiedTheTwoPiecesShareBoardIdentification() {
+        Piece original = DefaultPieces.pawn(BLACK, D2);
+        BoardState board = new BoardState(original);
+        Piece copy = new Piece(original);
+
+        assertTrue(original.sameBoardIdAs(copy));
+    }
+
 }
