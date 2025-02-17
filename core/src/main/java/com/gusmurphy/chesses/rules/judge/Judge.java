@@ -71,8 +71,11 @@ public class Judge {
         move.getMovingPiece().moveTo(move.coordinates());
     }
 
-    private static void makeLinkedMoveIfPresent(Move move) {
-        move.linkedMove().ifPresent(Judge::moveMovingPiece);
+    private void makeLinkedMoveIfPresent(Move move) {
+        move.linkedMove().ifPresent(linkedMove -> {
+            Piece linkedPiece = linkedMove.findMovingPieceOn(boardState);
+            linkedPiece.moveTo(linkedMove.coordinates());
+        });
     }
 
     private void distributeAnyEffectedSquares(Move move) {

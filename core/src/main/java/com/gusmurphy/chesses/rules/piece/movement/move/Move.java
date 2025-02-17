@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.piece.movement.move;
 
+import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 public class Move extends UnassociatedMoveDecorator {
@@ -13,6 +14,15 @@ public class Move extends UnassociatedMoveDecorator {
 
     public Piece getMovingPiece() {
         return movingPiece;
+    }
+
+    public Piece findMovingPieceOn(BoardState boardState) {
+        return boardState
+            .getAllPieces()
+            .stream()
+            .filter(piece -> piece.sameBoardIdAs(movingPiece))
+            .findFirst()
+            .get();
     }
 
 }

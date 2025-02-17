@@ -100,6 +100,23 @@ public class CastlingTests {
         assertEquals(D1, rook.getCoordinates());
     }
 
+    @Test
+    public void castlingWithAClonedJudgeDoesNotEffectTheOriginal() {
+        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        Piece originalRook = pieceFactory.rook(WHITE, A1);
+        Piece originalKing = pieceFactory.king(WHITE);
+
+        BoardState originalBoard = new BoardState(originalRook, originalKing);
+        BoardState cloneBoard = new BoardState(originalBoard);
+        Judge cloneJudge = new Judge(cloneBoard);
+
+        Piece cloneKing = cloneBoard.getStateAt(E1).occupyingPiece().get();
+        cloneJudge.submitMove(cloneKing, C1);
+
+        assertEquals(A1, originalRook.getCoordinates());
+        assertEquals(E1, originalKing.getCoordinates());
+    }
+
     @ParameterizedTest
     @MethodSource("blockedCastlingTestCases")
     public void castlingCannotHappenIfThereArePiecesInTheWay(
