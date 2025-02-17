@@ -59,6 +59,7 @@ public class PieceOnScreen implements PieceEventListener {
 
     public void setEffectivePosition(Vector2 position) {
         this.effectivePosition = position;
+        sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
     public void draw() {
