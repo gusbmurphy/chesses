@@ -304,7 +304,7 @@ public class JudgeTests {
         assertTrue(possibleMoves.stream().anyMatch(m -> m.coordinates() == C4));
 
         // After moving, there should only be one possible move.
-        pawn.moveTo(C4);
+        judge.submitMove(pawn, C4);
         List<Move> possibleMovesAfterFirst = judge.getPossibleMoves();
         assertEquals(1, possibleMovesAfterFirst.size());
         assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.coordinates() == C5));

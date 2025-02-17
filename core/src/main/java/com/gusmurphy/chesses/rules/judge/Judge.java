@@ -6,7 +6,6 @@ import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -15,10 +14,12 @@ public class Judge {
     protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
     protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
     protected final BoardState boardState;
+    private List<Move> latestPossibleMoves;
 
     public Judge(BoardState boardState) {
         this.boardState = boardState;
         turnChangeListeners.add(boardState);
+        latestPossibleMoves = getLatestPossibleMoves();
     }
 
     public void subscribeToTurnChange(TurnChangeListener listener) {
@@ -35,14 +36,16 @@ public class Judge {
             .filter(move -> move.coordinates() == coordinates)
             .findFirst()
             .ifPresent(this::makeLegalMove);
+
+        latestPossibleMoves = getLatestPossibleMoves();
     }
 
     // TODO: Feels like we shouldn't be asking the Judge for moves...
     public List<Move> getPossibleMoves() {
-        return getLatestPossibleMoves();
+        return latestPossibleMoves;
     }
 
-    private @NotNull List<Move> getLatestPossibleMoves() {
+    private List<Move> getLatestPossibleMoves() {
         List<Move> moves = new ArrayList<>();
         boardState.getAllPieces().forEach(piece -> {
             moves.addAll(piece.currentPossibleMoves());
