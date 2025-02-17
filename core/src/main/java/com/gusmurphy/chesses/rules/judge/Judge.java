@@ -29,7 +29,11 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates coordinates) {
-        piece.currentPossibleMoves().stream().filter(move -> move.coordinates() == coordinates).findFirst().ifPresent(this::makeLegalMove);
+        piece.currentPossibleMoves()
+            .stream()
+            .filter(move -> move.coordinates() == coordinates)
+            .findFirst()
+            .ifPresent(this::makeLegalMove);
     }
 
     // TODO: Feels like we shouldn't be asking the Judge for moves...
