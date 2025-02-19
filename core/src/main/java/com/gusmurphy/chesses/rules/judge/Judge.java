@@ -31,8 +31,9 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates coordinates) {
-        piece.currentPossibleMoves()
+        latestPossibleMoves
             .stream()
+            .filter(move -> move.getMovingPiece() == piece)
             .filter(move -> move.coordinates() == coordinates)
             .findFirst()
             .ifPresent(this::makeLegalMove);
