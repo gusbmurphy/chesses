@@ -96,6 +96,26 @@ public class DefaultPieceFactory implements MovementStrategyProvider {
             .build();
     }
 
+    public Piece queen(PlayerColor color, Coordinates position) {
+        return new PieceBuilder()
+            .color(color)
+            .movementStrategy(movementStrategies.get(QUEEN))
+            .startingCoordinates(position)
+            .type(QUEEN)
+            .movementStrategyProvider(this)
+            .build();
+    }
+
+    public Piece knight(PlayerColor color, Coordinates position) {
+        return new PieceBuilder()
+            .color(color)
+            .movementStrategy(movementStrategies.get(KNIGHT))
+            .startingCoordinates(position)
+            .type(KNIGHT)
+            .movementStrategyProvider(this)
+            .build();
+    }
+
     public MovementStrategy movementStrategyFor(PieceType type) {
         return movementStrategies.get(type);
     }

@@ -20,8 +20,8 @@ public class StartingBoards {
         DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
 
         for (File file : File.values()) {
-            pieces.add(DefaultPieces.pawn(WHITE, Coordinates.with(file, Rank.TWO)));
-            pieces.add(DefaultPieces.pawn(BLACK, Coordinates.with(file, Rank.SEVEN)));
+            pieces.add(pieceFactory.pawn(WHITE, Coordinates.with(file, Rank.TWO)));
+            pieces.add(pieceFactory.pawn(BLACK, Coordinates.with(file, Rank.SEVEN)));
         }
 
         pieces.add(pieceFactory.rook(WHITE, A1));
@@ -29,35 +29,21 @@ public class StartingBoards {
         pieces.add(pieceFactory.rook(WHITE, H1));
         pieces.add(pieceFactory.rook(BLACK, H8));
 
-        pieces.add(DefaultPieces.knight(WHITE, B1));
-        pieces.add(DefaultPieces.knight(BLACK, B8));
-        pieces.add(DefaultPieces.knight(WHITE, G1));
-        pieces.add(DefaultPieces.knight(BLACK, G8));
+        pieces.add(pieceFactory.knight(WHITE, B1));
+        pieces.add(pieceFactory.knight(BLACK, B8));
+        pieces.add(pieceFactory.knight(WHITE, G1));
+        pieces.add(pieceFactory.knight(BLACK, G8));
 
-        pieces.add(DefaultPieces.bishop(WHITE, C1));
-        pieces.add(DefaultPieces.bishop(BLACK, C8));
-        pieces.add(DefaultPieces.bishop(WHITE, F1));
-        pieces.add(DefaultPieces.bishop(BLACK, F8));
+        pieces.add(pieceFactory.bishop(WHITE, C1));
+        pieces.add(pieceFactory.bishop(BLACK, C8));
+        pieces.add(pieceFactory.bishop(WHITE, F1));
+        pieces.add(pieceFactory.bishop(BLACK, F8));
 
         pieces.add(pieceFactory.king(WHITE));
         pieces.add(pieceFactory.king(BLACK));
 
-        pieces.add(DefaultPieces.queen(WHITE, D1));
-        pieces.add(DefaultPieces.queen(BLACK, D8));
-
-        BoardState boardState = new BoardState();
-        pieces.forEach(boardState::place);
-
-        return boardState;
-    }
-
-    public static BoardState rookRoller() {
-        List<Piece> pieces = new ArrayList<>();
-
-        pieces.add(DefaultPieces.king(WHITE, B1));
-        pieces.add(DefaultPieces.king(BLACK, F8));
-        pieces.add(DefaultPieces.rook(WHITE, B7));
-        pieces.add(DefaultPieces.rook(WHITE, C6));
+        pieces.add(pieceFactory.queen(WHITE, D1));
+        pieces.add(pieceFactory.queen(BLACK, D8));
 
         BoardState boardState = new BoardState();
         pieces.forEach(boardState::place);
