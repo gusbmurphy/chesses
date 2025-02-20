@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.File;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
+import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckRuleTests {
 
+    private final DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+
     @Test
     void aCheckablePieceCannotPutItselfIntoCheck() {
-        Piece king = DefaultPieces.king(WHITE, C6);
-        Piece rook = DefaultPieces.rook(BLACK, D4);
+        Piece king = pieceFactory.king(WHITE, C6);
+        Piece rook = pieceFactory.rook(BLACK, D4);
 
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
@@ -32,8 +34,8 @@ public class CheckRuleTests {
 
     @Test
     void aPieceCanPutTheOpposingColorInCheck() {
-        Piece king = DefaultPieces.king(WHITE, C6);
-        Piece rook = DefaultPieces.rook(BLACK, D4);
+        Piece king = pieceFactory.king(WHITE, C6);
+        Piece rook = pieceFactory.rook(BLACK, D4);
 
         BoardState boardState = new BoardState(king, rook);
         Judge judge = new Judge(boardState);
@@ -46,11 +48,11 @@ public class CheckRuleTests {
 
     @Test
     void theOnlyPossibleMoveMightBeForAnotherPieceToPreventCheck() {
-        Piece king = DefaultPieces.king(WHITE, H1);
-        Piece pawnA = DefaultPieces.pawn(WHITE, G1);
-        Piece pawnB = DefaultPieces.pawn(WHITE, G2);
-        Piece savingRook = DefaultPieces.rook(WHITE, C4);
-        Piece attackingRook  = DefaultPieces.rook(BLACK, H6);
+        Piece king = pieceFactory.king(WHITE, H1);
+        Piece pawnA = pieceFactory.pawn(WHITE, G1);
+        Piece pawnB = pieceFactory.pawn(WHITE, G2);
+        Piece savingRook = pieceFactory.rook(WHITE, C4);
+        Piece attackingRook  = pieceFactory.rook(BLACK, H6);
 
 
         BoardState boardState = new BoardState(king, pawnA, pawnB, savingRook, attackingRook);
