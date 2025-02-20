@@ -3,7 +3,9 @@ package com.gusmurphy.chesses.rules.board.square.coordinates;
 import com.gusmurphy.chesses.rules.board.Direction;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.gusmurphy.chesses.rules.board.square.coordinates.Rank.*;
 
@@ -32,6 +34,12 @@ public enum Coordinates {
 
     public Rank rank() {
         return rank;
+    }
+
+    public static List<Coordinates> allIn(Rank rank) {
+        return Arrays.stream(values())
+            .filter(coordinates -> coordinates.rank == rank)
+            .collect(Collectors.toList());
     }
 
     public static Coordinates with(File file, Rank rank) {

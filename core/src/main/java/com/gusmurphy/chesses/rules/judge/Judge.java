@@ -79,8 +79,8 @@ public class Judge {
     }
 
     private void promptForAnyPawnTransformations() {
-        Arrays.stream(Coordinates.values())
-            .filter(c -> c.rank() == Rank.EIGHT)
+        Coordinates.allIn(Rank.EIGHT)
+            .stream()
             .map(boardState::getStateAt)
             .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
             .map(SquareState::occupyingPiece)
