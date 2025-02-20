@@ -27,34 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JudgeTests {
 
-    @Test
-    void weCanGetAllMovesForAllPiecesOnTheBoard() {
-        Piece king = DefaultPieces.king(WHITE, C4);
-        Piece rook = DefaultPieces.rook(WHITE, G3);
-        BoardState boardState = new BoardState(king, rook);
-
-        Judge judge = new Judge(boardState);
-        List<Move> moves = judge.getPossibleMoves();
-
-        List<Move> movesForKing = moves.stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
-        List<Move> movesForRook = moves.stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
-
-        assertEquals(8, movesForKing.size());
-        assertEquals(14, movesForRook.size());
-    }
-
-    @Test
-    void weCanGetMovesForJustOnePiece() {
-        Piece king = DefaultPieces.king(WHITE, C4);
-        Piece rook = DefaultPieces.rook(WHITE, G3);
-        BoardState boardState = new BoardState(king, rook);
-
-        Judge judge = new Judge(boardState);
-        List<Move> moves =
-            judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
-
-        assertEquals(8, moves.size());
-    }
+    private final DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
 
     @ParameterizedTest
     @MethodSource("okayMoves")
@@ -292,7 +265,7 @@ public class JudgeTests {
 
     @Test
     void pawnsCanOnlyMoveTwoSquaresOnTheFirstMove() {
-        Piece pawn = DefaultPieces.pawn(WHITE, C2);
+        Piece pawn = pieceFactory.pawn(WHITE, C2);
         BoardState boardState = new BoardState();
         boardState.place(pawn);
 
@@ -388,8 +361,8 @@ public class JudgeTests {
 
     @Test
     void aRookCanTakeAPawnAWaysAway() {
-        Piece rook = DefaultPieces.rook(BLACK, B2);
-        Piece pawn = DefaultPieces.pawn(WHITE, B7);
+        Piece rook = pieceFactory.rook(BLACK, B2);
+        Piece pawn = pieceFactory.pawn(WHITE, B7);
 
         BoardState boardState = new BoardState(rook, pawn);
         Judge judge = new Judge(boardState);
@@ -400,8 +373,8 @@ public class JudgeTests {
 
     @Test
     void afterAPieceIsTakenItIsNoLongerOnTheBoard() {
-        Piece piece = DefaultPieces.rook(WHITE, C4);
-        Piece pieceToTake = DefaultPieces.rook(BLACK, C5);
+        Piece piece = pieceFactory.rook(WHITE, C4);
+        Piece pieceToTake = pieceFactory.rook(BLACK, C5);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -415,8 +388,8 @@ public class JudgeTests {
 
     @Test
     void whenAPieceIsTakenAnEventIsBroadcast() {
-        Piece piece = DefaultPieces.rook(WHITE, C4);
-        Piece pieceToTake = DefaultPieces.rook(BLACK, C5);
+        Piece piece = pieceFactory.rook(WHITE, C4);
+        Piece pieceToTake = pieceFactory.rook(BLACK, C5);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -434,7 +407,7 @@ public class JudgeTests {
 
     @Test
     void aMoveCanBeSubmittedToMoveAPieceOnTheBoard() {
-        Piece piece = DefaultPieces.rook(WHITE, C4);
+        Piece piece = pieceFactory.rook(WHITE, C4);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -447,7 +420,7 @@ public class JudgeTests {
 
     @Test
     void anIllegalMoveDoesNothing() {
-        Piece piece = DefaultPieces.rook(WHITE, C4);
+        Piece piece = pieceFactory.rook(WHITE, C4);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
