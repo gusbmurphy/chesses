@@ -80,7 +80,7 @@ public class Judge {
     }
 
     private void promptForAnyPawnTransformations() {
-        getPawnsInRankEight().forEach(pawnToTransform -> {
+        streamPawnsInRankEight().forEach(pawnToTransform -> {
             pawnTransformListeners.stream()
                 .map(PawnTransformListener::requestNewTypeToTransformInto)
                 .findFirst()
@@ -88,7 +88,7 @@ public class Judge {
         });
     }
 
-    private Stream<Piece> getPawnsInRankEight() {
+    private Stream<Piece> streamPawnsInRankEight() {
         return Coordinates.allIn(Rank.EIGHT)
             .stream()
             .map(boardState::getStateAt)
