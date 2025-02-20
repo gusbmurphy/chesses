@@ -41,19 +41,7 @@ public class Judge {
             .findFirst()
             .ifPresent(this::makeLegalMove);
 
-        Arrays.stream(Coordinates.values())
-            .filter(c -> c.rank() == Rank.EIGHT)
-            .map(boardState::getStateAt)
-            .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
-            .map(SquareState::occupyingPiece)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .forEach(pawnToTransform -> {
-                pawnTransformListeners.stream()
-                    .map(PawnTransformListener::requestNewTypeToTransformInto)
-                    .findFirst()
-                    .ifPresent(pawnToTransform::transformTo);
-            });
+        promptForAnyPawnTransformations();
 
         latestPossibleMoves = getLatestPossibleMoves();
     }
@@ -88,6 +76,22 @@ public class Judge {
         moveMovingPiece(move);
         makeLinkedMoveIfPresent(move);
         distributeAnyEffectedSquares(move);
+    }
+
+    private void promptForAnyPawnTransformations() {
+        Arrays.stream(Coordinates.values())
+            .filter(c -> c.rank() == Rank.EIGHT)
+            .map(boardState::getStateAt)
+            .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
+            .map(SquareState::occupyingPiece)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .forEach(pawnToTransform -> {
+                pawnTransformListeners.stream()
+                    .map(PawnTransformListener::requestNewTypeToTransformInto)
+                    .findFirst()
+                    .ifPresent(pawnToTransform::transformTo);
+            });
     }
 
     private void takeOtherPieceIfPresent(Move move) {
