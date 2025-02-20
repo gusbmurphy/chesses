@@ -10,6 +10,7 @@ import com.gusmurphy.chesses.rules.piece.PieceType;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Judge {
 
@@ -56,11 +57,10 @@ public class Judge {
     }
 
     private List<Move> getLatestPossibleMoves() {
-        List<Move> moves = new ArrayList<>();
-        boardState.getAllPieces().forEach(piece -> {
-            moves.addAll(piece.currentPossibleMoves());
-        });
-        return moves;
+        return boardState.getAllPieces().stream()
+            .map(Piece::currentPossibleMoves)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
     protected void notifyGameOverListeners(GameOverEvent event) {
