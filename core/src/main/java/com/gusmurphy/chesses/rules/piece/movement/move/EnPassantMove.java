@@ -22,9 +22,9 @@ public class EnPassantMove implements UnassociatedMove {
 
     @Override
     public Map<Coordinates, SquareState> effectedSquares() {
-        Map<Coordinates, SquareState> effectedcoordinatess = new HashMap<>();
-        effectedcoordinatess.put(effectedCoordinates, effectedState);
-        return effectedcoordinatess;
+        Map<Coordinates, SquareState> effectedCoordinates = new HashMap<>();
+        effectedCoordinates.put(this.effectedCoordinates, effectedState);
+        return effectedCoordinates;
     }
 
     @Override
