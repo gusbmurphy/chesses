@@ -82,10 +82,12 @@ public class Judge {
         Coordinates.allIn(Rank.EIGHT)
             .stream()
             .map(boardState::getStateAt)
-            .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
             .map(SquareState::occupyingPiece)
             .filter(Optional::isPresent)
-            .map(Optional::get).forEach(pawnToTransform -> {
+            .map(Optional::get)
+            .filter(piece -> piece.type() == PieceType.PAWN)
+            .filter(piece -> piece.color() == PlayerColor.WHITE)
+            .forEach(pawnToTransform -> {
                 pawnTransformListeners.stream()
                     .map(PawnTransformListener::requestNewTypeToTransformInto)
                     .findFirst()
@@ -95,10 +97,12 @@ public class Judge {
         Coordinates.allIn(Rank.ONE)
             .stream()
             .map(boardState::getStateAt)
-            .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
             .map(SquareState::occupyingPiece)
             .filter(Optional::isPresent)
-            .map(Optional::get).forEach(pawnToTransform -> {
+            .map(Optional::get)
+            .filter(piece -> piece.type() == PieceType.PAWN)
+            .filter(piece -> piece.color() == PlayerColor.BLACK)
+            .forEach(pawnToTransform -> {
                 pawnTransformListeners.stream()
                     .map(PawnTransformListener::requestNewTypeToTransformInto)
                     .findFirst()

@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceType;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,6 +42,25 @@ public class PawnTransformTests {
             Arguments.of(WHITE, H7, H8),
             Arguments.of(BLACK, H2, H1)
         );
+    }
+
+    @Test
+    public void ifAPawnHappensToBeOnItsOwnSideWhenAMoveHappensItDoesNotTransform() {
+        // How did these pawns end up here? I do not know...
+        Piece whitePawn = DefaultPieces.pawn(WHITE, G1);
+        Piece blackPawn = DefaultPieces.pawn(BLACK, H8);
+        Piece rook = DefaultPieces.rook(WHITE, E1);
+        BoardState board = new BoardState(whitePawn, rook);
+        Judge judge = new Judge(board);
+
+        TestPawnTransformListener listener = new TestPawnTransformListener();
+        listener.respondWith(PieceType.BISHOP);
+        judge.subscribeToPawnTransform(listener);
+
+        judge.submitMove(rook, E3);
+
+        assertEquals(PieceType.PAWN, whitePawn.type());
+        assertEquals(PieceType.PAWN, blackPawn.type());
     }
 
 }
