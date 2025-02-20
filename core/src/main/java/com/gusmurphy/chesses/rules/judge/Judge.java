@@ -10,6 +10,7 @@ import com.gusmurphy.chesses.rules.piece.PieceType;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Judge {
 
@@ -79,19 +80,22 @@ public class Judge {
     }
 
     private void promptForAnyPawnTransformations() {
-        Coordinates.allIn(Rank.EIGHT)
+        getPawnsInRankEight().forEach(pawnToTransform -> {
+            pawnTransformListeners.stream()
+                .map(PawnTransformListener::requestNewTypeToTransformInto)
+                .findFirst()
+                .ifPresent(pawnToTransform::transformTo);
+        });
+    }
+
+    private Stream<Piece> getPawnsInRankEight() {
+        return Coordinates.allIn(Rank.EIGHT)
             .stream()
             .map(boardState::getStateAt)
             .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
             .map(SquareState::occupyingPiece)
             .filter(Optional::isPresent)
-            .map(Optional::get)
-            .forEach(pawnToTransform -> {
-                pawnTransformListeners.stream()
-                    .map(PawnTransformListener::requestNewTypeToTransformInto)
-                    .findFirst()
-                    .ifPresent(pawnToTransform::transformTo);
-            });
+            .map(Optional::get);
     }
 
     private void takeOtherPieceIfPresent(Move move) {
