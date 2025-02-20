@@ -29,14 +29,14 @@ public class PawnFirstMoveStrategy extends TurnBasedMovementStrategy {
 
     @Override
     public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
-        Coordinates enPassantcoordinates = piece
+        Coordinates enPassantCoordinates = piece
             .getCoordinates()
             .coordinatesToThe(piece.color() == PlayerColor.WHITE ? N : S)
             .get();
 
         return super.possibleMovesFrom(position)
             .stream()
-            .map(move -> new EnPassantMove(move.coordinates(), enPassantcoordinates, new EnPassantSquare(piece)))
+            .map(move -> new EnPassantMove(move.coordinates(), enPassantCoordinates, new EnPassantSquare(piece)))
             .collect(Collectors.toList());
     }
 
