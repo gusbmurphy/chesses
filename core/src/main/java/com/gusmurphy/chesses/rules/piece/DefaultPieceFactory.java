@@ -21,6 +21,8 @@ public class DefaultPieceFactory implements MovementStrategyProvider {
     private final List<Piece> createdPieces = new ArrayList<>();
     private final HashMap<PieceType, MovementStrategy> movementStrategies = new HashMap<>();
 
+    private final static MovementStrategy BASE_KING_STRATEGY = new LinearMovementStrategy(Direction.every(), 1);
+
     public DefaultPieceFactory() {
         movementStrategies.put(ROOK, new LinearMovementStrategy(N, E, S, W));
         movementStrategies.put(BISHOP, new LinearMovementStrategy(NE, SE, SW, NW));
@@ -83,13 +85,22 @@ public class DefaultPieceFactory implements MovementStrategyProvider {
     }
 
     public Piece king(PlayerColor color) {
-        MovementStrategy base = new LinearMovementStrategy(Direction.every(), 1);
         MovementStrategy castlingStrategy = createFullCastlingStrategy(color);
 
         Coordinates position = color == PlayerColor.WHITE ? Coordinates.E1 : Coordinates.E8;
         return new PieceBuilder()
             .color(color)
-            .movementStrategy(new CompositeMovementStrategy(base, castlingStrategy))
+            .movementStrategy(new CompositeMovementStrategy(BASE_KING_STRATEGY, castlingStrategy))
+            .startingCoordinates(position)
+            .type(KING)
+            .movementStrategyProvider(this)
+            .build();
+    }
+
+    public Piece king(PlayerColor color, Coordinates position) {
+        return new PieceBuilder()
+            .color(color)
+            .movementStrategy(BASE_KING_STRATEGY)
             .startingCoordinates(position)
             .type(KING)
             .movementStrategyProvider(this)
