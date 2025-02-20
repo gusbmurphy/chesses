@@ -174,7 +174,7 @@ public class DefaultPieceFactory implements MovementStrategyProvider {
             .findFirst();
 
         return existingRook.orElseGet(() -> {
-            Piece newRook = DefaultPieces.rook(color, coordinates);
+            Piece newRook = rook(color, coordinates);
             createdPieces.add(newRook);
             return newRook;
         });
