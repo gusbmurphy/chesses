@@ -13,6 +13,7 @@ import java.util.*;
 
 import static com.gusmurphy.chesses.rules.piece.PieceType.KING;
 
+// TODO: This should be able to make every kind of piece.
 public class DefaultPieceFactory {
 
     private final List<Piece> createdPieces = new ArrayList<>();
