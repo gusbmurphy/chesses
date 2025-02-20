@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.board;
 
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
+import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import org.junit.jupiter.api.Assertions;
@@ -14,9 +14,11 @@ import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*
 
 public class BoardStateTests {
 
+    private final DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+
     @Test
     void aPieceCanBeAddedToTheBoard() {
-        Piece piece = DefaultPieces.king(PlayerColor.WHITE, B5);
+        Piece piece = pieceFactory.rook(PlayerColor.WHITE, B5);
         BoardState boardState = new BoardState();
 
         boardState.place(piece);
@@ -39,7 +41,7 @@ public class BoardStateTests {
     void aPieceCanBeRemoved() {
         Coordinates coordinates = B5;
         BoardState boardState = new BoardState();
-        Piece piece = DefaultPieces.king(PlayerColor.WHITE, coordinates);
+        Piece piece = pieceFactory.rook(PlayerColor.WHITE, coordinates);
 
         boardState.place(piece);
 
@@ -63,9 +65,9 @@ public class BoardStateTests {
     void allPiecesOnTheBoardCanBeRetrieved() {
         BoardState board = new BoardState();
 
-        Piece pieceA = DefaultPieces.king(PlayerColor.WHITE, A3);
-        Piece pieceB = DefaultPieces.king(PlayerColor.WHITE, H4);
-        Piece pieceC = DefaultPieces.king(PlayerColor.WHITE, H8);
+        Piece pieceA = pieceFactory.rook(PlayerColor.WHITE, A3);
+        Piece pieceB = pieceFactory.rook(PlayerColor.WHITE, H4);
+        Piece pieceC = pieceFactory.rook(PlayerColor.WHITE, H8);
         board.place(pieceA);
         board.place(pieceB);
         board.place(pieceC);
@@ -77,7 +79,7 @@ public class BoardStateTests {
 
     @Test
     void creatingABoardFromAnotherOneCreatesDuplicatesOfThePieces() {
-        Piece originalPiece = DefaultPieces.rook(PlayerColor.BLACK, A2);
+        Piece originalPiece = pieceFactory.rook(PlayerColor.BLACK, A2);
         BoardState original = new BoardState(originalPiece);
         BoardState copy = new BoardState(original);
 
