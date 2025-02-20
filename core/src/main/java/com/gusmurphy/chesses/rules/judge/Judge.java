@@ -4,7 +4,9 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
+import com.gusmurphy.chesses.rules.board.square.coordinates.Rank;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.PieceType;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.*;
@@ -13,6 +15,7 @@ public class Judge {
 
     protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
     protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
+    protected final List<PawnTransformListener> pawnTransformListeners = new ArrayList<>();
     protected final BoardState boardState;
     private List<Move> latestPossibleMoves;
 
@@ -38,12 +41,30 @@ public class Judge {
             .findFirst()
             .ifPresent(this::makeLegalMove);
 
+        Arrays.stream(Coordinates.values())
+            .filter(c -> c.rank() == Rank.EIGHT)
+            .map(boardState::getStateAt)
+            .filter(squareState -> squareState.occupyingPiece().isPresent() && squareState.occupyingPiece().get().type() == PieceType.PAWN)
+            .map(SquareState::occupyingPiece)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .forEach(pawnToTransform -> {
+                pawnTransformListeners.stream()
+                    .map(PawnTransformListener::requestNewTypeToTransformInto)
+                    .findFirst()
+                    .ifPresent(pawnToTransform::transformTo);
+            });
+
         latestPossibleMoves = getLatestPossibleMoves();
     }
 
     // TODO: Feels like we shouldn't be asking the Judge for moves...
     public List<Move> getPossibleMoves() {
         return latestPossibleMoves;
+    }
+
+    public void subscribeToPawnTransform(PawnTransformListener listener) {
+        pawnTransformListeners.add(listener);
     }
 
     private List<Move> getLatestPossibleMoves() {

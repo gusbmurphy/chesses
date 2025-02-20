@@ -30,6 +30,10 @@ public enum Coordinates {
         return file;
     }
 
+    public Rank rank() {
+        return rank;
+    }
+
     public static Coordinates with(File file, Rank rank) {
         return Arrays.stream(values()).filter(coordinates -> coordinates.file == file && coordinates.rank == rank).findFirst().get();
     }

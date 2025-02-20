@@ -9,6 +9,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.EnPassantMove;
 import com.gusmurphy.chesses.rules.piece.movement.move.UnassociatedMove;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.gusmurphy.chesses.rules.board.Direction.N;
@@ -29,15 +30,16 @@ public class PawnFirstMoveStrategy extends TurnBasedMovementStrategy {
 
     @Override
     public List<UnassociatedMove> possibleMovesFrom(Coordinates position) {
-        Coordinates enPassantCoordinates = piece
-            .getCoordinates()
-            .coordinatesToThe(piece.color() == PlayerColor.WHITE ? N : S)
-            .get();
+        List<UnassociatedMove> moves = super.possibleMovesFrom(position);
 
-        return super.possibleMovesFrom(position)
-            .stream()
-            .map(move -> new EnPassantMove(move.coordinates(), enPassantCoordinates, new EnPassantSquare(piece)))
-            .collect(Collectors.toList());
+        Optional<Coordinates> enPassantCoordinates = piece
+            .getCoordinates()
+            .coordinatesToThe(piece.color() == PlayerColor.WHITE ? N : S);
+
+        return enPassantCoordinates.<List<UnassociatedMove>>map(coordinates -> moves.stream()
+            .map(move -> new EnPassantMove(move.coordinates(), coordinates, new EnPassantSquare(piece)))
+            .collect(Collectors.toList())
+        ).orElse(moves);
     }
 
 }

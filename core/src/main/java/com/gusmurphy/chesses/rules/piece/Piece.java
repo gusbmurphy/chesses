@@ -23,7 +23,7 @@ public class Piece {
     private final PlayerColor color;
     private MovementStrategy movementStrategy;
     private Coordinates coordinates;
-    private final PieceType type;
+    private PieceType type;
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
     private BoardState boardState;
     private Integer boardId;
@@ -66,6 +66,10 @@ public class Piece {
         coordinates = other.coordinates;
         type = other.type;
         boardId = other.boardId;
+    }
+
+    public void transformTo(PieceType newType) {
+        type = newType;
     }
 
     public void setBoardState(BoardState boardState) {
