@@ -27,6 +27,7 @@ public class Piece {
     private final List<PieceEventListener> eventListeners = new ArrayList<>();
     private BoardState boardState;
     private Integer boardId;
+    private MovementStrategyProvider movementStrategyProvider;
 
     // TODO: These constructors are ugly
     protected Piece(
@@ -68,8 +69,10 @@ public class Piece {
         boardId = other.boardId;
     }
 
+    // Really only pawns should have this...
     public void transformTo(PieceType newType) {
         type = newType;
+        movementStrategy = movementStrategyProvider.movementStrategyFor(type);
     }
 
     public void setBoardState(BoardState boardState) {
@@ -140,6 +143,10 @@ public class Piece {
 
     public boolean sameBoardIdAs(Piece other) {
         return Objects.equals(boardId, other.boardId);
+    }
+
+    public void setMovementStrategyProvider(MovementStrategyProvider provider) {
+        movementStrategyProvider = provider;
     }
 
     protected void setMovementStrategy(MovementStrategy strategy) {

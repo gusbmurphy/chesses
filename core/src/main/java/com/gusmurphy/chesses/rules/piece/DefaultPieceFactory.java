@@ -11,20 +11,62 @@ import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
 
 import java.util.*;
 
-import static com.gusmurphy.chesses.rules.piece.PieceType.KING;
+import static com.gusmurphy.chesses.rules.board.Direction.*;
+import static com.gusmurphy.chesses.rules.board.Direction.W;
+import static com.gusmurphy.chesses.rules.piece.PieceType.*;
 
 // TODO: This should be able to make every kind of piece.
-public class DefaultPieceFactory {
+public class DefaultPieceFactory implements MovementStrategyProvider {
 
     private final List<Piece> createdPieces = new ArrayList<>();
+    private final HashMap<PieceType, MovementStrategy> movementStrategies = new HashMap<>();
 
     public DefaultPieceFactory() {
+        movementStrategies.put(ROOK, new LinearMovementStrategy(N, E, S, W));
+        movementStrategies.put(BISHOP, new LinearMovementStrategy(NE, SE, SW, NW));
+        movementStrategies.put(QUEEN, new LinearMovementStrategy(Direction.every()));
+        movementStrategies.put(
+            KNIGHT,
+            new RelativeMovementStrategy(
+                new RelativeMovementStrategy(1, 2),
+                new RelativeMovementStrategy(-1, 2),
+                new RelativeMovementStrategy(-1, -2),
+                new RelativeMovementStrategy(1, -2),
+                new RelativeMovementStrategy(2, 1),
+                new RelativeMovementStrategy(-2, 1),
+                new RelativeMovementStrategy(-2, -1),
+                new RelativeMovementStrategy(2, -1)
+            )
+        );
     }
 
     public Piece rook(PlayerColor playerColor, Coordinates coordinates) {
-        Piece rook = DefaultPieces.rook(playerColor, coordinates);
+        Piece rook = new PieceBuilder()
+            .color(playerColor)
+            .startingCoordinates(coordinates)
+            .movementStrategy(movementStrategies.get(ROOK))
+            .type(ROOK)
+            .movementStrategyProvider(this)
+            .build();
+
         createdPieces.add(rook);
         return rook;
+    }
+
+    public Piece pawn(PlayerColor playerColor, Coordinates coordinates) {
+        Piece pawn = new PieceBuilder()
+            .color(playerColor)
+            .startingCoordinates(coordinates)
+            .type(PAWN)
+            .movementStrategyProvider(this)
+            .build();
+
+        MovementStrategy firstMove = new PawnFirstMoveStrategy(pawn);
+        MovementStrategy movementStrategy = createPawnStrategy(playerColor, firstMove);
+        pawn.setMovementStrategy(movementStrategy);
+
+        createdPieces.add(pawn);
+        return pawn;
     }
 
     public Piece king(PlayerColor color) {
@@ -37,7 +79,12 @@ public class DefaultPieceFactory {
             .movementStrategy(new CompositeMovementStrategy(base, castlingStrategy))
             .startingCoordinates(position)
             .type(KING)
+            .movementStrategyProvider(this)
             .build();
+    }
+
+    public MovementStrategy movementStrategyFor(PieceType type) {
+        return movementStrategies.get(type);
     }
 
     private MovementStrategy createFullCastlingStrategy(PlayerColor color) {
@@ -118,6 +165,25 @@ public class DefaultPieceFactory {
             createdPieces.add(newRook);
             return newRook;
         });
+    }
+
+    private static MovementStrategy createPawnStrategy(PlayerColor color, MovementStrategy firstMove) {
+        Direction movementDirection = color == PlayerColor.WHITE ? N : S;
+
+        MovementStrategy regular = new LinearMovementStrategy(
+            Collections.singletonList(movementDirection), 1
+        );
+
+        List<Direction> takingDirections = color == PlayerColor.WHITE ? Arrays.asList(NE, NW) : Arrays.asList(SE, SW);
+        MovementStrategy takingMovement = new TakeOnlyMovementStrategy(
+            new LinearMovementStrategy(takingDirections, 1)
+        );
+
+        return new CompositeMovementStrategy(
+            new NoTakeMovementStrategy(firstMove),
+            new NoTakeMovementStrategy(regular),
+            new TakeOnlyMovementStrategy(takingMovement)
+        );
     }
 
 }

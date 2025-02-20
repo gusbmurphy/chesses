@@ -11,6 +11,7 @@ public class PieceBuilder {
     private MovementStrategy movementStrategy = new NullMovementStrategy();
     private PieceType type = PieceType.KING;
     private Coordinates coordinates;
+    private MovementStrategyProvider movementStrategyProvider;
 
     public PieceBuilder() {
     }
@@ -35,8 +36,15 @@ public class PieceBuilder {
         return this;
     }
 
+    public PieceBuilder movementStrategyProvider(MovementStrategyProvider provider) {
+        movementStrategyProvider = provider;
+        return this;
+    }
+
     public Piece build() {
-        return new Piece(color, movementStrategy, coordinates, type);
+        Piece piece = new Piece(color, movementStrategy, coordinates, type);
+        piece.setMovementStrategyProvider(movementStrategyProvider);
+        return piece;
     }
 
 }
