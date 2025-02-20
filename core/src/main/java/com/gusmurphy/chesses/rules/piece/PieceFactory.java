@@ -16,14 +16,14 @@ import static com.gusmurphy.chesses.rules.board.Direction.W;
 import static com.gusmurphy.chesses.rules.piece.PieceType.*;
 
 // TODO: This should be able to make every kind of piece.
-public class DefaultPieceFactory implements MovementStrategyProvider {
+public class PieceFactory implements MovementStrategyProvider {
 
     private final List<Piece> createdPieces = new ArrayList<>();
     private final HashMap<PieceType, MovementStrategy> movementStrategies = new HashMap<>();
 
     private final static MovementStrategy BASE_KING_STRATEGY = new LinearMovementStrategy(Direction.every(), 1);
 
-    public DefaultPieceFactory() {
+    public PieceFactory() {
         movementStrategies.put(ROOK, new LinearMovementStrategy(N, E, S, W));
         movementStrategies.put(BISHOP, new LinearMovementStrategy(NE, SE, SW, NW));
         movementStrategies.put(QUEEN, new LinearMovementStrategy(Direction.every()));

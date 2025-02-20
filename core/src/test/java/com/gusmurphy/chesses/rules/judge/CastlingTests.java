@@ -3,7 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
@@ -27,7 +27,7 @@ public class CastlingTests {
     public void castlingMovesBothTheKingAndRook(
         PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates expectedRookMove
     ) {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
 
@@ -41,7 +41,7 @@ public class CastlingTests {
     @ParameterizedTest
     @MethodSource("castlingTestCases")
     public void castlingMovesShowUpWhenWeAskForAllMoves(PlayerColor color, Coordinates rookStartingPosition) {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
 
@@ -54,7 +54,7 @@ public class CastlingTests {
 
     @Test
     public void castlingCannotHappenIfTheKingHasMoved() {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece leftRook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
 
@@ -68,7 +68,7 @@ public class CastlingTests {
 
     @Test
     public void castlingCannotHappenIfTheRookHasMoved() {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece leftRook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
 
@@ -82,7 +82,7 @@ public class CastlingTests {
 
     @Test
     public void castlingCanHappenWithCheckRulesIfAnotherPieceHasAlreadyMoved() {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece rook = pieceFactory.rook(WHITE, A1);
         Piece otherRook = pieceFactory.rook(WHITE, H1);
         Piece king = pieceFactory.king(WHITE);
@@ -103,7 +103,7 @@ public class CastlingTests {
 
     @Test
     public void castlingWithAClonedJudgeDoesNotEffectTheOriginal() {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece originalRook = pieceFactory.rook(WHITE, A1);
         Piece originalKing = pieceFactory.king(WHITE);
 
@@ -123,7 +123,7 @@ public class CastlingTests {
     public void castlingCannotHappenIfThereArePiecesInTheWay(
         PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates blockingPosition
     ) {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
         Piece blockingPiece = DefaultPieces.pawn(color, blockingPosition);
@@ -142,7 +142,7 @@ public class CastlingTests {
     public void castlingCannotHappenIfTheKingWouldMoveThroughAThreatenedSquare(
         PlayerColor color, Coordinates rookStartingPosition, Coordinates kingMove, Coordinates threateningPosition
     ) {
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
         Piece leftRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
         Coordinates initialKingPosition = king.getCoordinates();

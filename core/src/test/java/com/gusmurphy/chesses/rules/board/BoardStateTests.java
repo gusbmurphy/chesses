@@ -1,7 +1,7 @@
 package com.gusmurphy.chesses.rules.board;
 
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +14,7 @@ import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*
 
 public class BoardStateTests {
 
-    private final DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+    private final PieceFactory pieceFactory = new PieceFactory();
 
     @Test
     void aPieceCanBeAddedToTheBoard() {

@@ -3,8 +3,7 @@ package com.gusmurphy.chesses.rules.board;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.square.coordinates.File;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Rank;
-import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class StartingBoards {
 
     public static BoardState regular() {
         List<Piece> pieces = new ArrayList<>();
-        DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+        PieceFactory pieceFactory = new PieceFactory();
 
         for (File file : File.values()) {
             pieces.add(pieceFactory.pawn(WHITE, Coordinates.with(file, Rank.TWO)));

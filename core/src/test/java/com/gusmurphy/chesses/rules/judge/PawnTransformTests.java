@@ -3,8 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
-import com.gusmurphy.chesses.rules.piece.DefaultPieceFactory;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceType;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PawnTransformTests {
 
-    private final DefaultPieceFactory pieceFactory = new DefaultPieceFactory();
+    private final PieceFactory pieceFactory = new PieceFactory();
 
     @ParameterizedTest
     @MethodSource("pawnReachingOtherSideMoves")
