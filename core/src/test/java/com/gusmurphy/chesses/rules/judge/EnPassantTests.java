@@ -1,8 +1,8 @@
 package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.board.BoardState;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import org.junit.jupiter.api.Test;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
@@ -12,10 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class EnPassantTests {
 
+    private final PieceFactory pieceFactory = new PieceFactory();
+
     @Test
     public void aWhitePawnCanTakeEnPassantOnTheLeft() {
-        Piece whitePawn = DefaultPieces.pawn(WHITE, F5);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, E7);
+        Piece whitePawn = pieceFactory.pawn(WHITE, F5);
+        Piece blackPawn = pieceFactory.pawn(BLACK, E7);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
         Judge judge = new Judge(boardState);
@@ -29,8 +31,8 @@ public class EnPassantTests {
 
     @Test
     public void aWhitePawnCanTakeEnPassantOnTheRight() {
-        Piece whitePawn = DefaultPieces.pawn(WHITE, F5);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, G7);
+        Piece whitePawn = pieceFactory.pawn(WHITE, F5);
+        Piece blackPawn = pieceFactory.pawn(BLACK, G7);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
         Judge judge = new Judge(boardState);
@@ -44,8 +46,8 @@ public class EnPassantTests {
 
     @Test
     public void aBlackPawnCanTakeEnPassantOnTheLeft() {
-        Piece whitePawn = DefaultPieces.pawn(WHITE, C2);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, D4);
+        Piece whitePawn = pieceFactory.pawn(WHITE, C2);
+        Piece blackPawn = pieceFactory.pawn(BLACK, D4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
         Judge judge = new Judge(boardState);
@@ -59,8 +61,8 @@ public class EnPassantTests {
 
     @Test
     public void aBlackPawnCanTakeEnPassantOnTheRight() {
-        Piece whitePawn = DefaultPieces.pawn(WHITE, E2);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, D4);
+        Piece whitePawn = pieceFactory.pawn(WHITE, E2);
+        Piece blackPawn = pieceFactory.pawn(BLACK, D4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
         Judge judge = new Judge(boardState);
@@ -74,10 +76,10 @@ public class EnPassantTests {
 
     @Test
     public void theEnPassantMoveCannotBeTakenOnATurnBeyondTheOneImmediatelyFollowing() {
-        Piece whitePawn = DefaultPieces.pawn(WHITE, E2);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, D4);
-        Piece whiteBishop = DefaultPieces.bishop(WHITE, H6);
-        Piece blackBishop = DefaultPieces.bishop(BLACK, H4);
+        Piece whitePawn = pieceFactory.pawn(WHITE, E2);
+        Piece blackPawn = pieceFactory.pawn(BLACK, D4);
+        Piece whiteBishop = pieceFactory.bishop(WHITE, H6);
+        Piece blackBishop = pieceFactory.bishop(BLACK, H4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn, whiteBishop, blackBishop);
         Judge judge = new PlayerTurnRule(new Judge(boardState), WHITE);

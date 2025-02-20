@@ -1,8 +1,8 @@
 package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTurnRuleTests {
 
+    private final PieceFactory pieceFactory = new PieceFactory();
+
     @ParameterizedTest
     @MethodSource("oppositeColorPairs")
     void nothingHappensIfAMoveIsSubmittedForAPieceWithoutTheCurrentTurnsColor(
@@ -27,7 +29,7 @@ public class PlayerTurnRuleTests {
         TestJudge testJudge = new TestJudge();
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
-        Piece piece = DefaultPieces.rook(pieceColor, C4);
+        Piece piece = pieceFactory.rook(pieceColor, C4);
         turnAwareJudge.submitMove(piece, C5);
 
         assertFalse(testJudge.getLastMovedPiece().isPresent());
@@ -39,7 +41,7 @@ public class PlayerTurnRuleTests {
         TestJudge testJudge = new TestJudge();
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, color);
 
-        Piece piece = DefaultPieces.rook(color, C4);
+        Piece piece = pieceFactory.rook(color, C4);
         turnAwareJudge.submitMove(piece, C5);
 
         assertEquals(piece, testJudge.getLastMovedPiece().get());
@@ -56,7 +58,7 @@ public class PlayerTurnRuleTests {
         TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
         turnAwareJudge.subscribeToTurnChange(turnEventListener);
 
-        Piece piece = DefaultPieces.rook(currentTurnColor, C4);
+        Piece piece = pieceFactory.rook(currentTurnColor, C4);
         turnAwareJudge.submitMove(piece, C5);
 
         assertEquals(turnColorAfterMove, turnEventListener.getLatestTurnColor().get());
@@ -66,7 +68,7 @@ public class PlayerTurnRuleTests {
     @MethodSource("oppositeColorPairs")
     void noMovesArePossibleForAPieceWithoutTheCurrentTurnColor(PlayerColor currentTurnColor, PlayerColor pieceColor) {
         TestJudge testJudge = new TestJudge();
-        testJudge.setPossibleMoves(Collections.singletonList(new Move(new StaticMove(C5), DefaultPieces.king(pieceColor, C4))));
+        testJudge.setPossibleMoves(Collections.singletonList(new Move(new StaticMove(C5), pieceFactory.king(pieceColor, C4))));
         Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
         TestTurnChangeListener turnEventListener = new TestTurnChangeListener();

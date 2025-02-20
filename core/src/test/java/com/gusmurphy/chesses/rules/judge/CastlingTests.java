@@ -4,7 +4,6 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.PieceFactory;
-import com.gusmurphy.chesses.rules.piece.DefaultPieces;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import org.junit.jupiter.api.Test;
@@ -86,7 +85,7 @@ public class CastlingTests {
         Piece rook = pieceFactory.rook(WHITE, A1);
         Piece otherRook = pieceFactory.rook(WHITE, H1);
         Piece king = pieceFactory.king(WHITE);
-        Piece blackPawn = DefaultPieces.pawn(BLACK, B7);
+        Piece blackPawn = pieceFactory.pawn(BLACK, B7);
 
         Judge judge = new CheckMateRule(
             new CheckRule(
@@ -126,7 +125,7 @@ public class CastlingTests {
         PieceFactory pieceFactory = new PieceFactory();
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
-        Piece blockingPiece = DefaultPieces.pawn(color, blockingPosition);
+        Piece blockingPiece = pieceFactory.pawn(color, blockingPosition);
 
         Coordinates initialKingPosition = king.getCoordinates();
 

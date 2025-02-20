@@ -14,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PieceTests {
 
+    private final PieceFactory pieceFactory = new PieceFactory();
+
     @Test
     void whenAPieceIsMovedAnyListenersAreNotified() {
-        Piece piece = DefaultPieces.king(WHITE, A4);
+        Piece piece = pieceFactory.king(WHITE, A4);
 
         BoardState boardState = new BoardState();
         boardState.place(piece);
@@ -33,7 +35,7 @@ public class PieceTests {
 
     @Test
     void aPieceThreatensCoordinatesOfTheOppositeColorThatItCanTake() {
-        Piece piece = DefaultPieces.rook(BLACK, D4);
+        Piece piece = pieceFactory.rook(BLACK, D4);
         new BoardState(piece);
 
         assertTrue(piece.threatens(WHITE, D5));
@@ -41,7 +43,7 @@ public class PieceTests {
 
     @Test
     void aPieceDoesNotThreatensCoordinatesOfTheSameColorThatItCanTake() {
-        Piece piece = DefaultPieces.rook(BLACK, D4);
+        Piece piece = pieceFactory.rook(BLACK, D4);
         new BoardState(piece);
 
         assertFalse(piece.threatens(BLACK, D5));
@@ -49,7 +51,7 @@ public class PieceTests {
 
     @Test
     void aPieceDoesNotThreatenCoordinatesItCantTake() {
-        Piece piece = DefaultPieces.rook(BLACK, D4);
+        Piece piece = pieceFactory.rook(BLACK, D4);
         new BoardState(piece);
 
         assertFalse(piece.threatens(WHITE, E7));
@@ -68,8 +70,8 @@ public class PieceTests {
 
     @Test
     void aPieceDoesNotThreatenCoordinatesBlockedByAnotherPiece() {
-        Piece piece = DefaultPieces.rook(BLACK, D4);
-        Piece blocker = DefaultPieces.rook(BLACK, D5);
+        Piece piece = pieceFactory.rook(BLACK, D4);
+        Piece blocker = pieceFactory.rook(BLACK, D5);
         new BoardState(piece, blocker);
 
         assertFalse(piece.threatens(WHITE, D6));
@@ -77,8 +79,8 @@ public class PieceTests {
 
     @Test
     void whenCopiedTheTwoPiecesShareBoardIdentification() {
-        Piece original = DefaultPieces.pawn(BLACK, D2);
-        Piece someOtherPiece = DefaultPieces.pawn(BLACK, D3);
+        Piece original = pieceFactory.pawn(BLACK, D2);
+        Piece someOtherPiece = pieceFactory.pawn(BLACK, D3);
         BoardState board = new BoardState(original, someOtherPiece);
         Piece copy = new Piece(original);
 
