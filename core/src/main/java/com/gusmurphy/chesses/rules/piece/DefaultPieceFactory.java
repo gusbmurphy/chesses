@@ -53,6 +53,19 @@ public class DefaultPieceFactory implements MovementStrategyProvider {
         return rook;
     }
 
+    public Piece bishop(PlayerColor playerColor, Coordinates coordinates) {
+        Piece bishop = new PieceBuilder()
+            .color(playerColor)
+            .startingCoordinates(coordinates)
+            .movementStrategy(movementStrategies.get(BISHOP))
+            .type(BISHOP)
+            .movementStrategyProvider(this)
+            .build();
+
+        createdPieces.add(bishop);
+        return bishop;
+    }
+
     public Piece pawn(PlayerColor playerColor, Coordinates coordinates) {
         Piece pawn = new PieceBuilder()
             .color(playerColor)
