@@ -93,14 +93,9 @@ public class Judge {
             .filter(piece -> piece.type() == PieceType.PAWN)
             .filter(piece -> piece.color() == color)
             .forEach(pawnToTransform -> {
-                pawnTransformListeners.stream()
+                pawnTransformListeners
                     .forEach(listener -> {
-                        listener.requestNewTypeToTransformInto(new PawnTransformReceiver() {
-                            @Override
-                            public void receiveNewType(PieceType type) {
-                                pawnToTransform.transformTo(type);
-                            }
-                        });
+                        listener.requestNewTypeToTransformInto(pawnToTransform::transformTo);
                     });
             });
     }
