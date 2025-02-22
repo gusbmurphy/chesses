@@ -78,11 +78,11 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     public void draw() {
-        float boardWidth = boardWidth();
+        float boardSize = boardSize();
         float bottomLeftX = bottomLeftX();
         float bottomLeftY = bottomLeftY();
 
-        bounds.set(bottomLeftX, bottomLeftY, boardWidth, boardWidth);
+        bounds.set(bottomLeftX, bottomLeftY, boardSize, boardSize);
 
         drawSpaces(bottomLeftX, bottomLeftY);
         drawHighlightedSpaces();
@@ -190,16 +190,16 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
-    private float boardWidth() {
+    private float boardSize() {
         return BOARD_WIDTH_IN_SQUARES * SQUARE_SIZE;
     }
 
     private float bottomLeftX() {
-        return viewport.getWorldWidth() / 2 - boardWidth() / 2;
+        return viewport.getWorldWidth() / 2 - boardSize() / 2;
     }
 
     private float bottomLeftY() {
-        return viewport.getWorldHeight() / 2 - boardWidth() / 2;
+        return viewport.getWorldHeight() / 2 - boardSize() / 2;
     }
 
     @Override
