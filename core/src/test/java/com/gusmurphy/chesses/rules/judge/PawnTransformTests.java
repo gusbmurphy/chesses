@@ -81,4 +81,21 @@ public class PawnTransformTests {
         assertEquals(PieceType.PAWN, blackPawn.type());
     }
 
+    @Test
+    public void noMovesCanBeMadeWhileWaitingForTheTransform() {
+        Piece pawn = pieceFactory.pawn(WHITE, H7);
+        Piece bishop = pieceFactory.bishop(BLACK, B3);
+        BoardState board = new BoardState(pawn, bishop);
+        Judge judge = new Judge(board);
+
+        TestPawnTransformListener listener = new TestPawnTransformListener();
+        listener.dontRespond();
+        judge.subscribeToPawnTransform(listener);
+
+        judge.submitMove(pawn, H8);
+        judge.submitMove(bishop, C4);
+
+        assertEquals(B3, bishop.getCoordinates());
+    }
+
 }

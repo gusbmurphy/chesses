@@ -19,6 +19,7 @@ public class Judge {
     protected final List<PawnTransformListener> pawnTransformListeners = new ArrayList<>();
     protected final BoardState boardState;
     private List<Move> latestPossibleMoves;
+    private boolean waitingForPawnTransformDecision = false;
 
     public Judge(BoardState boardState) {
         this.boardState = boardState;
@@ -35,6 +36,10 @@ public class Judge {
     }
 
     public void submitMove(Piece piece, Coordinates coordinates) {
+        if (waitingForPawnTransformDecision) {
+            return;
+        }
+
         latestPossibleMoves
             .stream()
             .filter(move -> move.getMovingPiece() == piece)
@@ -97,7 +102,11 @@ public class Judge {
 
     private void requestNewTypeFromListeners(Piece pawnToTransform) {
         pawnTransformListeners.forEach(listener -> {
-            listener.requestNewTypeToTransformInto(pawnToTransform::transformTo);
+            waitingForPawnTransformDecision = true;
+            listener.requestNewTypeToTransformInto(type -> {
+                waitingForPawnTransformDecision = false;
+                pawnToTransform.transformTo(type);
+            });
         });
     }
 

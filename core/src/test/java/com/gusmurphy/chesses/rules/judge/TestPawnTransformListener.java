@@ -4,15 +4,24 @@ import com.gusmurphy.chesses.rules.piece.PieceType;
 
 public class TestPawnTransformListener implements PawnTransformListener {
 
-    private PieceType typeToRespondWith;
+    private Response response;
 
     @Override
     public void requestNewTypeToTransformInto(PawnTransformReceiver receiver) {
-        receiver.receiveNewType(typeToRespondWith);
+        response.respond(receiver);
     }
 
     public void respondWith(PieceType type) {
-        typeToRespondWith = type;
+        response = receiver -> receiver.receiveNewType(type);
+    }
+
+    public void dontRespond() {
+        response = receiver -> {
+        };
+    }
+
+    interface Response {
+        void respond(PawnTransformReceiver receiver);
     }
 
 }
