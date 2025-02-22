@@ -50,4 +50,10 @@ public class StartingBoards {
         return boardState;
     }
 
+    public static BoardState easyPawnTransform() {
+        PieceFactory pieceFactory = new PieceFactory();
+        Piece pawn = pieceFactory.pawn(WHITE, H7);
+        return new BoardState(pawn);
+    }
+
 }
