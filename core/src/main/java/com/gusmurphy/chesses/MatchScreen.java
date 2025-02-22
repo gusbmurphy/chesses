@@ -37,17 +37,21 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
 
-        Skin skin = new Skin(
-            Gdx.files.internal("uiskin.json"),
-            new TextureAtlas(
-                Gdx.files.internal("uiskin.atlas")
-            )
-        );
+        Skin skin = getSkin();
 
         stage = new Stage();
         checkmateLabel = new Label("Checkmate.", skin);
         checkmateLabel.setVisible(false);
         stage.addActor(checkmateLabel);
+    }
+
+    private static Skin getSkin() {
+        return new Skin(
+            Gdx.files.internal("uiskin.json"),
+            new TextureAtlas(
+                Gdx.files.internal("uiskin.atlas")
+            )
+        );
     }
 
     @Override
