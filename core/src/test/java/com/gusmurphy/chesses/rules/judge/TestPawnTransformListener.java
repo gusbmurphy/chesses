@@ -7,8 +7,8 @@ public class TestPawnTransformListener implements PawnTransformListener {
     private PieceType typeToRespondWith;
 
     @Override
-    public PieceType requestNewTypeToTransformInto() {
-        return typeToRespondWith;
+    public void requestNewTypeToTransformInto(PawnTransformReceiver receiver) {
+        receiver.receiveNewType(typeToRespondWith);
     }
 
     public void respondWith(PieceType type) {
