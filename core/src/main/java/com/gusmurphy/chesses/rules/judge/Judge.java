@@ -92,12 +92,13 @@ public class Judge {
             .map(Optional::get)
             .filter(piece -> piece.type() == PieceType.PAWN)
             .filter(piece -> piece.color() == color)
-            .forEach(pawnToTransform -> {
-                pawnTransformListeners
-                    .forEach(listener -> {
-                        listener.requestNewTypeToTransformInto(pawnToTransform::transformTo);
-                    });
-            });
+            .forEach(this::requestNewTypeFromListeners);
+    }
+
+    private void requestNewTypeFromListeners(Piece pawnToTransform) {
+        pawnTransformListeners.forEach(listener -> {
+            listener.requestNewTypeToTransformInto(pawnToTransform::transformTo);
+        });
     }
 
     private void takeOtherPieceIfPresent(Move move) {
