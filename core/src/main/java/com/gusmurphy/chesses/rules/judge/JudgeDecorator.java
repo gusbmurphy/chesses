@@ -37,6 +37,11 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
+    public void subscribeToPawnTransform(PawnTransformListener listener) {
+        wrappedJudge.subscribeToPawnTransform(listener);
+    }
+
+    @Override
     protected void notifyGameOverListeners(GameOverEvent event) {
         wrappedJudge.notifyGameOverListeners(event);
     }

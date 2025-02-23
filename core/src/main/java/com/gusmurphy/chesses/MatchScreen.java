@@ -34,7 +34,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
 
-        boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
+        boardOnScreen = new BoardOnScreen(StartingBoards.easyPawnTransform(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
 
         Skin skin = getSkin();
@@ -42,7 +42,10 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         stage = new Stage();
         checkmateLabel = new Label("Checkmate.", skin);
         checkmateLabel.setVisible(false);
+        PawnTransformMenu pawnTransformMenu = new PawnTransformMenu(skin);
+        boardOnScreen.getJudge().subscribeToPawnTransform(pawnTransformMenu); // TODO: Why do we have to get the judge?
         stage.addActor(checkmateLabel);
+        stage.addActor(pawnTransformMenu);
     }
 
     private static Skin getSkin() {

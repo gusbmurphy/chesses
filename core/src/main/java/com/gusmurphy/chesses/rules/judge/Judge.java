@@ -47,8 +47,6 @@ public class Judge {
             .findFirst()
             .ifPresent(this::makeLegalMove);
 
-        promptForAnyPawnTransformations();
-
         latestPossibleMoves = getLatestPossibleMoves();
     }
 
@@ -81,6 +79,7 @@ public class Judge {
         moveMovingPiece(move);
         makeLinkedMoveIfPresent(move);
         distributeAnyEffectedSquares(move);
+        promptForAnyPawnTransformations();
     }
 
     private void promptForAnyPawnTransformations() {
