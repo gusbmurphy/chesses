@@ -10,6 +10,8 @@ public class PawnTransformMenu extends Window implements PawnTransformListener {
     public PawnTransformMenu(Skin skin) {
         super("Select new type for pawn", skin);
         setVisible(false);
+        setMovable(true);
+        setResizable(true);
     }
 
     @Override
