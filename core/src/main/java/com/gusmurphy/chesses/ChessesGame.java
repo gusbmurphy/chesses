@@ -15,7 +15,7 @@ public class ChessesGame extends Game {
     public void create() {
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        viewport = new FitViewport(8, 5);
+        viewport = new FitViewport(800, 600);
 
         this.setScreen(new MatchScreen(this));
     }

@@ -42,7 +42,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     private final Judge judge;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
-    public static final float SQUARE_SIZE = 0.5f;
+    public static final float SQUARE_SIZE = 40f;
 
     public BoardOnScreen(BoardState boardState, final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
