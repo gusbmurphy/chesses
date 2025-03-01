@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.rules.piece;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gusmurphy.chesses.rules.PlayerColor;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
 
@@ -13,10 +14,20 @@ public class PieceSprite {
         );
     }
 
-    private static String fileNameFor(Piece piece) {
-        String fileName = piece.color() == WHITE ? "w_" : "b_";
+    public static Sprite spriteFor(PlayerColor color, PieceType pieceType) {
+        return new Sprite(
+            new Texture(fileNameFor(color, pieceType))
+        );
+    }
 
-        switch (piece.type()) {
+    private static String fileNameFor(Piece piece) {
+        return fileNameFor(piece.color(), piece.type());
+    }
+
+    private static String fileNameFor(PlayerColor color, PieceType pieceType) {
+        String fileName = color == WHITE ? "w_" : "b_";
+
+        switch (pieceType) {
             case KING:
                 fileName += "king";
                 break;
