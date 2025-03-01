@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.ui;
+package com.gusmurphy.chesses.ui.pawntransform;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
