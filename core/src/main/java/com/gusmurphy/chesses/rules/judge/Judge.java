@@ -16,7 +16,7 @@ public class Judge {
 
     protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
     protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
-    protected final List<PawnTransformListener> pawnTransformListeners = new ArrayList<>();
+    protected final List<PawnTransformRequestListener> pawnTransformRequestListeners = new ArrayList<>();
     protected final BoardState boardState;
     private List<Move> latestPossibleMoves;
     private boolean waitingForPawnTransformDecision = false;
@@ -55,8 +55,8 @@ public class Judge {
         return latestPossibleMoves;
     }
 
-    public void subscribeToPawnTransform(PawnTransformListener listener) {
-        pawnTransformListeners.add(listener);
+    public void subscribeToPawnTransform(PawnTransformRequestListener listener) {
+        pawnTransformRequestListeners.add(listener);
     }
 
     private List<Move> getLatestPossibleMoves() {
@@ -100,7 +100,7 @@ public class Judge {
     }
 
     private void requestNewTypeFromListeners(Piece pawnToTransform) {
-        pawnTransformListeners.forEach(listener -> {
+        pawnTransformRequestListeners.forEach(listener -> {
             waitingForPawnTransformDecision = true;
             listener.requestNewTypeToTransformInto(type -> {
                 waitingForPawnTransformDecision = false;

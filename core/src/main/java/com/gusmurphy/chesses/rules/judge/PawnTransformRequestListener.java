@@ -1,6 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
-public interface PawnTransformListener {
+public interface PawnTransformRequestListener {
 
     void requestNewTypeToTransformInto(PawnTransformReceiver receiver);
 

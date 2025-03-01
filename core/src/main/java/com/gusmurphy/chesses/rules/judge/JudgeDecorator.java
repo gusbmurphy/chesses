@@ -37,7 +37,7 @@ public abstract class JudgeDecorator extends Judge {
     }
 
     @Override
-    public void subscribeToPawnTransform(PawnTransformListener listener) {
+    public void subscribeToPawnTransform(PawnTransformRequestListener listener) {
         wrappedJudge.subscribeToPawnTransform(listener);
     }
 

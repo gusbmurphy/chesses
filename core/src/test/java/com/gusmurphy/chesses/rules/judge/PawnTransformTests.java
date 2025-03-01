@@ -30,7 +30,7 @@ public class PawnTransformTests {
         BoardState board = new BoardState(pawn);
         Judge judge = new Judge(board);
 
-        TestPawnTransformListener listener = new TestPawnTransformListener();
+        TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
         judge.subscribeToPawnTransform(listener);
 
@@ -52,7 +52,7 @@ public class PawnTransformTests {
         BoardState board = new BoardState(pawn);
         Judge judge = new Judge(board);
 
-        TestPawnTransformListener listener = new TestPawnTransformListener();
+        TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
         judge.subscribeToPawnTransform(listener);
 
@@ -71,7 +71,7 @@ public class PawnTransformTests {
         BoardState board = new BoardState(whitePawn, rook);
         Judge judge = new Judge(board);
 
-        TestPawnTransformListener listener = new TestPawnTransformListener();
+        TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
         judge.subscribeToPawnTransform(listener);
 
@@ -88,7 +88,7 @@ public class PawnTransformTests {
         BoardState board = new BoardState(pawn, bishop);
         Judge judge = new Judge(board);
 
-        TestPawnTransformListener listener = new TestPawnTransformListener();
+        TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.dontRespond();
         judge.subscribeToPawnTransform(listener);
 

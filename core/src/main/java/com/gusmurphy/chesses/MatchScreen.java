@@ -42,7 +42,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         stage = new Stage();
         checkmateLabel = new Label("Checkmate.", skin);
         checkmateLabel.setVisible(false);
-        PawnTransformMenu pawnTransformMenu = new PawnTransformMenu(skin);
+        PawnTransformRequestMenu pawnTransformMenu = new PawnTransformRequestMenu(skin);
         boardOnScreen.getJudge().subscribeToPawnTransform(pawnTransformMenu); // TODO: Why do we have to get the judge?
         stage.addActor(checkmateLabel);
         stage.addActor(pawnTransformMenu);

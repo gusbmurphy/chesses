@@ -2,7 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.piece.PieceType;
 
-public class TestPawnTransformListener implements PawnTransformListener {
+public class TestPawnTransformRequestListener implements PawnTransformRequestListener {
 
     private Response response;
 

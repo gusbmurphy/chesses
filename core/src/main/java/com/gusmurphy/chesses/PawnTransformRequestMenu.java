@@ -6,15 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.gusmurphy.chesses.rules.judge.PawnTransformListener;
+import com.gusmurphy.chesses.rules.judge.PawnTransformRequestListener;
 import com.gusmurphy.chesses.rules.judge.PawnTransformReceiver;
 import com.gusmurphy.chesses.rules.piece.PieceType;
 
-public class PawnTransformMenu extends Window implements PawnTransformListener {
+public class PawnTransformRequestMenu extends Window implements PawnTransformRequestListener {
 
     private final Button queenButton;
 
-    public PawnTransformMenu(Skin skin) {
+    public PawnTransformRequestMenu(Skin skin) {
         super("Select new type for pawn", skin);
 
         Sprite queenSprite = new Sprite(new Texture("w_queen.png"));
