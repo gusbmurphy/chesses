@@ -6,15 +6,22 @@ import com.gusmurphy.chesses.rules.judge.PawnTransformRequestListener;
 import com.gusmurphy.chesses.rules.judge.PawnTransformReceiver;
 import com.gusmurphy.chesses.rules.piece.PieceType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PawnTransformRequestMenu extends Window implements PawnTransformRequestListener {
 
-    private final PieceSelectionButton queenButton;
+    private final List<PieceSelectionButton> buttons;
 
     public PawnTransformRequestMenu(Skin skin) {
         super("Select new type for pawn", skin);
 
-        queenButton = new PieceSelectionButton(PlayerColor.WHITE, PieceType.QUEEN);
-        super.add(queenButton);
+        buttons = new ArrayList<>();
+        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.QUEEN));
+        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.ROOK));
+        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.BISHOP));
+        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.KNIGHT));
+        buttons.forEach(super::add);
 
         setVisible(false);
         setMovable(true);
@@ -24,6 +31,6 @@ public class PawnTransformRequestMenu extends Window implements PawnTransformReq
     @Override
     public void requestNewTypeToTransformInto(PawnTransformReceiver receiver) {
         setVisible(true);
-        queenButton.setListener(receiver, this);
+        buttons.forEach(button -> button.setListener(receiver, this));
     }
 }
