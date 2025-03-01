@@ -35,6 +35,7 @@ public class PawnTransformRequestMenu extends Window implements PawnTransformReq
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 receiver.receiveNewType(PieceType.QUEEN);
+                setVisible(false);
             }
         });
     }
