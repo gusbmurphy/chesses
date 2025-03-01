@@ -6,6 +6,7 @@ import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceType;
+import com.gusmurphy.chesses.rules.piece.TestPieceEventListener;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -60,6 +61,25 @@ public class PawnTransformTests {
         judge.submitMove(pawn, A1); // It can now move like a bishop...
 
         assertEquals(A1, pawn.getCoordinates());
+    }
+
+    @Test
+    public void whenAPawnIsTransformedListenersAreNotified() {
+        Piece pawn = pieceFactory.pawn(WHITE, H7);
+        BoardState board = new BoardState(pawn);
+        Judge judge = new Judge(board);
+
+        TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
+        listener.respondWith(PieceType.BISHOP);
+        judge.subscribeToPawnTransform(listener);
+
+        TestPieceEventListener pieceEventListener = new TestPieceEventListener();
+        pawn.subscribeToEvents(pieceEventListener);
+
+        judge.submitMove(pawn, H8);
+        judge.submitMove(pawn, A1); // It can now move like a bishop...
+
+        assertEquals(pawn, pieceEventListener.getLastPieceTransformed().get());
     }
 
     @Test

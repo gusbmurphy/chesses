@@ -73,6 +73,7 @@ public class Piece {
     public void transformTo(PieceType newType) {
         type = newType;
         movementStrategy = movementStrategyProvider.movementStrategyFor(type);
+        eventListeners.forEach(listener -> listener.onPieceEvent(PieceEvent.TRANSFORMED, this));
     }
 
     public void setBoardState(BoardState boardState) {

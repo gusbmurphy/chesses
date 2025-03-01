@@ -9,6 +9,7 @@ public class TestPieceEventListener implements PieceEventListener {
 
     private Piece lastMovedPiece;
     private Piece lastPieceTaken;
+    private Piece lastTransformedPiece;
 
     public Optional<Piece> getLastMovedPiece() {
         return Optional.ofNullable(lastMovedPiece);
@@ -16,6 +17,10 @@ public class TestPieceEventListener implements PieceEventListener {
 
     public Optional<Piece> getLastPieceTaken() {
         return Optional.ofNullable(lastPieceTaken);
+    }
+
+    public Optional<Piece> getLastPieceTransformed() {
+        return Optional.ofNullable(lastTransformedPiece);
     }
 
     @Override
@@ -26,6 +31,9 @@ public class TestPieceEventListener implements PieceEventListener {
                 break;
             case TAKEN:
                 lastPieceTaken = piece;
+                break;
+            case TRANSFORMED:
+                lastTransformedPiece = piece;
                 break;
         }
     }
