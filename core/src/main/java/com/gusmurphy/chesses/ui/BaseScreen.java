@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses;
+package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Screen;
 

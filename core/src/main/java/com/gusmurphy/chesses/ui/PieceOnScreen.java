@@ -1,15 +1,17 @@
-package com.gusmurphy.chesses.rules.piece;
+package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.gusmurphy.chesses.rules.board.BoardOnScreen;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
+import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
+import com.gusmurphy.chesses.rules.piece.PieceSprite;
 
-import static com.gusmurphy.chesses.rules.board.BoardOnScreen.*;
+import static com.gusmurphy.chesses.ui.BoardOnScreen.*;
 
 import java.util.ArrayList;
 import java.util.List;

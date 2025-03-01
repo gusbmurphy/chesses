@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.rules.board;
+package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
+import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.board.PieceEvent;
+import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.square.coordinates.CoordinatesXyAdapter;
 import com.gusmurphy.chesses.rules.judge.CheckMateRule;
@@ -17,7 +20,6 @@ import com.gusmurphy.chesses.rules.judge.CheckRule;
 import com.gusmurphy.chesses.rules.judge.Judge;
 import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
 import com.gusmurphy.chesses.rules.piece.Piece;
-import com.gusmurphy.chesses.rules.piece.PieceOnScreen;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 

@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses;
+package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gusmurphy.chesses.rules.board.BoardOnScreen;
+import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.judge.GameOverEvent;
 import com.gusmurphy.chesses.rules.judge.GameOverEventType;
