@@ -19,7 +19,7 @@ public class PieceOnScreen implements PieceEventListener {
     private final BoardOnScreen boardOnScreen;
     private final Piece piece;
     private final SpriteBatch spriteBatch;
-    private final Sprite sprite;
+    private Sprite sprite;
     private final Rectangle bounds;
     private Vector2 effectivePosition;
     private boolean isDragged = false;
@@ -32,11 +32,9 @@ public class PieceOnScreen implements PieceEventListener {
 
         this.boardOnScreen = boardOnScreen;
 
-        sprite = PieceSprite.spriteFor(piece);
-        sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
-        bounds = new Rectangle();
         effectivePosition = boardOnScreen.getScreenPositionForCenterOf(piece.getCoordinates());
-        sprite.setCenter(effectivePosition.x, effectivePosition.y);
+        setSpriteFor(piece);
+        bounds = new Rectangle();
     }
 
     public void subscribeToMovement(PieceSelectionListener listener) {
@@ -89,10 +87,21 @@ public class PieceOnScreen implements PieceEventListener {
         );
     }
 
+    private void setSpriteFor(Piece piece) {
+        sprite = PieceSprite.spriteFor(piece);
+        sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
+        sprite.setCenter(effectivePosition.x, effectivePosition.y);
+    }
+
     @Override
     public void onPieceEvent(PieceEvent event, Piece piece) {
-        if (event == PieceEvent.MOVED) {
-            setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
+        switch (event) {
+            case MOVED:
+                setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
+                break;
+            case TRANSFORMED:
+                setSpriteFor(piece);
+                break;
         }
     }
 }
