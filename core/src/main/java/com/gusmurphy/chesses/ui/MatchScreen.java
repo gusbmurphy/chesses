@@ -54,9 +54,10 @@ public class MatchScreen extends BaseScreen {
     }
 
     private void setupCurrentTurnIndicator(Skin skin) {
-        CurrentTurnIndicator currentTurnIndicator = new CurrentTurnIndicator(skin);
-        boardRepresentation.getJudge().subscribeToTurnChange(currentTurnIndicator);
-        stage.addActor(currentTurnIndicator);
+        CurrentTurnIndicator turnIndicator = new CurrentTurnIndicator(skin);
+        turnIndicator.setPosition(10, 50);
+        boardRepresentation.getJudge().subscribeToTurnChange(turnIndicator);
+        stage.addActor(turnIndicator);
     }
 
     private void setupCheckmarkIndicator(Skin skin) {
