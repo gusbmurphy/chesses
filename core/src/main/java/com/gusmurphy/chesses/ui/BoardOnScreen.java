@@ -62,54 +62,11 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
                 )));
     }
 
-    public SpriteBatch getSpriteBatch() {
-        return spriteBatch;
-    }
-
-    public Judge getJudge() {
-        return judge;
-    }
-
-    public void render() {
-        cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(cursorPosition);
-
-        for (PieceOnScreen piece : piecesOnScreen.values()) {
-            piece.processDragging(cursorPosition);
+    @Override
+    public void onPieceEvent(PieceEvent event, Piece piece) {
+        if (event == PieceEvent.TAKEN) {
+            piecesOnScreen.remove(piece);
         }
-    }
-
-    public void draw() {
-        float boardSize = boardSize();
-        float bottomLeftX = bottomLeftX();
-        float bottomLeftY = bottomLeftY();
-
-        bounds.set(bottomLeftX, bottomLeftY, boardSize, boardSize);
-
-        drawSpaces(bottomLeftX, bottomLeftY);
-        drawHighlightedSpaces();
-        drawPieces();
-    }
-
-    private void drawPieces() {
-        spriteBatch.begin();
-        piecesOnScreen.values().forEach(PieceOnScreen::draw);
-        spriteBatch.end();
-    }
-
-    public Optional<Coordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
-        if (bounds.contains(screenPosition)) {
-            float xWithinBoard = screenPosition.x - bottomLeftX();
-            float yWithinBoard = screenPosition.y - bottomLeftY();
-
-            int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
-            int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
-
-            CoordinatesXyAdapter adapter = new CoordinatesXyAdapter(x, y);
-            return Optional.of(adapter.coordinates());
-        }
-
-        return Optional.empty();
     }
 
     @Override
@@ -139,6 +96,38 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         }
     }
 
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public Judge getJudge() {
+        return judge;
+    }
+
+    public void render() {
+        cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(cursorPosition);
+
+        for (PieceOnScreen piece : piecesOnScreen.values()) {
+            piece.processDragging(cursorPosition);
+        }
+    }
+
+    public Optional<Coordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {
+        if (bounds.contains(screenPosition)) {
+            float xWithinBoard = screenPosition.x - bottomLeftX();
+            float yWithinBoard = screenPosition.y - bottomLeftY();
+
+            int x = (int) Math.floor(xWithinBoard / SQUARE_SIZE);
+            int y = (int) Math.floor(yWithinBoard / SQUARE_SIZE);
+
+            CoordinatesXyAdapter adapter = new CoordinatesXyAdapter(x, y);
+            return Optional.of(adapter.coordinates());
+        }
+
+        return Optional.empty();
+    }
+
     public Vector2 getScreenPositionForCenterOf(Coordinates coordinates) {
         CoordinatesXyAdapter xyAdapter = new CoordinatesXyAdapter(coordinates);
 
@@ -149,6 +138,24 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         float x = xyAdapter.x() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldWidth / 2 - boardWidth / 2;
         float y = xyAdapter.y() * SQUARE_SIZE + SQUARE_SIZE / 2 + worldHeight / 2 - boardWidth / 2;
         return new Vector2(x, y);
+    }
+
+    public void draw() {
+        float boardSize = boardSize();
+        float bottomLeftX = bottomLeftX();
+        float bottomLeftY = bottomLeftY();
+
+        bounds.set(bottomLeftX, bottomLeftY, boardSize, boardSize);
+
+        drawSpaces(bottomLeftX, bottomLeftY);
+        drawHighlightedSpaces();
+        drawPieces();
+    }
+
+    private void drawPieces() {
+        spriteBatch.begin();
+        piecesOnScreen.values().forEach(PieceOnScreen::draw);
+        spriteBatch.end();
     }
 
     private void createPiecesOnScreenFor(BoardState boardState) {
@@ -207,13 +214,6 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
 
     private float bottomLeftY() {
         return viewport.getWorldHeight() / 2 - boardSize() / 2;
-    }
-
-    @Override
-    public void onPieceEvent(PieceEvent event, Piece piece) {
-        if (event == PieceEvent.TAKEN) {
-            piecesOnScreen.remove(piece);
-        }
     }
 
     private void subscribeToEventsFromPieces(BoardState boardState) {
