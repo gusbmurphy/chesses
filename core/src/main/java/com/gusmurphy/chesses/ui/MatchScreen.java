@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.ChessesGame;
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.judge.GameOverEvent;
 import com.gusmurphy.chesses.rules.judge.GameOverEventType;
@@ -43,10 +44,15 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         stage = new Stage();
         checkmateLabel = new Label("Checkmate.", skin);
         checkmateLabel.setVisible(false);
-        PawnTransformRequestMenu pawnTransformMenu = new PawnTransformRequestMenu(skin);
-        boardOnScreen.getJudge().subscribeToPawnTransform(pawnTransformMenu); // TODO: Why do we have to get the judge?
         stage.addActor(checkmateLabel);
-        stage.addActor(pawnTransformMenu);
+
+        PawnTransformRequestMenu whitePawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.WHITE);
+        PawnTransformRequestMenu blackPawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.BLACK);
+        boardOnScreen.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
+        boardOnScreen.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
+        stage.addActor(whitePawnTransformMenu);
+        stage.addActor(blackPawnTransformMenu);
+
         Gdx.input.setInputProcessor(stage);
     }
 

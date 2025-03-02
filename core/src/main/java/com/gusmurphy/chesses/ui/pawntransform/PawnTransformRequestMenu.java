@@ -11,16 +11,19 @@ import java.util.List;
 
 public class PawnTransformRequestMenu extends Window implements PawnTransformRequestListener {
 
+    private final PlayerColor color;
     private final List<PieceSelectionButton> buttons;
 
-    public PawnTransformRequestMenu(Skin skin) {
+    public PawnTransformRequestMenu(Skin skin, PlayerColor color) {
         super("Select new type for pawn", skin);
 
+        this.color = color;
+
         buttons = new ArrayList<>();
-        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.QUEEN));
-        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.ROOK));
-        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.BISHOP));
-        buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.KNIGHT));
+        buttons.add(new PieceSelectionButton(color, PieceType.QUEEN));
+        buttons.add(new PieceSelectionButton(color, PieceType.ROOK));
+        buttons.add(new PieceSelectionButton(color, PieceType.BISHOP));
+        buttons.add(new PieceSelectionButton(color, PieceType.KNIGHT));
         buttons.forEach(super::add);
 
         setSize(300, 150);
@@ -31,7 +34,9 @@ public class PawnTransformRequestMenu extends Window implements PawnTransformReq
 
     @Override
     public void requestNewTypeToTransformInto(PlayerColor forColor, PawnTransformReceiver receiver) {
-        setVisible(true);
-        buttons.forEach(button -> button.setListener(receiver, this));
+        if (forColor == color) {
+            setVisible(true);
+            buttons.forEach(button -> button.setListener(receiver, this));
+        }
     }
 }
