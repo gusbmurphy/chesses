@@ -46,14 +46,18 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         checkmateLabel.setVisible(false);
         stage.addActor(checkmateLabel);
 
+        setupPawnTransformMenus(skin);
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void setupPawnTransformMenus(Skin skin) {
         PawnTransformRequestMenu whitePawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.WHITE);
         PawnTransformRequestMenu blackPawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.BLACK);
         boardOnScreen.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
         boardOnScreen.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
         stage.addActor(whitePawnTransformMenu);
         stage.addActor(blackPawnTransformMenu);
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     private static Skin getSkin() {
