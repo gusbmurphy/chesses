@@ -18,6 +18,7 @@ import java.util.List;
 
 public class PieceOnScreen implements PieceEventListener {
 
+    private final static float PIECE_TO_SQUARE_SIZE_RATIO = 0.8f;
     private final BoardOnScreen boardOnScreen;
     private final Piece piece;
     private final SpriteBatch spriteBatch;
@@ -91,7 +92,7 @@ public class PieceOnScreen implements PieceEventListener {
 
     private void setSpriteFor(Piece piece) {
         sprite = PieceSprite.spriteFor(piece);
-        sprite.setSize(SQUARE_SIZE, SQUARE_SIZE);
+        sprite.setSize(SQUARE_SIZE * PIECE_TO_SQUARE_SIZE_RATIO, SQUARE_SIZE * PIECE_TO_SQUARE_SIZE_RATIO);
         sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
