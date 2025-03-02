@@ -18,16 +18,12 @@ public class MatchScreen extends BaseScreen {
     private final Stage stage;
 
     public MatchScreen(final ChessesGame game) {
+        stage = new Stage();
         this.game = game;
         boardRepresentation = new BoardRepresentation(StartingBoards.regular(), game);
 
         Skin skin = getSkin();
-        CheckmateIndicator checkmateIndicator = new CheckmateIndicator(skin);
-        boardRepresentation.getJudge().subscribeToGameOver(checkmateIndicator);
-
-        stage = new Stage();
-        stage.addActor(checkmateIndicator);
-
+        setupCheckmarkIndicator(skin);
         setupPawnTransformMenus(skin);
 
         Gdx.input.setInputProcessor(stage);
@@ -54,6 +50,13 @@ public class MatchScreen extends BaseScreen {
                 Gdx.files.internal("uiskin.atlas")
             )
         );
+    }
+
+    private void setupCheckmarkIndicator(Skin skin) {
+        CheckmateIndicator checkmateIndicator = new CheckmateIndicator(skin);
+        boardRepresentation.getJudge().subscribeToGameOver(checkmateIndicator);
+
+        stage.addActor(checkmateIndicator);
     }
 
     private void setupPawnTransformMenus(Skin skin) {
