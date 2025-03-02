@@ -173,16 +173,18 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     private void drawHighlightedSpaces() {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
         for (Coordinates space : highlightedCoordinates) {
             Vector2 center = getScreenPositionForCenterOf(space);
             float xPosition = center.x - SQUARE_SIZE / 2;
             float yPosition = center.y - SQUARE_SIZE / 2;
 
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.CYAN);
             shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
-            shapeRenderer.end();
         }
+
+        shapeRenderer.end();
     }
 
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
