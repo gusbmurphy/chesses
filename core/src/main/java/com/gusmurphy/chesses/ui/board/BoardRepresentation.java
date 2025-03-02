@@ -76,7 +76,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
                 .getPossibleMoves()
                 .stream()
                 .filter(move -> move.getMovingPiece() == piece)
-                .map(move -> new MoveIndication(move))
+                .map(MoveIndication::new)
                 .collect(Collectors.toList());
             this.possibleMoves.addAll(possibleMoves);
             selectedPiece = piece;
