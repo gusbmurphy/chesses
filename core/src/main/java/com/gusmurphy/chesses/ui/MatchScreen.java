@@ -51,24 +51,6 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         Gdx.input.setInputProcessor(stage);
     }
 
-    private void setupPawnTransformMenus(Skin skin) {
-        PawnTransformRequestMenu whitePawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.WHITE);
-        PawnTransformRequestMenu blackPawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.BLACK);
-        boardOnScreen.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
-        boardOnScreen.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
-        stage.addActor(whitePawnTransformMenu);
-        stage.addActor(blackPawnTransformMenu);
-    }
-
-    private static Skin getSkin() {
-        return new Skin(
-            Gdx.files.internal("uiskin.json"),
-            new TextureAtlas(
-                Gdx.files.internal("uiskin.atlas")
-            )
-        );
-    }
-
     @Override
     public void render(float delta) {
         boardOnScreen.render();
@@ -81,6 +63,31 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
+    }
+
+    @Override
+    public void onGameOverEvent(GameOverEvent event) {
+        if (event.type() == GameOverEventType.CHECKMATE) {
+            checkmate = true;
+        }
+    }
+
+    private static Skin getSkin() {
+        return new Skin(
+            Gdx.files.internal("uiskin.json"),
+            new TextureAtlas(
+                Gdx.files.internal("uiskin.atlas")
+            )
+        );
+    }
+
+    private void setupPawnTransformMenus(Skin skin) {
+        PawnTransformRequestMenu whitePawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.WHITE);
+        PawnTransformRequestMenu blackPawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.BLACK);
+        boardOnScreen.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
+        boardOnScreen.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
+        stage.addActor(whitePawnTransformMenu);
+        stage.addActor(blackPawnTransformMenu);
     }
 
     private void drawScreen() {
@@ -96,10 +103,4 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         }
     }
 
-    @Override
-    public void onGameOverEvent(GameOverEvent event) {
-        if (event.type() == GameOverEventType.CHECKMATE) {
-            checkmate = true;
-        }
-    }
 }
