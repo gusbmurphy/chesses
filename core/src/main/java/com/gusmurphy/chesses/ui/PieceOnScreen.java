@@ -60,7 +60,7 @@ public class PieceOnScreen implements PieceEventListener {
         isDragged = status;
     }
 
-    public void processDragging(Vector2 cursorPosition) {
+    public void processInput(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
             checkForClick(cursorPosition);
         }

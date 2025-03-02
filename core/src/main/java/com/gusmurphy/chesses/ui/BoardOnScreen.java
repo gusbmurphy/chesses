@@ -1,7 +1,6 @@
 package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -110,7 +109,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
         viewport.unproject(cursorPosition);
 
         for (PieceOnScreen piece : piecesOnScreen.values()) {
-            piece.processDragging(cursorPosition);
+            piece.processInput(cursorPosition);
         }
     }
 
