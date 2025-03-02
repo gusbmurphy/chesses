@@ -21,7 +21,6 @@ import com.gusmurphy.chesses.rules.judge.Judge;
 import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
-import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.ui.piece.PieceRepresentation;
 
 import java.util.*;
@@ -36,7 +35,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     private final Texture darkSquareTexture = new Texture("dark_square.png");
     private final Texture lightSquareTexture = new Texture("light_square.png");
     private final Rectangle bounds = new Rectangle();
-    private final ArrayList<Coordinates> highlightedCoordinates = new ArrayList<>();
+    private final ArrayList<MoveIndication> possibleMoves = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
     private final Map<Piece, PieceRepresentation> piecesOnScreen = new ConcurrentHashMap<>();
@@ -73,13 +72,13 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     @Override
     public void onPieceSelected(Piece piece) {
         if (selectedPiece == null) {
-            List<Coordinates> possibleMoves = judge
+            List<MoveIndication> possibleMoves = judge
                 .getPossibleMoves()
                 .stream()
                 .filter(move -> move.getMovingPiece() == piece)
-                .map(Move::coordinates)
+                .map(move -> new MoveIndication(move))
                 .collect(Collectors.toList());
-            highlightedCoordinates.addAll(possibleMoves);
+            this.possibleMoves.addAll(possibleMoves);
             selectedPiece = piece;
             PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
             pieceRepresentation.setDragStatus(true);
@@ -188,12 +187,12 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Coordinates space : highlightedCoordinates) {
-            Vector2 center = getScreenPositionForCenterOf(space);
+        for (MoveIndication move : possibleMoves) {
+            Vector2 center = getScreenPositionForCenterOf(move.getCoordinates());
             float xPosition = center.x - SQUARE_SIZE / 2;
             float yPosition = center.y - SQUARE_SIZE / 2;
 
-            shapeRenderer.setColor(0, 1, 1, 0.5f);
+            shapeRenderer.setColor(move.getColor());
             shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
         }
 
@@ -204,7 +203,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
         if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.coordinates() == coordinates)) {
             judge.submitMove(piece, coordinates);
-            highlightedCoordinates.clear();
+            possibleMoves.clear();
         }
     }
 
