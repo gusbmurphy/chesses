@@ -4,37 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
-import com.gusmurphy.chesses.rules.judge.GameOverEvent;
-import com.gusmurphy.chesses.rules.judge.GameOverEventType;
-import com.gusmurphy.chesses.rules.judge.GameOverListener;
 import com.gusmurphy.chesses.ui.pawntransform.PawnTransformRequestMenu;
 
-public class MatchScreen extends BaseScreen implements GameOverListener {
+public class MatchScreen extends BaseScreen {
 
     private final ChessesGame game;
     private final BoardRepresentation boardRepresentation;
     private final Stage stage;
-    private final Label checkmateLabel;
-
-    private boolean checkmate = false;
 
     public MatchScreen(final ChessesGame game) {
         this.game = game;
         boardRepresentation = new BoardRepresentation(StartingBoards.regular(), game);
-        boardRepresentation.getJudge().subscribeToGameOver(this);
 
         Skin skin = getSkin();
+        CheckmateIndicator checkmateIndicator = new CheckmateIndicator(skin);
+        boardRepresentation.getJudge().subscribeToGameOver(checkmateIndicator);
 
         stage = new Stage();
-        checkmateLabel = new Label("Checkmate.", skin);
-        checkmateLabel.setVisible(false);
-        stage.addActor(checkmateLabel);
+        stage.addActor(checkmateIndicator);
 
         setupPawnTransformMenus(skin);
 
@@ -53,13 +45,6 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
-    }
-
-    @Override
-    public void onGameOverEvent(GameOverEvent event) {
-        if (event.type() == GameOverEventType.CHECKMATE) {
-            checkmate = true;
-        }
     }
 
     private static Skin getSkin() {
@@ -87,10 +72,6 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         game.getShapeRenderer().setProjectionMatrix(game.getViewport().getCamera().combined);
 
         boardRepresentation.draw();
-
-        if (checkmate) {
-            checkmateLabel.setVisible(true);
-        }
     }
 
 }
