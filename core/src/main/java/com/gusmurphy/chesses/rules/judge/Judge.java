@@ -102,10 +102,13 @@ public class Judge {
     private void requestNewTypeFromListeners(Piece pawnToTransform) {
         pawnTransformRequestListeners.forEach(listener -> {
             waitingForPawnTransformDecision = true;
-            listener.requestNewTypeToTransformInto(type -> {
-                waitingForPawnTransformDecision = false;
-                pawnToTransform.transformTo(type);
-            });
+            listener.requestNewTypeToTransformInto(
+                pawnToTransform.color(),
+                type -> {
+                    waitingForPawnTransformDecision = false;
+                    pawnToTransform.transformTo(type);
+                }
+            );
         });
     }
 

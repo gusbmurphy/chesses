@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.piece.PieceType;
 
 public class TestPawnTransformRequestListener implements PawnTransformRequestListener {
@@ -7,7 +8,7 @@ public class TestPawnTransformRequestListener implements PawnTransformRequestLis
     private Response response;
 
     @Override
-    public void requestNewTypeToTransformInto(PawnTransformReceiver receiver) {
+    public void requestNewTypeToTransformInto(PlayerColor forColor, PawnTransformReceiver receiver) {
         response.respond(receiver);
     }
 

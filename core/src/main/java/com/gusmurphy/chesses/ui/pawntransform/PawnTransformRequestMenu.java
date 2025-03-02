@@ -30,7 +30,7 @@ public class PawnTransformRequestMenu extends Window implements PawnTransformReq
     }
 
     @Override
-    public void requestNewTypeToTransformInto(PawnTransformReceiver receiver) {
+    public void requestNewTypeToTransformInto(PlayerColor forColor, PawnTransformReceiver receiver) {
         setVisible(true);
         buttons.forEach(button -> button.setListener(receiver, this));
     }
