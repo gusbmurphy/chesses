@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -183,6 +184,8 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     }
 
     private void drawHighlightedSpaces() {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (Coordinates space : highlightedCoordinates) {
@@ -190,11 +193,12 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
             float xPosition = center.x - SQUARE_SIZE / 2;
             float yPosition = center.y - SQUARE_SIZE / 2;
 
-            shapeRenderer.setColor(Color.CYAN);
+            shapeRenderer.setColor(0, 1, 1, 0.5f);
             shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
         }
 
         shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
