@@ -80,11 +80,8 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     @Override
     public void onPieceReleased(Piece piece, Vector2 screenPosition) {
         if (selectedPiece == piece) {
-            Optional<Coordinates> releaseCoordinates = getBoardCoordinatesOfScreenPosition(screenPosition);
-            releaseCoordinates.ifPresent(coordinates -> movePieceToCoordinatesIfLegalAndClearHighlights(piece, releaseCoordinates.get()));
-            selectedPiece = null;
-            PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
-            pieceRepresentation.setDragStatus(false);
+            movePieceIfMoveIsLegal(piece, screenPosition);
+            unselectPiece(piece);
         }
     }
 
@@ -229,6 +226,17 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         selectedPiece = piece;
         PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
         pieceRepresentation.setDragStatus(true);
+    }
+
+    private void movePieceIfMoveIsLegal(Piece piece, Vector2 screenPosition) {
+        Optional<Coordinates> releaseCoordinates = getBoardCoordinatesOfScreenPosition(screenPosition);
+        releaseCoordinates.ifPresent(coordinates -> movePieceToCoordinatesIfLegalAndClearHighlights(piece, releaseCoordinates.get()));
+    }
+
+    private void unselectPiece(Piece piece) {
+        selectedPiece = null;
+        PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
+        pieceRepresentation.setDragStatus(false);
     }
 
 }
