@@ -19,11 +19,10 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private final ChessesGame game;
     private final BoardOnScreen boardOnScreen;
-
-    private boolean checkmate = false;
-
     private final Stage stage;
     private final Label checkmateLabel;
+
+    private boolean checkmate = false;
 
     public MatchScreen(final ChessesGame game) {
         this.game = game;
