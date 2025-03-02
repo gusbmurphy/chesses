@@ -31,16 +31,15 @@ public class PieceRepresentation implements PieceEventListener {
 
     public PieceRepresentation(Piece piece, BoardRepresentation boardRepresentation) {
         this.piece = piece;
-        piece.subscribeToEvents(this);
         this.spriteBatch = boardRepresentation.getSpriteBatch();
-
         this.boardRepresentation = boardRepresentation;
 
         effectivePosition = boardRepresentation.getScreenPositionForCenterOf(piece.getCoordinates());
-        setSpriteFor(piece);
         bounds = new Rectangle();
-
         state = new DefaultState(this);
+
+        setSpriteFor(piece);
+        piece.subscribeToEvents(this);
     }
 
     @Override
