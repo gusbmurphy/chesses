@@ -37,4 +37,10 @@ public class PlayerTurnRule extends JudgeDecorator {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public void subscribeToTurnChange(TurnChangeListener listener) {
+        listener.onTurnChange(currentTurnColor);
+        super.subscribeToTurnChange(listener);
+    }
+
 }
