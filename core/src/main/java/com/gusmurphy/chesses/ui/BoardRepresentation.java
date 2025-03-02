@@ -38,7 +38,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     private final ArrayList<Coordinates> highlightedCoordinates = new ArrayList<>();
     private final Vector2 cursorPosition = new Vector2();
 
-    private final Map<Piece, PieceOnScreen> piecesOnScreen = new ConcurrentHashMap<>();
+    private final Map<Piece, PieceRepresentation> piecesOnScreen = new ConcurrentHashMap<>();
     private Piece selectedPiece;
 
     private final Judge judge;
@@ -80,8 +80,8 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
                 .collect(Collectors.toList());
             highlightedCoordinates.addAll(possibleMoves);
             selectedPiece = piece;
-            PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
-            pieceOnScreen.setDragStatus(true);
+            PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
+            pieceRepresentation.setDragStatus(true);
         }
     }
 
@@ -91,8 +91,8 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
             Optional<Coordinates> releaseCoordinates = getBoardCoordinatesOfScreenPosition(screenPosition);
             releaseCoordinates.ifPresent(coordinates -> movePieceToCoordinatesIfLegalAndClearHighlights(piece, releaseCoordinates.get()));
             selectedPiece = null;
-            PieceOnScreen pieceOnScreen = piecesOnScreen.get(piece);
-            pieceOnScreen.setDragStatus(false);
+            PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
+            pieceRepresentation.setDragStatus(false);
         }
     }
 
@@ -108,7 +108,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         cursorPosition.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(cursorPosition);
 
-        for (PieceOnScreen piece : piecesOnScreen.values()) {
+        for (PieceRepresentation piece : piecesOnScreen.values()) {
             piece.processInput(cursorPosition);
         }
     }
@@ -154,15 +154,15 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
 
     private void drawPieces() {
         spriteBatch.begin();
-        piecesOnScreen.values().forEach(PieceOnScreen::draw);
+        piecesOnScreen.values().forEach(PieceRepresentation::draw);
         spriteBatch.end();
     }
 
     private void createPiecesOnScreenFor(BoardState boardState) {
         for (Piece piece : boardState.getAllPieces()) {
-            PieceOnScreen pieceOnScreen = new PieceOnScreen(piece, this);
-            piecesOnScreen.put(piece, pieceOnScreen);
-            pieceOnScreen.subscribeToMovement(this);
+            PieceRepresentation pieceRepresentation = new PieceRepresentation(piece, this);
+            piecesOnScreen.put(piece, pieceRepresentation);
+            pieceRepresentation.subscribeToMovement(this);
         }
     }
 

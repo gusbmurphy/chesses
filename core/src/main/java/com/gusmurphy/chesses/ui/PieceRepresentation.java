@@ -16,7 +16,7 @@ import static com.gusmurphy.chesses.ui.BoardRepresentation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceOnScreen implements PieceEventListener {
+public class PieceRepresentation implements PieceEventListener {
 
     private final static float PIECE_TO_SQUARE_SIZE_RATIO = 0.8f;
     private final BoardRepresentation boardRepresentation;
@@ -28,7 +28,7 @@ public class PieceOnScreen implements PieceEventListener {
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(Piece piece, BoardRepresentation boardRepresentation) {
+    public PieceRepresentation(Piece piece, BoardRepresentation boardRepresentation) {
         this.piece = piece;
         piece.subscribeToEvents(this);
         this.spriteBatch = boardRepresentation.getSpriteBatch();
