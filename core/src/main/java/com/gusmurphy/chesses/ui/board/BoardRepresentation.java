@@ -72,16 +72,8 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     @Override
     public void onPieceSelected(Piece piece) {
         if (selectedPiece == null) {
-            List<MoveIndication> possibleMoves = judge
-                .getPossibleMoves()
-                .stream()
-                .filter(move -> move.getMovingPiece() == piece)
-                .map(MoveIndication::new)
-                .collect(Collectors.toList());
-            this.possibleMoves.addAll(possibleMoves);
-            selectedPiece = piece;
-            PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
-            pieceRepresentation.setDragStatus(true);
+            getIndicatorsForPossibleMoves(piece);
+            updateSelectedPiece(piece);
         }
     }
 
@@ -221,6 +213,22 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
 
     private void subscribeToEventsFromPieces(BoardState boardState) {
         boardState.getAllPieces().forEach(piece -> piece.subscribeToEvents(this));
+    }
+
+    private void getIndicatorsForPossibleMoves(Piece piece) {
+        List<MoveIndication> indicators = judge
+            .getPossibleMoves()
+            .stream()
+            .filter(move -> move.getMovingPiece() == piece)
+            .map(MoveIndication::new)
+            .collect(Collectors.toList());
+        this.possibleMoves.addAll(indicators );
+    }
+
+    private void updateSelectedPiece(Piece piece) {
+        selectedPiece = piece;
+        PieceRepresentation pieceRepresentation = piecesOnScreen.get(piece);
+        pieceRepresentation.setDragStatus(true);
     }
 
 }
