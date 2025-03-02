@@ -2,14 +2,11 @@ package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
@@ -20,10 +17,7 @@ import com.gusmurphy.chesses.ui.pawntransform.PawnTransformRequestMenu;
 
 public class MatchScreen extends BaseScreen implements GameOverListener {
 
-    private final SpriteBatch spriteBatch;
-    private final ShapeRenderer shapeRenderer;
-    private final FitViewport viewport;
-
+    private final ChessesGame game;
     private final BoardOnScreen boardOnScreen;
 
     private boolean checkmate = false;
@@ -32,10 +26,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
     private final Label checkmateLabel;
 
     public MatchScreen(final ChessesGame game) {
-        spriteBatch = game.getSpriteBatch();
-        shapeRenderer = game.getShapeRenderer();
-        viewport = game.getViewport();
-
+        this.game = game;
         boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
 
@@ -92,9 +83,9 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private void drawScreen() {
         ScreenUtils.clear(Color.WHITE);
-        viewport.apply();
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+        game.getViewport().apply();
+        game.getSpriteBatch().setProjectionMatrix(game.getViewport().getCamera().combined);
+        game.getShapeRenderer().setProjectionMatrix(game.getViewport().getCamera().combined);
 
         boardOnScreen.draw();
 
