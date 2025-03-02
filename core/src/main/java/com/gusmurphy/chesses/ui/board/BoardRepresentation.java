@@ -159,12 +159,16 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         spriteBatch.begin();
 
         for (int x = 0; x < BOARD_WIDTH_IN_SQUARES; x++) {
-            for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
-                drawSquareAt(x, y);
-            }
+            drawColumnAt(x);
         }
 
         spriteBatch.end();
+    }
+
+    private void drawColumnAt(int x) {
+        for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
+            drawSquareAt(x, y);
+        }
     }
 
     private void drawSquareAt(int x, int y) {
