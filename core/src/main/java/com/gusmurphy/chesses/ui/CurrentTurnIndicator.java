@@ -13,7 +13,11 @@ public class CurrentTurnIndicator extends Label implements TurnChangeListener {
 
     @Override
     public void onTurnChange(PlayerColor newTurnColor) {
-        setText(newTurnColor + " to move.");
+        setText(capitalize(newTurnColor.toString()) + " to move.");
+    }
+
+    private static String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
 }
