@@ -11,7 +11,7 @@ import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.PieceSprite;
 
-import static com.gusmurphy.chesses.ui.BoardOnScreen.*;
+import static com.gusmurphy.chesses.ui.BoardRepresentation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class PieceOnScreen implements PieceEventListener {
 
     private final static float PIECE_TO_SQUARE_SIZE_RATIO = 0.8f;
-    private final BoardOnScreen boardOnScreen;
+    private final BoardRepresentation boardRepresentation;
     private final Piece piece;
     private final SpriteBatch spriteBatch;
     private Sprite sprite;
@@ -28,14 +28,14 @@ public class PieceOnScreen implements PieceEventListener {
     private boolean isDragged = false;
     private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
 
-    public PieceOnScreen(Piece piece, BoardOnScreen boardOnScreen) {
+    public PieceOnScreen(Piece piece, BoardRepresentation boardRepresentation) {
         this.piece = piece;
         piece.subscribeToEvents(this);
-        this.spriteBatch = boardOnScreen.getSpriteBatch();
+        this.spriteBatch = boardRepresentation.getSpriteBatch();
 
-        this.boardOnScreen = boardOnScreen;
+        this.boardRepresentation = boardRepresentation;
 
-        effectivePosition = boardOnScreen.getScreenPositionForCenterOf(piece.getCoordinates());
+        effectivePosition = boardRepresentation.getScreenPositionForCenterOf(piece.getCoordinates());
         setSpriteFor(piece);
         bounds = new Rectangle();
     }
@@ -44,7 +44,7 @@ public class PieceOnScreen implements PieceEventListener {
     public void onPieceEvent(PieceEvent event, Piece piece) {
         switch (event) {
             case MOVED:
-                setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
+                setEffectivePosition(boardRepresentation.getScreenPositionForCenterOf(this.piece.getCoordinates()));
                 break;
             case TRANSFORMED:
                 setSpriteFor(piece);

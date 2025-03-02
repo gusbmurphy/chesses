@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class BoardOnScreen implements PieceSelectionListener, PieceEventListener {
+public class BoardRepresentation implements PieceSelectionListener, PieceEventListener {
 
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
@@ -46,7 +46,7 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 40f;
 
-    public BoardOnScreen(BoardState boardState, final ChessesGame game) {
+    public BoardRepresentation(BoardState boardState, final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();

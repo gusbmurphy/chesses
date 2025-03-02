@@ -18,7 +18,7 @@ import com.gusmurphy.chesses.ui.pawntransform.PawnTransformRequestMenu;
 public class MatchScreen extends BaseScreen implements GameOverListener {
 
     private final ChessesGame game;
-    private final BoardOnScreen boardOnScreen;
+    private final BoardRepresentation boardRepresentation;
     private final Stage stage;
     private final Label checkmateLabel;
 
@@ -26,8 +26,8 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     public MatchScreen(final ChessesGame game) {
         this.game = game;
-        boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
-        boardOnScreen.getJudge().subscribeToGameOver(this);
+        boardRepresentation = new BoardRepresentation(StartingBoards.regular(), game);
+        boardRepresentation.getJudge().subscribeToGameOver(this);
 
         Skin skin = getSkin();
 
@@ -43,7 +43,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
 
     @Override
     public void render(float delta) {
-        boardOnScreen.render();
+        boardRepresentation.render();
         drawScreen();
 
         stage.act(Gdx.graphics.getDeltaTime());
@@ -74,8 +74,8 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
     private void setupPawnTransformMenus(Skin skin) {
         PawnTransformRequestMenu whitePawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.WHITE);
         PawnTransformRequestMenu blackPawnTransformMenu = new PawnTransformRequestMenu(skin, PlayerColor.BLACK);
-        boardOnScreen.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
-        boardOnScreen.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
+        boardRepresentation.getJudge().subscribeToPawnTransform(whitePawnTransformMenu); // TODO: Why do we have to get the judge?
+        boardRepresentation.getJudge().subscribeToPawnTransform(blackPawnTransformMenu);
         stage.addActor(whitePawnTransformMenu);
         stage.addActor(blackPawnTransformMenu);
     }
@@ -86,7 +86,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         game.getSpriteBatch().setProjectionMatrix(game.getViewport().getCamera().combined);
         game.getShapeRenderer().setProjectionMatrix(game.getViewport().getCamera().combined);
 
-        boardOnScreen.draw();
+        boardRepresentation.draw();
 
         if (checkmate) {
             checkmateLabel.setVisible(true);
