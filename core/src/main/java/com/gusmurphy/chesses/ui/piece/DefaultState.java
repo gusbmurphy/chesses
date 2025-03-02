@@ -11,7 +11,7 @@ class DefaultState extends PieceRepresentationState {
 
     @Override
     public void processInput(Vector2 cursorPosition) {
-        if (pieceWasJustClicked(cursorPosition)) {
+        if (pieceWasJustClicked(cursorPosition) && pieceHasMoves()) {
             notifySelectionListeners();
         }
     }
@@ -21,6 +21,14 @@ class DefaultState extends PieceRepresentationState {
         if (isNowDragged) {
             representation.setState(new DraggedState(representation));
         }
+    }
+
+    private boolean pieceHasMoves() {
+        // TODO: Yucky!
+        return representation.boardRepresentation.getJudge()
+            .getPossibleMoves()
+            .stream()
+            .anyMatch(move -> move.getMovingPiece() == representation.piece);
     }
 
     private boolean pieceWasJustClicked(Vector2 cursorPosition) {

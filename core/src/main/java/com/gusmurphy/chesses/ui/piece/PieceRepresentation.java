@@ -19,13 +19,13 @@ import java.util.List;
 public class PieceRepresentation implements PieceEventListener {
 
     protected final Piece piece;
+    protected final BoardRepresentation boardRepresentation;
     protected final Rectangle bounds;
     protected final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
     protected Sprite sprite;
     protected Vector2 effectivePosition;
 
     private final static float PIECE_TO_SQUARE_SIZE_RATIO = 0.8f;
-    private final BoardRepresentation boardRepresentation;
     private final SpriteBatch spriteBatch;
     private PieceRepresentationState state;
 
