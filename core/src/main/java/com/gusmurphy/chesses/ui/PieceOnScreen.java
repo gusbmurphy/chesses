@@ -40,6 +40,18 @@ public class PieceOnScreen implements PieceEventListener {
         bounds = new Rectangle();
     }
 
+    @Override
+    public void onPieceEvent(PieceEvent event, Piece piece) {
+        switch (event) {
+            case MOVED:
+                setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
+                break;
+            case TRANSFORMED:
+                setSpriteFor(piece);
+                break;
+        }
+    }
+
     public void subscribeToMovement(PieceSelectionListener listener) {
         selectionListeners.add(listener);
     }
@@ -96,15 +108,4 @@ public class PieceOnScreen implements PieceEventListener {
         sprite.setCenter(effectivePosition.x, effectivePosition.y);
     }
 
-    @Override
-    public void onPieceEvent(PieceEvent event, Piece piece) {
-        switch (event) {
-            case MOVED:
-                setEffectivePosition(boardOnScreen.getScreenPositionForCenterOf(this.piece.getCoordinates()));
-                break;
-            case TRANSFORMED:
-                setSpriteFor(piece);
-                break;
-        }
-    }
 }
