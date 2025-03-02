@@ -88,10 +88,13 @@ public class BoardOnScreen implements PieceSelectionListener, PieceEventListener
 
         drawSpaces(bottomLeftX, bottomLeftY);
         drawHighlightedSpaces();
+        drawPieces();
+    }
 
-        for (PieceOnScreen piece : piecesOnScreen.values()) {
-            piece.draw();
-        }
+    private void drawPieces() {
+        spriteBatch.begin();
+        piecesOnScreen.values().forEach(PieceOnScreen::draw);
+        spriteBatch.end();
     }
 
     public Optional<Coordinates> getBoardCoordinatesOfScreenPosition(Vector2 screenPosition) {

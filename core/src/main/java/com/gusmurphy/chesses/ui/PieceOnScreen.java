@@ -76,10 +76,8 @@ public class PieceOnScreen implements PieceEventListener {
     }
 
     public void draw() {
-        spriteBatch.begin();
         sprite.draw(spriteBatch);
         bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-        spriteBatch.end();
     }
 
     private void checkForClick(Vector2 cursorPosition) {
