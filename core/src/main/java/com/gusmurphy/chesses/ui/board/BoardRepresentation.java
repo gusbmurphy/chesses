@@ -136,7 +136,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
 
         bounds.set(bottomLeftX, bottomLeftY, boardSize, boardSize);
 
-        drawSpaces(bottomLeftX, bottomLeftY);
+        drawSpaces();
         drawHighlightedSpaces();
         drawPieces();
     }
@@ -155,20 +155,26 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         }
     }
 
-    private void drawSpaces(float bottomLeftX, float bottomLeftY) {
+    private void drawSpaces() {
         spriteBatch.begin();
 
         for (int x = 0; x < BOARD_WIDTH_IN_SQUARES; x++) {
             for (int y = 0; y < BOARD_WIDTH_IN_SQUARES; y++) {
-                boolean isDark = (x % 2) == (y % 2);
-                Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
-                float xPosition = x * SQUARE_SIZE + bottomLeftX;
-                float yPosition = y * SQUARE_SIZE + bottomLeftY;
-                spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
+                drawSquareAt(x, y);
             }
         }
 
         spriteBatch.end();
+    }
+
+    private void drawSquareAt(int x, int y) {
+        float bottomLeftX = bottomLeftX();
+        float bottomLeftY = bottomLeftY();
+        boolean isDark = (x % 2) == (y % 2);
+        Texture texture = isDark ? darkSquareTexture : lightSquareTexture;
+        float xPosition = x * SQUARE_SIZE + bottomLeftX;
+        float yPosition = y * SQUARE_SIZE + bottomLeftY;
+        spriteBatch.draw(texture, xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
     }
 
     private void drawHighlightedSpaces() {
