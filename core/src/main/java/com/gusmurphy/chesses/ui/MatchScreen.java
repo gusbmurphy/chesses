@@ -23,6 +23,7 @@ public class MatchScreen extends BaseScreen {
         boardRepresentation = new BoardRepresentation(StartingBoards.regular(), game);
 
         Skin skin = getSkin();
+        setupCurrentTurnIndicator(skin);
         setupCheckmarkIndicator(skin);
         setupPawnTransformMenus(skin);
 
@@ -50,6 +51,12 @@ public class MatchScreen extends BaseScreen {
                 Gdx.files.internal("uiskin.atlas")
             )
         );
+    }
+
+    private void setupCurrentTurnIndicator(Skin skin) {
+        CurrentTurnIndicator currentTurnIndicator = new CurrentTurnIndicator(skin);
+        boardRepresentation.getJudge().subscribeToTurnChange(currentTurnIndicator);
+        stage.addActor(currentTurnIndicator);
     }
 
     private void setupCheckmarkIndicator(Skin skin) {
