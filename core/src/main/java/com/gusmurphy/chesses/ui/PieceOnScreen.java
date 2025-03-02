@@ -62,7 +62,7 @@ public class PieceOnScreen implements PieceEventListener {
 
     public void processInput(Vector2 cursorPosition) {
         if (Gdx.input.justTouched()) {
-            checkForClick(cursorPosition);
+            processClick(cursorPosition);
         }
 
         if (isDragged) {
@@ -80,7 +80,7 @@ public class PieceOnScreen implements PieceEventListener {
         bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-    private void checkForClick(Vector2 cursorPosition) {
+    private void processClick(Vector2 cursorPosition) {
         if (cursorIsOnPiece(cursorPosition) && !isDragged) {
             selectionListeners.forEach(listener -> listener.onPieceSelected(piece));
         } else if (isDragged) {
