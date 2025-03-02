@@ -1,6 +1,5 @@
 package com.gusmurphy.chesses.ui.piece;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,15 +18,16 @@ import java.util.List;
 
 public class PieceRepresentation implements PieceEventListener {
 
+    protected final Piece piece;
+    protected final Rectangle bounds;
+    protected final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
+    protected Sprite sprite;
+    protected Vector2 effectivePosition;
+
     private final static float PIECE_TO_SQUARE_SIZE_RATIO = 0.8f;
     private final BoardRepresentation boardRepresentation;
-    private final Piece piece;
     private final SpriteBatch spriteBatch;
-    private Sprite sprite;
-    private final Rectangle bounds;
-    private Vector2 effectivePosition;
-    private boolean isDragged = false;
-    private final List<PieceSelectionListener> selectionListeners = new ArrayList<>();
+    private PieceRepresentationState state;
 
     public PieceRepresentation(Piece piece, BoardRepresentation boardRepresentation) {
         this.piece = piece;
@@ -39,6 +39,8 @@ public class PieceRepresentation implements PieceEventListener {
         effectivePosition = boardRepresentation.getScreenPositionForCenterOf(piece.getCoordinates());
         setSpriteFor(piece);
         bounds = new Rectangle();
+
+        state = new DefaultState(this);
     }
 
     @Override
@@ -57,18 +59,12 @@ public class PieceRepresentation implements PieceEventListener {
         selectionListeners.add(listener);
     }
 
-    public void setDragStatus(boolean status) {
-        isDragged = status;
+    public void setDragStatus(boolean isNowDragged) {
+        state.setDragStatus(isNowDragged);
     }
 
     public void processInput(Vector2 cursorPosition) {
-        if (Gdx.input.justTouched()) {
-            processClick(cursorPosition);
-        }
-
-        if (isDragged) {
-            updateSpritePosition(cursorPosition);
-        }
+        state.processInput(cursorPosition);
     }
 
     public void setEffectivePosition(Vector2 position) {
@@ -81,24 +77,8 @@ public class PieceRepresentation implements PieceEventListener {
         bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-    private void processClick(Vector2 cursorPosition) {
-        if (cursorIsOnPiece(cursorPosition) && !isDragged) {
-            selectionListeners.forEach(listener -> listener.onPieceSelected(piece));
-        } else if (isDragged) {
-            selectionListeners.forEach(listener -> listener.onPieceReleased(piece, cursorPosition));
-            sprite.setCenter(effectivePosition.x, effectivePosition.y);
-        }
-    }
-
-    private boolean cursorIsOnPiece(Vector2 cursorPosition) {
-        return bounds.contains(cursorPosition);
-    }
-
-    private void updateSpritePosition(Vector2 cursorPosition) {
-        sprite.setPosition(
-            cursorPosition.x - sprite.getWidth() / 2,
-            cursorPosition.y - sprite.getHeight() / 2
-        );
+    protected void setState(PieceRepresentationState newState) {
+        state = newState;
     }
 
     private void setSpriteFor(Piece piece) {
