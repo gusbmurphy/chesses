@@ -9,9 +9,9 @@ import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.PieceSprite;
-import com.gusmurphy.chesses.ui.BoardRepresentation;
+import com.gusmurphy.chesses.ui.board.BoardRepresentation;
 
-import static com.gusmurphy.chesses.ui.BoardRepresentation.*;
+import static com.gusmurphy.chesses.ui.board.BoardRepresentation.*;
 
 import java.util.ArrayList;
 import java.util.List;

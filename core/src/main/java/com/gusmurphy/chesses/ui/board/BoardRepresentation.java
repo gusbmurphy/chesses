@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.ui;
+package com.gusmurphy.chesses.ui.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

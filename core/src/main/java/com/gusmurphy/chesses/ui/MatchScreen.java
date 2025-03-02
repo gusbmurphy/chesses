@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
+import com.gusmurphy.chesses.ui.board.BoardRepresentation;
 import com.gusmurphy.chesses.ui.pawntransform.PawnTransformRequestMenu;
 
 public class MatchScreen extends BaseScreen {
