@@ -23,6 +23,7 @@ public class PawnTransformRequestMenu extends Window implements PawnTransformReq
         buttons.add(new PieceSelectionButton(PlayerColor.WHITE, PieceType.KNIGHT));
         buttons.forEach(super::add);
 
+        setSize(300, 150);
         setVisible(false);
         setMovable(true);
         setResizable(true);
