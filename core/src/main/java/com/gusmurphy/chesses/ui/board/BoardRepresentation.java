@@ -15,10 +15,7 @@ import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.board.square.coordinates.CoordinatesXyAdapter;
-import com.gusmurphy.chesses.rules.judge.CheckMateRule;
-import com.gusmurphy.chesses.rules.judge.CheckRule;
-import com.gusmurphy.chesses.rules.judge.Judge;
-import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
+import com.gusmurphy.chesses.rules.judge.*;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.ui.piece.PieceRepresentation;
@@ -54,12 +51,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         createPiecesOnScreenFor(boardState);
         subscribeToEventsFromPieces(boardState);
 
-        judge = new CheckMateRule(
-            new CheckRule(
-                new PlayerTurnRule(
-                    new Judge(boardState),
-                    PlayerColor.WHITE
-                )));
+        judge = new DefaultJudge(boardState);
     }
 
     @Override
