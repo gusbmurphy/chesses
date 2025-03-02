@@ -22,6 +22,7 @@ import com.gusmurphy.chesses.rules.judge.PlayerTurnRule;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
+import com.gusmurphy.chesses.ui.piece.PieceRepresentation;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

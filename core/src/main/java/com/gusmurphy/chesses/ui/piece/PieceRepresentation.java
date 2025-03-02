@@ -1,4 +1,4 @@
-package com.gusmurphy.chesses.ui;
+package com.gusmurphy.chesses.ui.piece;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,6 +10,7 @@ import com.gusmurphy.chesses.rules.board.PieceEventListener;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceSelectionListener;
 import com.gusmurphy.chesses.rules.piece.PieceSprite;
+import com.gusmurphy.chesses.ui.BoardRepresentation;
 
 import static com.gusmurphy.chesses.ui.BoardRepresentation.*;
 
