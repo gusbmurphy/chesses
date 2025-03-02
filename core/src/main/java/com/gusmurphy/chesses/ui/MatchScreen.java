@@ -36,7 +36,7 @@ public class MatchScreen extends BaseScreen implements GameOverListener {
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
 
-        boardOnScreen = new BoardOnScreen(StartingBoards.easyPawnTransform(), game);
+        boardOnScreen = new BoardOnScreen(StartingBoards.regular(), game);
         boardOnScreen.getJudge().subscribeToGameOver(this);
 
         Skin skin = getSkin();
