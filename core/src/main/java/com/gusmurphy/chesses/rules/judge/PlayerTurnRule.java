@@ -5,7 +5,6 @@ import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
