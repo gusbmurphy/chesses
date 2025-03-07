@@ -191,10 +191,17 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     }
 
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
-        if (judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == piece).anyMatch(m -> m.coordinates() == coordinates)) {
+        if (pieceCanMoveTo(piece, coordinates)) {
             judge.submitMove(piece, coordinates);
             possibleMoves.clear();
         }
+    }
+
+    private boolean pieceCanMoveTo(Piece piece, Coordinates coordinates) {
+        return judge.getPossibleMoves()
+            .stream()
+            .filter(move -> move.getMovingPiece() == piece)
+            .anyMatch(m -> m.coordinates() == coordinates);
     }
 
     private float boardSize() {
@@ -220,7 +227,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
             .filter(move -> move.getMovingPiece() == piece)
             .map(MoveIndication::new)
             .collect(Collectors.toList());
-        this.possibleMoves.addAll(indicators );
+        this.possibleMoves.addAll(indicators);
     }
 
     private void updateSelectedPiece(Piece piece) {
