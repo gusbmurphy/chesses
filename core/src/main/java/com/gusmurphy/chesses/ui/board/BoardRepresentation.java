@@ -130,6 +130,29 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         drawSpaces();
         drawHighlightedSpaces();
         drawPieces();
+
+        if (selectedPiece != null) {
+            getBoardCoordinatesOfScreenPosition(cursorPosition).flatMap(coordinates ->
+                possibleMoves.stream()
+                    .filter(moveIndication -> moveIndication.getCoordinates() == coordinates)
+                    .findFirst()
+                    .map(MoveIndication::getCoordinates)
+            ).ifPresent(coordinatesOfMoveUnderCursor -> {
+                Vector2 coordinateCenter = getScreenPositionForCenterOf(coordinatesOfMoveUnderCursor);
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+                float xPosition = coordinateCenter.x - SQUARE_SIZE / 2;
+                float yPosition = coordinateCenter.y - SQUARE_SIZE / 2;
+
+                shapeRenderer.setColor(1, 0, 0, 0.5f);
+                shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
+
+                shapeRenderer.end();
+                Gdx.gl.glDisable(GL20.GL_BLEND);
+            });
+        }
     }
 
     private void drawPieces() {
