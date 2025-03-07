@@ -197,6 +197,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         }
     }
 
+    // TODO: Shouldn't we be able to make the move and then the judge can tell us if it happened?
     private boolean pieceCanMoveTo(Piece piece, Coordinates coordinates) {
         return judge.getPossibleMoves()
             .stream()
