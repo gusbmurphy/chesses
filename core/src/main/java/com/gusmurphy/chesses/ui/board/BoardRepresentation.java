@@ -135,20 +135,25 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
 
     private void drawPieces() {
         spriteBatch.begin();
+        drawNonSelectedPieces();
+        drawSelectedPiece();
+        spriteBatch.end();
+    }
 
+    private void drawNonSelectedPieces() {
         piecesOnScreen.entrySet()
             .stream()
             .filter(entry -> entry.getKey() != selectedPiece)
             .map(Map.Entry::getValue)
             .forEach(PieceRepresentation::draw);
+    }
 
+    private void drawSelectedPiece() {
         piecesOnScreen.entrySet()
             .stream()
             .filter(entry -> entry.getKey() == selectedPiece)
             .map(Map.Entry::getValue)
             .forEach(PieceRepresentation::draw);
-
-        spriteBatch.end();
     }
 
     private void createPiecesOnScreenFor(BoardState boardState) {
