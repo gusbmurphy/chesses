@@ -210,13 +210,17 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
 
     private void drawSelectedMoveIndicator() {
         if (selectedPiece != null) {
-            getBoardCoordinatesOfScreenPosition(cursorPosition).flatMap(coordinates ->
-                possibleMoves.stream()
-                    .filter(moveIndication -> moveIndication.getCoordinates() == coordinates)
-                    .findFirst()
-                    .map(MoveIndication::getCoordinates)
-            ).ifPresent(this::drawSelectionIndicatorAt);
+            getBoardCoordinatesOfScreenPosition(cursorPosition)
+                .flatMap(this::getPossibleMoveAt)
+                .ifPresent(this::drawSelectionIndicatorAt);
         }
+    }
+
+    private Optional<Coordinates> getPossibleMoveAt(Coordinates coordinates) {
+        return possibleMoves.stream()
+            .filter(moveIndication -> moveIndication.getCoordinates() == coordinates)
+            .findFirst()
+            .map(MoveIndication::getCoordinates);
     }
 
     private void drawSelectionIndicatorAt(Coordinates coordinates) {
