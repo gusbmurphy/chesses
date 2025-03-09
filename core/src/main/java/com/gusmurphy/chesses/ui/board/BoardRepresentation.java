@@ -1,6 +1,7 @@
 package com.gusmurphy.chesses.ui.board;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -222,6 +223,10 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     }
 
     private void drawSelectionIndicatorAt(Coordinates coordinates) {
+        drawSquareAt(coordinates, new Color(1, 0, 0, 0.5f));
+    }
+
+    private void drawSquareAt(Coordinates coordinates, Color color) {
         Vector2 coordinateCenter = getScreenPositionForCenterOf(coordinates);
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -230,7 +235,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         float xPosition = coordinateCenter.x - SQUARE_SIZE / 2;
         float yPosition = coordinateCenter.y - SQUARE_SIZE / 2;
 
-        shapeRenderer.setColor(1, 0, 0, 0.5f);
+        shapeRenderer.setColor(color);
         shapeRenderer.rect(xPosition, yPosition, SQUARE_SIZE, SQUARE_SIZE);
 
         shapeRenderer.end();
