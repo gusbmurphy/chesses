@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gusmurphy.chesses.ui.MatchScreen;
+import com.gusmurphy.chesses.ui.GameSelectScreen;
 
 public class ChessesGame extends Game {
 
@@ -18,7 +18,7 @@ public class ChessesGame extends Game {
         shapeRenderer = new ShapeRenderer();
         viewport = new FitViewport(800, 600);
 
-        this.setScreen(new MatchScreen(this));
+        this.setScreen(new GameSelectScreen(this));
     }
 
     @Override
