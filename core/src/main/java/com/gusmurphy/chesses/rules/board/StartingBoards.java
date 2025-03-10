@@ -50,6 +50,33 @@ public class StartingBoards {
         return boardState;
     }
 
+    public static BoardState singlePlayer() {
+        List<Piece> pieces = new ArrayList<>();
+        PieceFactory pieceFactory = new PieceFactory();
+
+        for (File file : File.values()) {
+            pieces.add(pieceFactory.pawn(WHITE, Coordinates.with(file, Rank.TWO)));
+        }
+
+        pieces.add(pieceFactory.rook(WHITE, A1));
+        pieces.add(pieceFactory.rook(WHITE, H1));
+
+        pieces.add(pieceFactory.knight(WHITE, B1));
+        pieces.add(pieceFactory.knight(WHITE, G1));
+
+        pieces.add(pieceFactory.bishop(WHITE, C1));
+        pieces.add(pieceFactory.bishop(WHITE, F1));
+
+        pieces.add(pieceFactory.king(WHITE));
+
+        pieces.add(pieceFactory.queen(WHITE, D1));
+
+        BoardState boardState = new BoardState();
+        pieces.forEach(boardState::place);
+
+        return boardState;
+    }
+
     public static BoardState easyPawnTransform() {
         PieceFactory pieceFactory = new PieceFactory();
         List<Piece> pieces = new ArrayList<>();
