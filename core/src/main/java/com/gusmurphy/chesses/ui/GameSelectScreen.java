@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gusmurphy.chesses.ChessesGame;
+import com.gusmurphy.chesses.rules.Variations;
 
 public class GameSelectScreen extends BaseScreen {
 
@@ -23,7 +24,7 @@ public class GameSelectScreen extends BaseScreen {
         regularButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MatchScreen(game));
+                game.setScreen(new MatchScreen(game, Variations.standard()));
             }
         });
         stage.addActor(regularButton);

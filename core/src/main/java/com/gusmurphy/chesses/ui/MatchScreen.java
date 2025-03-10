@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.PlayerColor;
-import com.gusmurphy.chesses.rules.board.StartingBoards;
+import com.gusmurphy.chesses.rules.Variation;
 import com.gusmurphy.chesses.ui.board.BoardRepresentation;
 import com.gusmurphy.chesses.ui.pawntransform.PawnTransformRequestMenu;
 
@@ -18,10 +18,10 @@ public class MatchScreen extends BaseScreen {
     private final BoardRepresentation boardRepresentation;
     private final Stage stage;
 
-    public MatchScreen(final ChessesGame game) {
+    public MatchScreen(final ChessesGame game, Variation variation) {
         stage = new Stage();
         this.game = game;
-        boardRepresentation = new BoardRepresentation(StartingBoards.regular(), game);
+        boardRepresentation = new BoardRepresentation(variation, game);
 
         Skin skin = getSkin();
         setupCurrentTurnIndicator(skin);
