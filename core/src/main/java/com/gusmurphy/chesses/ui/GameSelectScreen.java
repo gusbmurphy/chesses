@@ -20,22 +20,10 @@ public class GameSelectScreen extends BaseScreen {
 
         Skin skin = getSkin();
 
-        TextButton regularButton = new TextButton("Regular Style", skin);
-        regularButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MatchScreen(game, GameVariation.standard()));
-            }
-        });
+        TextButton regularButton = new VariantSelectButton(game, skin, GameVariation.standard());
         regularButton.setX(10);
 
-        TextButton singlePlayerButton = new TextButton("Single Player", skin);
-        singlePlayerButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MatchScreen(game, GameVariation.singlePlayer()));
-            }
-        });
+        TextButton singlePlayerButton = new VariantSelectButton(game, skin, GameVariation.singlePlayer());
         singlePlayerButton.setX(200);
 
         stage.addActor(regularButton);
