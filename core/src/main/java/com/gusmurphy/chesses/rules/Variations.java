@@ -7,10 +7,10 @@ import com.gusmurphy.chesses.rules.judge.Judge;
 
 public class Variations {
 
-    public static Variation standard() {
+    public static GameVariation standard() {
         BoardState boardState = StartingBoards.regular();
         Judge judge = new DefaultJudge(boardState);
-        return new Variation(boardState, judge);
+        return new GameVariation(boardState, judge);
     }
 
 }

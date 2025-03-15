@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gusmurphy.chesses.ChessesGame;
-import com.gusmurphy.chesses.rules.Variation;
+import com.gusmurphy.chesses.rules.GameVariation;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.PieceEvent;
 import com.gusmurphy.chesses.rules.board.PieceEventListener;
@@ -44,7 +44,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 40f;
 
-    public BoardRepresentation(Variation variation, final ChessesGame game) {
+    public BoardRepresentation(GameVariation variation, final ChessesGame game) {
         spriteBatch = game.getSpriteBatch();
         shapeRenderer = game.getShapeRenderer();
         viewport = game.getViewport();
