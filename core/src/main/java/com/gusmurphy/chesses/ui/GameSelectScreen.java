@@ -27,7 +27,19 @@ public class GameSelectScreen extends BaseScreen {
                 game.setScreen(new MatchScreen(game, GameVariation.standard()));
             }
         });
+        regularButton.setX(10);
+
+        TextButton singlePlayerButton = new TextButton("Single Player", skin);
+        singlePlayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MatchScreen(game, GameVariation.singlePlayer()));
+            }
+        });
+        singlePlayerButton.setX(200);
+
         stage.addActor(regularButton);
+        stage.addActor(singlePlayerButton);
         Gdx.input.setInputProcessor(stage);
     }
 
