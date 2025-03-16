@@ -34,11 +34,7 @@ public class PlayerTurnRule extends JudgeDecorator {
             super.submitMove(piece, coordinates);
             movesMadeThisTurn++;
 
-            if (movesMadeThisTurn == maxMovesPerTurn) {
-                movesMadeThisTurn = 0;
-                currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
-                notifyTurnChangeListeners(currentTurnColor);
-            }
+            switchTurnIfNecessary();
         }
     }
 
@@ -55,6 +51,18 @@ public class PlayerTurnRule extends JudgeDecorator {
     public void subscribeToTurnChange(TurnChangeListener listener) {
         listener.onTurnChange(currentTurnColor);
         super.subscribeToTurnChange(listener);
+    }
+
+    private void switchTurnIfNecessary() {
+        if (movesMadeThisTurn == maxMovesPerTurn) {
+            switchTurn();
+        }
+    }
+
+    private void switchTurn() {
+        movesMadeThisTurn = 0;
+        currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
+        notifyTurnChangeListeners(currentTurnColor);
     }
 
 }
