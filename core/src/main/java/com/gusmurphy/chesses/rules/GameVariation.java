@@ -33,4 +33,10 @@ public class GameVariation {
         return new GameVariation(boardState, judge, "SinglePlayer");
     }
 
+    public static GameVariation moveEveryPiece() {
+        BoardState boardState = StartingBoards.regular();
+        Judge judge = new CheckMateRule(new CheckRule(new PlayerTurnRule(new Judge(boardState), PlayerColor.WHITE, 16)));
+        return new GameVariation(boardState, judge, "Move Every Piece");
+    }
+
 }
