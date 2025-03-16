@@ -35,6 +35,7 @@ public class PlayerTurnRule extends JudgeDecorator {
             movesMadeThisTurn++;
 
             if (movesMadeThisTurn == maxMovesPerTurn) {
+                movesMadeThisTurn = 0;
                 currentTurnColor = currentTurnColor == BLACK ? WHITE : BLACK;
                 notifyTurnChangeListeners(currentTurnColor);
             }
