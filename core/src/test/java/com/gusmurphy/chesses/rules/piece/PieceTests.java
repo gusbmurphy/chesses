@@ -81,7 +81,7 @@ public class PieceTests {
     void whenCopiedTheTwoPiecesShareBoardIdentification() {
         Piece original = pieceFactory.pawn(BLACK, D2);
         Piece someOtherPiece = pieceFactory.pawn(BLACK, D3);
-        BoardState board = new BoardState(original, someOtherPiece);
+        new BoardState(original, someOtherPiece);
         Piece copy = new Piece(original);
 
         assertTrue(original.sameBoardIdAs(copy));
