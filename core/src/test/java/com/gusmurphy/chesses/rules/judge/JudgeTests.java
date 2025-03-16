@@ -232,7 +232,7 @@ public class JudgeTests {
     }
 
     @Test
-    void aRelativeStrategyOnlyGoesToCertaincoordinatessRelativeToTheCurrentOne() {
+    void aRelativeStrategyOnlyGoesToCertainCoordinatesRelativeToTheCurrentOne() {
         RelativeMovementStrategy partOne = new RelativeMovementStrategy(1, 2);
         RelativeMovementStrategy partTwo = new RelativeMovementStrategy(-2, 3);
         MovementStrategy fullStrategy = new RelativeMovementStrategy(partOne, partTwo);
