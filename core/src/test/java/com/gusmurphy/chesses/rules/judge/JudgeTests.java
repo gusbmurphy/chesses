@@ -8,6 +8,7 @@ import com.gusmurphy.chesses.rules.piece.*;
 import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import com.gusmurphy.chesses.rules.piece.movement.move.StaticMove;
 import com.gusmurphy.chesses.rules.piece.movement.strategy.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,6 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
@@ -281,6 +283,20 @@ public class JudgeTests {
         List<Move> possibleMovesAfterFirst = judge.getPossibleMoves();
         assertEquals(1, possibleMovesAfterFirst.size());
         assertTrue(possibleMovesAfterFirst.stream().anyMatch(m -> m.coordinates() == C5));
+    }
+
+    @Test
+    @Disabled("Hmm...")
+    void aPawnCannotTakeItsDoubleMoveThroughAnotherPiece() {
+        Piece pawn = pieceFactory.pawn(WHITE, C2);
+        Piece blockingPiece = pieceFactory.rook(WHITE, C3);
+        BoardState boardState = new BoardState(pawn, blockingPiece);
+
+        Judge judge = new Judge(boardState);
+        List<Move> possibleMovesForPawn = judge.getPossibleMoves()
+            .stream().filter(move -> move.getMovingPiece() == pawn).collect(Collectors.toList());
+
+        assertEquals(0, possibleMovesForPawn.size());
     }
 
     @Test
