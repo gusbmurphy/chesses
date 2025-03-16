@@ -27,9 +27,13 @@ public class GameSelectScreen extends BaseScreen {
         TextButton moveEveryPieceButton = new VariantSelectButton(game, skin, GameVariation.moveEveryPiece());
         singlePlayerButton.setX(300);
 
+        TextButton oopsAllSomethingButton = new VariantSelectButton(game, skin, GameVariation.oopsAllSomething());
+        oopsAllSomethingButton.setX(400);
+
         stage.addActor(regularButton);
         stage.addActor(singlePlayerButton);
         stage.addActor(moveEveryPieceButton);
+        stage.addActor(oopsAllSomethingButton);
         Gdx.input.setInputProcessor(stage);
     }
 

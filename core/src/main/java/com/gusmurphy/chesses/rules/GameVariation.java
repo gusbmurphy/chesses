@@ -22,6 +22,12 @@ public class GameVariation {
         return new GameVariation(boardState, judge, "Standard");
     }
 
+    public static GameVariation oopsAllSomething() {
+        BoardState boardState = StartingBoards.oopsAllSomething();
+        Judge judge = new DefaultJudge(boardState);
+        return new GameVariation(boardState, judge, "Oops all X");
+    }
+
     public static GameVariation singlePlayer() {
         BoardState boardState = StartingBoards.singlePlayer();
         // Maybe we should have a JudgeBuilder...

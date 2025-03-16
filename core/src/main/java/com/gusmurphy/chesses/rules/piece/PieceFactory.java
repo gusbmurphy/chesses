@@ -42,6 +42,19 @@ public class PieceFactory implements MovementStrategyProvider {
         );
     }
 
+    public Piece piece(PlayerColor playerColor, Coordinates coordinates, PieceType type) {
+        Piece piece = new PieceBuilder()
+            .color(playerColor)
+            .startingCoordinates(coordinates)
+            .movementStrategy(movementStrategies.get(type))
+            .type(type)
+            .movementStrategyProvider(this)
+            .build();
+
+        createdPieces.add(piece);
+        return piece;
+    }
+
     public Piece rook(PlayerColor playerColor, Coordinates coordinates) {
         Piece rook = new PieceBuilder()
             .color(playerColor)
