@@ -43,6 +43,10 @@ public class PieceFactory implements MovementStrategyProvider {
     }
 
     public Piece piece(PlayerColor playerColor, Coordinates coordinates, PieceType type) {
+        if (type == PAWN) {
+            return pawn(playerColor, coordinates);
+        }
+
         Piece piece = new PieceBuilder()
             .color(playerColor)
             .startingCoordinates(coordinates)
