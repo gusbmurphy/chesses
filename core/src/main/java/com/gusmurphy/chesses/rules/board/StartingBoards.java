@@ -77,15 +77,4 @@ public class StartingBoards {
         return boardState;
     }
 
-    public static BoardState easyPawnTransform() {
-        PieceFactory pieceFactory = new PieceFactory();
-        List<Piece> pieces = new ArrayList<>();
-
-        pieces.add(pieceFactory.pawn(WHITE, H7));
-        pieces.add(pieceFactory.rook(BLACK, B7));
-
-        return new BoardState(pieces.toArray(new Piece[0]));
-
-    }
-
 }
