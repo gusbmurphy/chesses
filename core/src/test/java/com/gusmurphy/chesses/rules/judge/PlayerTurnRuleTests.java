@@ -79,6 +79,22 @@ public class PlayerTurnRuleTests {
         assertTrue(possibleMoves.isEmpty());
     }
 
+    @ParameterizedTest
+    @EnumSource(PlayerColor.class)
+    void ifTheNumberOfMovesIsSpecifiedTheCurrentPlayerCanMakeMultipleMoves(PlayerColor color) {
+        TestJudge testJudge = new TestJudge();
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, color, 2);
+
+        Piece firstPiece = pieceFactory.rook(color, C4);
+        Piece secondPiece = pieceFactory.rook(color, D4);
+
+        turnAwareJudge.submitMove(firstPiece, C5);
+        assertEquals(firstPiece, testJudge.getLastMovedPiece().get());
+
+        turnAwareJudge.submitMove(secondPiece, D5);
+        assertEquals(secondPiece, testJudge.getLastMovedPiece().get());
+    }
+
     private static Stream<Arguments> oppositeColorPairs() {
         return Stream.of(
             Arguments.of(PlayerColor.WHITE, PlayerColor.BLACK),
