@@ -122,7 +122,7 @@ public class JudgeTests {
     }
 
     @ParameterizedTest
-    @MethodSource("singlecoordinatesMoves")
+    @MethodSource("singleCoordinateMoves")
     void aSimpleLinearMovementStrategyLimitsMovementToOneDirection(
         Direction direction, Coordinates expected
     ) {
@@ -138,7 +138,7 @@ public class JudgeTests {
         assertEquals(expected, possibleMoves.get(0).coordinates());
     }
 
-    private static Stream<Arguments> singlecoordinatesMoves() {
+    private static Stream<Arguments> singleCoordinateMoves() {
         return Stream.of(
             Arguments.of(Direction.N, D5),
             Arguments.of(Direction.NE, E5),
