@@ -25,7 +25,7 @@ public class GameSelectScreen extends BaseScreen {
         singlePlayerButton.setX(200);
 
         TextButton moveEveryPieceButton = new VariantSelectButton(game, skin, GameVariation.moveEveryPiece());
-        singlePlayerButton.setX(300);
+        moveEveryPieceButton.setX(300);
 
         TextButton oopsAllSomethingButton = new VariantSelectButton(game, skin, GameVariation.oopsAllSomething());
         oopsAllSomethingButton.setX(400);
