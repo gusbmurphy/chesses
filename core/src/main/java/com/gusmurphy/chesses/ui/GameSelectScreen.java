@@ -10,13 +10,8 @@ import com.gusmurphy.chesses.rules.GameVariation;
 
 public class GameSelectScreen extends BaseScreen {
 
-    private final Stage stage;
-
     public GameSelectScreen(final ChessesGame game) {
-        // TODO: Looking like some duplication that could live in the BaseScreen maybe?
-        stage = new Stage();
-
-        Skin skin = getSkin();
+        super(game);
 
         TextButton regularButton = new VariantSelectButton(game, skin, GameVariation.standard());
         regularButton.setX(10);
@@ -41,15 +36,6 @@ public class GameSelectScreen extends BaseScreen {
     public void render(float delta) {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-    }
-
-    private static Skin getSkin() {
-        return new Skin(
-            Gdx.files.internal("uiskin.json"),
-            new TextureAtlas(
-                Gdx.files.internal("uiskin.atlas")
-            )
-        );
     }
 
 }
