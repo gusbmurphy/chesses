@@ -11,13 +11,19 @@ import com.gusmurphy.chesses.rules.GameVariation;
 public class GameSelectScreen extends BaseScreen {
 
     private final Stage stage;
+    private final Skin skin;
 
     public GameSelectScreen(final ChessesGame game) {
         // TODO: Looking like some duplication that could live in the BaseScreen maybe?
         stage = new Stage();
 
-        Skin skin = getSkin();
+        skin = getSkin();
 
+        setupButtons(game);
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void setupButtons(ChessesGame game) {
         TextButton regularButton = new VariantSelectButton(game, skin, GameVariation.standard());
         regularButton.setX(10);
 
@@ -34,7 +40,6 @@ public class GameSelectScreen extends BaseScreen {
         stage.addActor(singlePlayerButton);
         stage.addActor(moveEveryPieceButton);
         stage.addActor(oopsAllSomethingButton);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
