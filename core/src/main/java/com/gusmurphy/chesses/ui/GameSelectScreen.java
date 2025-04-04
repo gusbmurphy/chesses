@@ -15,10 +15,10 @@ public class GameSelectScreen extends BaseScreen {
         super(game);
 
         List<TextButton> buttons = new ArrayList<>();
-        buttons.add(new VariantSelectButton(game, skin, GameVariation.standard()));
-        buttons.add(new VariantSelectButton(game, skin, GameVariation.singlePlayer()));
-        buttons.add(new VariantSelectButton(game, skin, GameVariation.moveEveryPiece()));
-        buttons.add(new VariantSelectButton(game, skin, GameVariation.oopsAllSomething()));
+        buttons.add(createSelectButtonFor(GameVariation.standard()));
+        buttons.add(createSelectButtonFor(GameVariation.singlePlayer()));
+        buttons.add(createSelectButtonFor(GameVariation.moveEveryPiece()));
+        buttons.add(createSelectButtonFor(GameVariation.oopsAllSomething()));
 
         Table table = new Table();
         table.setFillParent(true);
@@ -32,6 +32,10 @@ public class GameSelectScreen extends BaseScreen {
     public void render(float delta) {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+    }
+
+    private VariantSelectButton createSelectButtonFor(GameVariation variation) {
+        return new VariantSelectButton(game, skin, variation);
     }
 
 }
