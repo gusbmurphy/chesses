@@ -1,31 +1,30 @@
 package com.gusmurphy.chesses.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.gusmurphy.chesses.ChessesGame;
 import com.gusmurphy.chesses.rules.GameVariation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameSelectScreen extends BaseScreen {
 
     public GameSelectScreen(final ChessesGame game) {
         super(game);
 
-        TextButton regularButton = new VariantSelectButton(game, skin, GameVariation.standard());
-        regularButton.setX(10);
+        List<TextButton> buttons = new ArrayList<>();
+        buttons.add(new VariantSelectButton(game, skin, GameVariation.standard()));
+        buttons.add(new VariantSelectButton(game, skin, GameVariation.singlePlayer()));
+        buttons.add(new VariantSelectButton(game, skin, GameVariation.moveEveryPiece()));
+        buttons.add(new VariantSelectButton(game, skin, GameVariation.oopsAllSomething()));
 
-        TextButton singlePlayerButton = new VariantSelectButton(game, skin, GameVariation.singlePlayer());
-        singlePlayerButton.setX(200);
+        Table table = new Table();
+        table.setFillParent(true);
+        buttons.forEach(table::add);
 
-        TextButton moveEveryPieceButton = new VariantSelectButton(game, skin, GameVariation.moveEveryPiece());
-        moveEveryPieceButton.setX(300);
-
-        TextButton oopsAllSomethingButton = new VariantSelectButton(game, skin, GameVariation.oopsAllSomething());
-        oopsAllSomethingButton.setX(400);
-
-        stage.addActor(regularButton);
-        stage.addActor(singlePlayerButton);
-        stage.addActor(moveEveryPieceButton);
-        stage.addActor(oopsAllSomethingButton);
+        stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
     }
 
