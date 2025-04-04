@@ -6,7 +6,6 @@ import com.gusmurphy.chesses.rules.board.square.EmptySquare;
 import com.gusmurphy.chesses.rules.board.square.OccupiedSquare;
 import com.gusmurphy.chesses.rules.board.square.SquareState;
 import com.gusmurphy.chesses.rules.judge.TurnChangeListener;
-import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
@@ -18,7 +17,6 @@ public class BoardState implements TurnChangeListener {
     private final static SquareState EMPTY_SQUARE = new EmptySquare();
     private final HashMap<Coordinates, SquareState> specialSquares = new HashMap<>();
     private final List<TurnChangeListener> childTurnChangeListeners = new ArrayList<>();
-    private final PieceFactory pieceFactory = new PieceFactory();
     private int latestBoardId = 0;
 
     public BoardState(Piece... pieces) {
