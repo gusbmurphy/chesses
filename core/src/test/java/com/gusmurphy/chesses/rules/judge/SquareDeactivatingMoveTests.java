@@ -1,5 +1,6 @@
 package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class SquareDeactivatingMoveTests {
         Piece rook = pieceFactory.rook(WHITE, C3);
         Piece bishop = pieceFactory.bishop(BLACK, E3);
 
-        Judge baseJudge = new TestJudge();
+        Judge baseJudge = new Judge(new BoardState(rook, bishop));
         Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         squareDeactivationJudge.submitMove(rook, C5);
