@@ -244,18 +244,11 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     }
 
     private void movePieceToCoordinatesIfLegalAndClearHighlights(Piece piece, Coordinates coordinates) {
-        if (pieceCanMoveTo(piece, coordinates)) {
+        try {
             judge.submitMove(piece, coordinates);
             possibleMoves.clear();
+        } catch (IllegalMoveException ignored) {
         }
-    }
-
-    // TODO: Shouldn't we be able to make the move and then the judge can tell us if it happened?
-    private boolean pieceCanMoveTo(Piece piece, Coordinates coordinates) {
-        return judge.getPossibleMoves()
-            .stream()
-            .filter(move -> move.getMovingPiece() == piece)
-            .anyMatch(m -> m.coordinates() == coordinates);
     }
 
     private float boardSize() {
