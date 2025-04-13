@@ -22,7 +22,10 @@ public class SquareDeactivatingMoveTests {
 
         squareDeactivationJudge.submitMove(rook, C5);
         squareDeactivationJudge.submitMove(rook, H5);
-        squareDeactivationJudge.submitMove(bishop, C5);
+
+        assertThrows(IllegalMoveException.class, () -> {
+            squareDeactivationJudge.submitMove(bishop, C5);
+        });
 
         assertEquals(E3, bishop.getCoordinates());
     }

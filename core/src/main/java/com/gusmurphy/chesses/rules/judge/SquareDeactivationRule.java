@@ -13,6 +13,8 @@ public class SquareDeactivationRule extends JudgeDecorator {
     public void submitMove(Piece piece, Coordinates coordinates) {
         if (piece.color() == PlayerColor.WHITE) {
             super.submitMove(piece, coordinates);
+        } else {
+            throw new IllegalMoveException(piece, coordinates);
         }
     }
 }
