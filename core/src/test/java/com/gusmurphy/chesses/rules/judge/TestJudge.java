@@ -13,9 +13,14 @@ public class TestJudge extends Judge {
 
     private Piece lastMovedPiece;
     private List<Move> possibleMoves = Collections.emptyList();
+    private boolean shouldThrowOnNextMove = false;
 
     public TestJudge() {
         super(new BoardState());
+    }
+
+    public TestJudge(Piece... pieces) {
+        super(new BoardState(pieces));
     }
 
     public void setPossibleMoves(List<Move> moves) {
@@ -24,7 +29,16 @@ public class TestJudge extends Judge {
 
     @Override
     public void submitMove(Piece piece, Coordinates coordinates) {
-        lastMovedPiece = piece;
+        if (shouldThrowOnNextMove) {
+            shouldThrowOnNextMove = false;
+            throw new IllegalMoveException(piece, coordinates);
+        } else {
+            lastMovedPiece = piece;
+        }
+    }
+
+    public void throwOnNextMove() {
+        shouldThrowOnNextMove = true;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceFactory;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,6 +34,25 @@ public class SquareDeactivatingMoveTests {
         });
 
         assertEquals(E3, bishop.getCoordinates());
+    }
+
+    @Test
+    void ifAMoveIsIllegalForOtherReasonsTheSpaceIsNotDeactivated() {
+        PieceFactory pieceFactory = new PieceFactory();
+        Piece rook = pieceFactory.rook(PlayerColor.BLACK, C3);
+        Piece bishop = pieceFactory.bishop(PlayerColor.WHITE, E3);
+
+        TestJudge baseJudge = new TestJudge(rook, bishop);
+        Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
+
+        baseJudge.throwOnNextMove();
+        assertThrows(IllegalMoveException.class, () -> {
+            squareDeactivationJudge.submitMove(rook, C5);
+        });
+
+        assertDoesNotThrow(() -> {
+            squareDeactivationJudge.submitMove(bishop, C5);
+        });
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
