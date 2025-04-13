@@ -59,7 +59,10 @@ public class CastlingTests {
 
         Judge judge = new Judge(new BoardState(leftRook, king));
         judge.submitMove(king, E2);
-        judge.submitMove(king, C1);
+
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(king, C1);
+        });
 
         assertEquals(E2, king.getCoordinates());
         assertEquals(A1, leftRook.getCoordinates());
@@ -73,8 +76,10 @@ public class CastlingTests {
 
         Judge judge = new Judge(new BoardState(leftRook, king));
         judge.submitMove(leftRook, A2);
-        judge.submitMove(king, C1);
 
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(king, C1);
+        });
         assertEquals(E1, king.getCoordinates());
         assertEquals(A2, leftRook.getCoordinates());
     }
@@ -130,8 +135,10 @@ public class CastlingTests {
         Coordinates initialKingPosition = king.getCoordinates();
 
         Judge judge = new Judge(new BoardState(rightRook, king, blockingPiece));
-        judge.submitMove(king, kingMove);
 
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(king, kingMove);
+        });
         assertEquals(initialKingPosition, king.getCoordinates());
         assertEquals(rookStartingPosition, rightRook.getCoordinates());
     }
@@ -148,8 +155,10 @@ public class CastlingTests {
         Piece threat = pieceFactory.rook(color.opposite(), threateningPosition);
 
         Judge judge = new Judge(new BoardState(leftRook, king, threat));
-        judge.submitMove(king, kingMove);
 
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(king, kingMove);
+        });
         assertEquals(initialKingPosition, king.getCoordinates());
         assertEquals(rookStartingPosition, leftRook.getCoordinates());
     }

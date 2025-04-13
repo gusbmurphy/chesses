@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.gusmurphy.chesses.rules.PlayerColor.*;
 import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnPassantTests {
 
@@ -87,7 +86,10 @@ public class EnPassantTests {
         judge.submitMove(whitePawn, E4);
         judge.submitMove(blackBishop, G3);
         judge.submitMove(whiteBishop, F8);
-        judge.submitMove(blackPawn, E3);
+
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(blackPawn, E3);
+        });
 
         // The black pawn should not have moved...
         assertEquals(D4, blackPawn.getCoordinates());

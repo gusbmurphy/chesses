@@ -35,17 +35,22 @@ public class Judge {
         gameOverListeners.add(listener);
     }
 
-    public void submitMove(Piece piece, Coordinates coordinates) {
+    public void submitMove(Piece piece, Coordinates coordinates) throws IllegalMoveException {
         if (waitingForPawnTransformDecision) {
             return;
         }
 
-        latestPossibleMoves
+        Optional<Move> legalMove = latestPossibleMoves
             .stream()
             .filter(move -> move.getMovingPiece() == piece)
             .filter(move -> move.coordinates() == coordinates)
-            .findFirst()
-            .ifPresent(this::makeLegalMove);
+            .findFirst();
+
+        if (legalMove.isPresent()) {
+            makeLegalMove(legalMove.get());
+        } else {
+            throw new IllegalMoveException(piece, coordinates);
+        }
 
         latestPossibleMoves = getLatestPossibleMoves();
     }

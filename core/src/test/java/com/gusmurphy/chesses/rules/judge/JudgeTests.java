@@ -77,7 +77,9 @@ public class JudgeTests {
 
         Judge judge = new Judge(boardState);
 
-        assertFalse(judge.getPossibleMoves().stream().anyMatch(m -> m.coordinates() == A4));
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(piece, A4);
+        });
     }
 
     @Test
@@ -441,8 +443,10 @@ public class JudgeTests {
         boardState.place(piece);
 
         Judge judge = new Judge(boardState);
-        judge.submitMove(piece, D5);
 
+        assertThrows(IllegalMoveException.class, () -> {
+            judge.submitMove(piece, D5);
+        });
         assertEquals(C4, piece.getCoordinates());
     }
 
