@@ -1,10 +1,10 @@
 package com.gusmurphy.chesses.rules.judge;
 
+import com.gusmurphy.chesses.rules.board.square.SpecialSquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SquareDeactivationRule extends JudgeDecorator {
 
@@ -22,5 +22,10 @@ public class SquareDeactivationRule extends JudgeDecorator {
 
         super.submitMove(piece, coordinates);
         deactivatedCoordinates.add(coordinates);
+    }
+
+    @Override
+    public List<SpecialSquareState> getSpecialSquareStates() {
+        return Collections.singletonList(new SpecialSquareState());
     }
 }

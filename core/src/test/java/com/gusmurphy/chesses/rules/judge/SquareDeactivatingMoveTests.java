@@ -2,6 +2,7 @@ package com.gusmurphy.chesses.rules.judge;
 
 import com.gusmurphy.chesses.rules.PlayerColor;
 import com.gusmurphy.chesses.rules.board.BoardState;
+import com.gusmurphy.chesses.rules.board.square.SpecialSquareState;
 import com.gusmurphy.chesses.rules.piece.Piece;
 import com.gusmurphy.chesses.rules.piece.PieceFactory;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates.*;
@@ -53,6 +55,20 @@ public class SquareDeactivatingMoveTests {
         assertDoesNotThrow(() -> {
             squareDeactivationJudge.submitMove(bishop, C5);
         });
+    }
+
+    @Test
+    void weCanGetTheCurrentlyDeactivatedSquares() {
+        PieceFactory pieceFactory = new PieceFactory();
+        Piece rook = pieceFactory.rook(PlayerColor.WHITE, C3);
+
+        BaseJudge baseJudge = new BaseJudge(new BoardState(rook));
+        Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
+
+        squareDeactivationJudge.submitMove(rook, C5);
+
+        List<SpecialSquareState> results = squareDeactivationJudge.getSpecialSquareStates();
+        assertEquals(1, results.size());
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
