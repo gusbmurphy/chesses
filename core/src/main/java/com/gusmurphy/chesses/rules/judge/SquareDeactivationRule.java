@@ -26,6 +26,6 @@ public class SquareDeactivationRule extends JudgeDecorator {
 
     @Override
     public List<SpecialSquareState> getSpecialSquareStates() {
-        return Collections.singletonList(new SpecialSquareState());
+        return Collections.singletonList(new SpecialSquareState(Coordinates.C3));
     }
 }

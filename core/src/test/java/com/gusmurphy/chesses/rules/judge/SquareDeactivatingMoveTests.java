@@ -69,6 +69,7 @@ public class SquareDeactivatingMoveTests {
 
         List<SpecialSquareState> results = squareDeactivationJudge.getSpecialSquareStates();
         assertEquals(1, results.size());
+        assertEquals(C3, results.get(0).coordinates());
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
