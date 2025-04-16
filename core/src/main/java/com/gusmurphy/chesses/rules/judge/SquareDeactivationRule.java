@@ -3,6 +3,7 @@ package com.gusmurphy.chesses.rules.judge;
 import com.gusmurphy.chesses.rules.board.square.SpecialSquareState;
 import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
+import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +25,14 @@ public class SquareDeactivationRule extends JudgeDecorator {
         Coordinates originalCoordinates = piece.getCoordinates();
         super.submitMove(piece, coordinates);
         deactivatedCoordinates.add(originalCoordinates);
+    }
+
+    @Override
+    public List<Move> getPossibleMoves() {
+        return super.getPossibleMoves()
+            .stream()
+            .filter(move -> !deactivatedCoordinates.contains(move.coordinates()))
+            .collect(Collectors.toList());
     }
 
     @Override

@@ -35,6 +35,11 @@ public class SquareDeactivatingMoveTests {
         });
 
         assertEquals(E5, bishop.getCoordinates());
+        assertFalse(squareDeactivationJudge
+            .getPossibleMoves()
+            .stream()
+            .anyMatch(move -> move.coordinates() == C3)
+        );
     }
 
     @Test
