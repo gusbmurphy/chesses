@@ -11,7 +11,7 @@ public class SquareDeactivationRule extends JudgeDecorator {
 
     private final Set<Coordinates> deactivatedCoordinates = new HashSet<>();
 
-    SquareDeactivationRule(BaseJudge judge) {
+    public SquareDeactivationRule(BaseJudge judge) {
         super(judge);
     }
 

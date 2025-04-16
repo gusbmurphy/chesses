@@ -19,6 +19,7 @@ public class GameSelectScreen extends BaseScreen {
         buttons.add(createSelectButtonFor(GameVariation.singlePlayer()));
         buttons.add(createSelectButtonFor(GameVariation.moveEveryPiece()));
         buttons.add(createSelectButtonFor(GameVariation.oopsAllSomething()));
+        buttons.add(createSelectButtonFor(GameVariation.squareDeactivation()));
 
         Table table = new Table();
         table.setFillParent(true);

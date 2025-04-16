@@ -45,4 +45,10 @@ public class GameVariation {
         return new GameVariation(boardState, judge, "Move Every Piece");
     }
 
+    public static GameVariation squareDeactivation() {
+        BoardState boardState = StartingBoards.regular();
+        Judge judge = new SquareDeactivationRule(new DefaultJudge(boardState));
+        return new GameVariation(boardState, judge, "Square Deactivation");
+    }
+
 }
