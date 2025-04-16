@@ -12,7 +12,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BaseJudge {
+public class BaseJudge extends Judge {
 
     protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
     protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
@@ -27,14 +27,17 @@ public class BaseJudge {
         latestPossibleMoves = getLatestPossibleMoves();
     }
 
+    @Override
     public void subscribeToTurnChange(TurnChangeListener listener) {
         turnChangeListeners.add(listener);
     }
 
+    @Override
     public void subscribeToGameOver(GameOverListener listener) {
         gameOverListeners.add(listener);
     }
 
+    @Override
     public void submitMove(Piece piece, Coordinates coordinates) throws IllegalMoveException {
         if (waitingForPawnTransformDecision) {
             return;
@@ -56,10 +59,12 @@ public class BaseJudge {
     }
 
     // TODO: Feels like we shouldn't be asking the Judge for moves...
+    @Override
     public List<Move> getPossibleMoves() {
         return latestPossibleMoves;
     }
 
+    @Override
     public void subscribeToPawnTransform(PawnTransformRequestListener listener) {
         pawnTransformRequestListeners.add(listener);
     }

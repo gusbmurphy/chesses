@@ -29,7 +29,7 @@ public class PawnTransformTests {
     ) {
         Piece pawn = pieceFactory.pawn(color, start);
         BoardState board = new BoardState(pawn);
-        BaseJudge judge = new BaseJudge(board);
+        Judge judge = new BaseJudge(board);
 
         TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
@@ -51,7 +51,7 @@ public class PawnTransformTests {
     public void onceAPawnReachesTheOtherSideItCanMoveLikeTheNewPiece() {
         Piece pawn = pieceFactory.pawn(WHITE, H7);
         BoardState board = new BoardState(pawn);
-        BaseJudge judge = new BaseJudge(board);
+        Judge judge = new BaseJudge(board);
 
         TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
@@ -67,7 +67,7 @@ public class PawnTransformTests {
     public void whenAPawnIsTransformedListenersAreNotified() {
         Piece pawn = pieceFactory.pawn(WHITE, H7);
         BoardState board = new BoardState(pawn);
-        BaseJudge judge = new BaseJudge(board);
+        Judge judge = new BaseJudge(board);
 
         TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
@@ -89,7 +89,7 @@ public class PawnTransformTests {
         Piece blackPawn = pieceFactory.pawn(BLACK, H8);
         Piece rook = pieceFactory.rook(WHITE, E1);
         BoardState board = new BoardState(whitePawn, rook);
-        BaseJudge judge = new BaseJudge(board);
+        Judge judge = new BaseJudge(board);
 
         TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.respondWith(PieceType.BISHOP);
@@ -106,7 +106,7 @@ public class PawnTransformTests {
         Piece pawn = pieceFactory.pawn(WHITE, H7);
         Piece bishop = pieceFactory.bishop(BLACK, B3);
         BoardState board = new BoardState(pawn, bishop);
-        BaseJudge judge = new BaseJudge(board);
+        Judge judge = new BaseJudge(board);
 
         TestPawnTransformRequestListener listener = new TestPawnTransformRequestListener();
         listener.dontRespond();

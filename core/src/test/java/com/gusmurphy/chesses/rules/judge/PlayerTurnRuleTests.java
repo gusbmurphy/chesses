@@ -27,7 +27,7 @@ public class PlayerTurnRuleTests {
         PlayerColor pieceColor, PlayerColor currentTurnColor
     ) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
         Piece piece = pieceFactory.rook(pieceColor, C4);
         turnAwareJudge.submitMove(piece, C5);
@@ -39,7 +39,7 @@ public class PlayerTurnRuleTests {
     @EnumSource(PlayerColor.class)
     void aMoveIsPassedAlongIfItIsForTheCorrectColor(PlayerColor color) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, color);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, color);
 
         Piece piece = pieceFactory.rook(color, C4);
         turnAwareJudge.submitMove(piece, C5);
@@ -53,7 +53,7 @@ public class PlayerTurnRuleTests {
         PlayerColor currentTurnColor, PlayerColor turnColorAfterMove
     ) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
         TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
         turnAwareJudge.subscribeToTurnChange(turnEventListener);
@@ -69,7 +69,7 @@ public class PlayerTurnRuleTests {
     void noMovesArePossibleForAPieceWithoutTheCurrentTurnColor(PlayerColor currentTurnColor, PlayerColor pieceColor) {
         TestJudge testJudge = new TestJudge();
         testJudge.setPossibleMoves(Collections.singletonList(new Move(new StaticMove(C5), pieceFactory.king(pieceColor, C4))));
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor);
 
         TestTurnChangeListener turnEventListener = new TestTurnChangeListener();
         turnAwareJudge.subscribeToTurnChange(turnEventListener);
@@ -83,7 +83,7 @@ public class PlayerTurnRuleTests {
     @EnumSource(PlayerColor.class)
     void ifTheNumberOfMovesIsSpecifiedTheCurrentPlayerCanMakeMultipleMoves(PlayerColor color) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, color, 2);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, color, 2);
 
         Piece firstPiece = pieceFactory.rook(color, C4);
         Piece secondPiece = pieceFactory.rook(color, D4);
@@ -99,7 +99,7 @@ public class PlayerTurnRuleTests {
     @MethodSource("oppositeColorPairs")
     void theCurrentTurnChangesOnceTheLastAllowedMoveIsMade(PlayerColor currentTurnColor, PlayerColor otherColor) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor, 2);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor, 2);
 
         Piece firstPiece = pieceFactory.rook(currentTurnColor, C4);
         Piece secondPiece = pieceFactory.rook(currentTurnColor, D4);
@@ -119,7 +119,7 @@ public class PlayerTurnRuleTests {
     @MethodSource("oppositeColorPairs")
     void theCurrentTurnChangesAfterTheSecondPlayerCompletesTheirTurn(PlayerColor currentTurnColor, PlayerColor otherColor) {
         TestJudge testJudge = new TestJudge();
-        BaseJudge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor, 1);
+        Judge turnAwareJudge = new PlayerTurnRule(testJudge, currentTurnColor, 1);
 
         Piece firstPiece = pieceFactory.rook(currentTurnColor, C4);
         Piece secondPiece = pieceFactory.rook(otherColor, D4);

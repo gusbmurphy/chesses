@@ -17,7 +17,7 @@ public class CheckMateRuleTests {
         TestJudge testJudge = new TestJudge();
         testJudge.setPossibleMoves(Collections.emptyList());
 
-        BaseJudge judge = new CheckMateRule(testJudge);
+        Judge judge = new CheckMateRule(testJudge);
         TestGameOverListener listener = new TestGameOverListener();
         judge.subscribeToGameOver(listener);
 

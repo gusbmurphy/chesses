@@ -19,7 +19,7 @@ public class EnPassantTests {
         Piece blackPawn = pieceFactory.pawn(BLACK, E7);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
-        BaseJudge judge = new BaseJudge(boardState);
+        Judge judge = new BaseJudge(boardState);
 
         judge.submitMove(blackPawn, E5);
         judge.submitMove(whitePawn, E6);
@@ -34,7 +34,7 @@ public class EnPassantTests {
         Piece blackPawn = pieceFactory.pawn(BLACK, G7);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
-        BaseJudge judge = new BaseJudge(boardState);
+        Judge judge = new BaseJudge(boardState);
 
         judge.submitMove(blackPawn, G5);
         judge.submitMove(whitePawn, G6);
@@ -49,7 +49,7 @@ public class EnPassantTests {
         Piece blackPawn = pieceFactory.pawn(BLACK, D4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
-        BaseJudge judge = new BaseJudge(boardState);
+        Judge judge = new BaseJudge(boardState);
 
         judge.submitMove(whitePawn, C4);
         judge.submitMove(blackPawn, C3);
@@ -64,7 +64,7 @@ public class EnPassantTests {
         Piece blackPawn = pieceFactory.pawn(BLACK, D4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn);
-        BaseJudge judge = new BaseJudge(boardState);
+        Judge judge = new BaseJudge(boardState);
 
         judge.submitMove(whitePawn, E4);
         judge.submitMove(blackPawn, E3);
@@ -81,7 +81,7 @@ public class EnPassantTests {
         Piece blackBishop = pieceFactory.bishop(BLACK, H4);
 
         BoardState boardState = new BoardState(whitePawn, blackPawn, whiteBishop, blackBishop);
-        BaseJudge judge = new PlayerTurnRule(new BaseJudge(boardState), WHITE);
+        Judge judge = new PlayerTurnRule(new BaseJudge(boardState), WHITE);
 
         judge.submitMove(whitePawn, E4);
         judge.submitMove(blackBishop, G3);
