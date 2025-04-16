@@ -5,6 +5,7 @@ import com.gusmurphy.chesses.rules.board.square.coordinates.Coordinates;
 import com.gusmurphy.chesses.rules.piece.Piece;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SquareDeactivationRule extends JudgeDecorator {
 
@@ -26,6 +27,8 @@ public class SquareDeactivationRule extends JudgeDecorator {
 
     @Override
     public List<SpecialSquareState> getSpecialSquareStates() {
-        return Collections.singletonList(new SpecialSquareState(Coordinates.C3));
+        return deactivatedCoordinates.stream()
+            .map(SpecialSquareState::new)
+            .collect(Collectors.toList());
     }
 }

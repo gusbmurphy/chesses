@@ -61,15 +61,18 @@ public class SquareDeactivatingMoveTests {
     void weCanGetTheCurrentlyDeactivatedSquares() {
         PieceFactory pieceFactory = new PieceFactory();
         Piece rook = pieceFactory.rook(PlayerColor.WHITE, C3);
+        Piece bishop = pieceFactory.bishop(PlayerColor.WHITE, E3);
 
-        BaseJudge baseJudge = new BaseJudge(new BoardState(rook));
+        BaseJudge baseJudge = new BaseJudge(new BoardState(rook, bishop));
         Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         squareDeactivationJudge.submitMove(rook, C5);
+        squareDeactivationJudge.submitMove(bishop, H6);
 
         List<SpecialSquareState> results = squareDeactivationJudge.getSpecialSquareStates();
-        assertEquals(1, results.size());
-        assertEquals(C3, results.get(0).coordinates());
+        assertEquals(2, results.size());
+        assertTrue(results.stream().anyMatch(square -> square.coordinates() == C5));
+        assertTrue(results.stream().anyMatch(square -> square.coordinates() == H6));
     }
 
     private static Stream<Arguments> oppositeColorPairs() {
