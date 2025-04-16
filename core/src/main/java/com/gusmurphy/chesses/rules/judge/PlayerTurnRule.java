@@ -16,13 +16,13 @@ public class PlayerTurnRule extends JudgeDecorator {
     private final int maxMovesPerTurn;
     private int movesMadeThisTurn = 0;
 
-    public PlayerTurnRule(Judge judge, PlayerColor initialTurnColor) {
+    public PlayerTurnRule(BaseJudge judge, PlayerColor initialTurnColor) {
         super(judge);
         currentTurnColor = initialTurnColor;
         maxMovesPerTurn = 1;
     }
 
-    public PlayerTurnRule(Judge judge, PlayerColor initialTurnColor, int movesPerTurn) {
+    public PlayerTurnRule(BaseJudge judge, PlayerColor initialTurnColor, int movesPerTurn) {
         super(judge);
         currentTurnColor = initialTurnColor;
         this.maxMovesPerTurn = movesPerTurn;

@@ -12,7 +12,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Judge {
+public class BaseJudge {
 
     protected final List<TurnChangeListener> turnChangeListeners = new ArrayList<>();
     protected final List<GameOverListener> gameOverListeners = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Judge {
     private List<Move> latestPossibleMoves;
     private boolean waitingForPawnTransformDecision = false;
 
-    public Judge(BoardState boardState) {
+    public BaseJudge(BoardState boardState) {
         this.boardState = boardState;
         turnChangeListeners.add(boardState);
         latestPossibleMoves = getLatestPossibleMoves();

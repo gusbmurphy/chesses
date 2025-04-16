@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CheckMateRule extends JudgeDecorator {
 
-    public CheckMateRule(Judge judge) {
+    public CheckMateRule(BaseJudge judge) {
         super(judge);
     }
 

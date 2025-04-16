@@ -7,11 +7,11 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 
 import java.util.List;
 
-public abstract class JudgeDecorator extends Judge {
+public abstract class JudgeDecorator extends BaseJudge {
 
-    protected final Judge wrappedJudge;
+    protected final BaseJudge wrappedJudge;
 
-    JudgeDecorator(Judge judge) {
+    JudgeDecorator(BaseJudge judge) {
         super(judge.boardState);
         wrappedJudge = judge;
     }

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class TestJudge extends Judge {
+public class TestJudge extends BaseJudge {
 
     private Piece lastMovedPiece;
     private List<Move> possibleMoves = Collections.emptyList();

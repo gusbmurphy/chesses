@@ -30,7 +30,7 @@ public class CastlingTests {
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
 
-        Judge judge = new Judge(new BoardState(rightRook, king));
+        BaseJudge judge = new BaseJudge(new BoardState(rightRook, king));
         judge.submitMove(king, kingMove);
 
         assertEquals(kingMove, king.getCoordinates());
@@ -44,7 +44,7 @@ public class CastlingTests {
         Piece rightRook = pieceFactory.rook(color, rookStartingPosition);
         Piece king = pieceFactory.king(color);
 
-        Judge judge = new Judge(new BoardState(rightRook, king));
+        BaseJudge judge = new BaseJudge(new BoardState(rightRook, king));
         List<Move> kingMoves = judge
             .getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
 
@@ -57,7 +57,7 @@ public class CastlingTests {
         Piece leftRook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
 
-        Judge judge = new Judge(new BoardState(leftRook, king));
+        BaseJudge judge = new BaseJudge(new BoardState(leftRook, king));
         judge.submitMove(king, E2);
 
         assertThrows(IllegalMoveException.class, () -> {
@@ -74,7 +74,7 @@ public class CastlingTests {
         Piece leftRook = pieceFactory.rook(WHITE, A1);
         Piece king = pieceFactory.king(WHITE);
 
-        Judge judge = new Judge(new BoardState(leftRook, king));
+        BaseJudge judge = new BaseJudge(new BoardState(leftRook, king));
         judge.submitMove(leftRook, A2);
 
         assertThrows(IllegalMoveException.class, () -> {
@@ -92,9 +92,9 @@ public class CastlingTests {
         Piece king = pieceFactory.king(WHITE);
         Piece blackPawn = pieceFactory.pawn(BLACK, B7);
 
-        Judge judge = new CheckMateRule(
+        BaseJudge judge = new CheckMateRule(
             new CheckRule(
-                new Judge(new BoardState(rook, otherRook, king, blackPawn))
+                new BaseJudge(new BoardState(rook, otherRook, king, blackPawn))
             )
         );
 
@@ -113,7 +113,7 @@ public class CastlingTests {
 
         BoardState originalBoard = new BoardState(originalRook, originalKing);
         BoardState cloneBoard = new BoardState(originalBoard);
-        Judge cloneJudge = new Judge(cloneBoard);
+        BaseJudge cloneJudge = new BaseJudge(cloneBoard);
 
         Piece cloneKing = cloneBoard.getStateAt(E1).occupyingPiece().get();
         cloneJudge.submitMove(cloneKing, C1);
@@ -134,7 +134,7 @@ public class CastlingTests {
 
         Coordinates initialKingPosition = king.getCoordinates();
 
-        Judge judge = new Judge(new BoardState(rightRook, king, blockingPiece));
+        BaseJudge judge = new BaseJudge(new BoardState(rightRook, king, blockingPiece));
 
         assertThrows(IllegalMoveException.class, () -> {
             judge.submitMove(king, kingMove);
@@ -154,7 +154,7 @@ public class CastlingTests {
         Coordinates initialKingPosition = king.getCoordinates();
         Piece threat = pieceFactory.rook(color.opposite(), threateningPosition);
 
-        Judge judge = new Judge(new BoardState(leftRook, king, threat));
+        BaseJudge judge = new BaseJudge(new BoardState(leftRook, king, threat));
 
         assertThrows(IllegalMoveException.class, () -> {
             judge.submitMove(king, kingMove);

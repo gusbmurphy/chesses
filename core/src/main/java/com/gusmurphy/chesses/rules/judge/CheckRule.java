@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class CheckRule extends JudgeDecorator {
 
-    public CheckRule(Judge judge) {
+    public CheckRule(BaseJudge judge) {
         super(judge);
     }
 
@@ -19,7 +19,7 @@ public class CheckRule extends JudgeDecorator {
 
         return moves.stream().filter(move -> {
             BoardState boardCopy = new BoardState(this.boardState);
-            Judge futureJudge = new Judge(boardCopy);
+            BaseJudge futureJudge = new BaseJudge(boardCopy);
             // TODO: This doesn't feel like a great way to get this "futurePiece"...
             Piece futurePiece = futureJudge.boardState.getStateAt(move.getMovingPiece().getCoordinates()).occupyingPiece().get();
             futureJudge.submitMove(futurePiece, move.coordinates());

@@ -23,8 +23,8 @@ public class SquareDeactivatingMoveTests {
         Piece rook = pieceFactory.rook(firstColor, C3);
         Piece bishop = pieceFactory.bishop(secondColor, E3);
 
-        Judge baseJudge = new Judge(new BoardState(rook, bishop));
-        Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
+        BaseJudge baseJudge = new BaseJudge(new BoardState(rook, bishop));
+        BaseJudge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         squareDeactivationJudge.submitMove(rook, C5);
         squareDeactivationJudge.submitMove(rook, H5);
@@ -43,7 +43,7 @@ public class SquareDeactivatingMoveTests {
         Piece bishop = pieceFactory.bishop(PlayerColor.WHITE, E3);
 
         TestJudge baseJudge = new TestJudge(rook, bishop);
-        Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
+        BaseJudge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         baseJudge.throwOnNextMove();
         assertThrows(IllegalMoveException.class, () -> {

@@ -39,7 +39,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
     private final Map<Piece, PieceRepresentation> piecesOnScreen = new ConcurrentHashMap<>();
     private Piece selectedPiece;
 
-    private final Judge judge;
+    private final BaseJudge judge;
 
     static private final int BOARD_WIDTH_IN_SQUARES = 8;
     public static final float SQUARE_SIZE = 40f;
@@ -82,7 +82,7 @@ public class BoardRepresentation implements PieceSelectionListener, PieceEventLi
         return spriteBatch;
     }
 
-    public Judge getJudge() {
+    public BaseJudge getJudge() {
         return judge;
     }
 

@@ -24,7 +24,7 @@ public class CheckRuleTests {
         Piece rook = pieceFactory.rook(BLACK, D4);
 
         BoardState boardState = new BoardState(king, rook);
-        Judge judge = new Judge(boardState);
+        BaseJudge judge = new BaseJudge(boardState);
         judge = new CheckRule(judge);
         List<Move> movesForKing =
             judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == king).collect(Collectors.toList());
@@ -38,7 +38,7 @@ public class CheckRuleTests {
         Piece rook = pieceFactory.rook(BLACK, D4);
 
         BoardState boardState = new BoardState(king, rook);
-        Judge judge = new Judge(boardState);
+        BaseJudge judge = new BaseJudge(boardState);
         judge = new CheckRule(judge);
         List<Move> movesForRook =
             judge.getPossibleMoves().stream().filter(move -> move.getMovingPiece() == rook).collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class CheckRuleTests {
 
 
         BoardState boardState = new BoardState(king, pawnA, pawnB, savingRook, attackingRook);
-        Judge judge = new Judge(boardState);
+        BaseJudge judge = new BaseJudge(boardState);
         judge = new CheckRule(judge);
         judge = new PlayerTurnRule(judge, WHITE);
         List<Move> moves = judge.getPossibleMoves();
