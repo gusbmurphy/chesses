@@ -23,28 +23,26 @@ public class SquareDeactivatingMoveTests {
     void afterAPieceHasMadeADeactivatingMoveAnotherPieceCannotMoveThere(PlayerColor firstColor, PlayerColor secondColor) {
         PieceFactory pieceFactory = new PieceFactory();
         Piece rook = pieceFactory.rook(firstColor, C3);
-        Piece bishop = pieceFactory.bishop(secondColor, E3);
+        Piece bishop = pieceFactory.bishop(secondColor, E5);
 
         BaseJudge baseJudge = new BaseJudge(new BoardState(rook, bishop));
         Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         squareDeactivationJudge.submitMove(rook, C5);
-        squareDeactivationJudge.submitMove(rook, H5);
 
         assertThrows(IllegalMoveException.class, () -> {
-            squareDeactivationJudge.submitMove(bishop, C5);
+            squareDeactivationJudge.submitMove(bishop, C3);
         });
 
-        assertEquals(E3, bishop.getCoordinates());
+        assertEquals(E5, bishop.getCoordinates());
     }
 
     @Test
     void ifAMoveIsIllegalForOtherReasonsTheSpaceIsNotDeactivated() {
         PieceFactory pieceFactory = new PieceFactory();
         Piece rook = pieceFactory.rook(PlayerColor.BLACK, C3);
-        Piece bishop = pieceFactory.bishop(PlayerColor.WHITE, E3);
 
-        TestJudge baseJudge = new TestJudge(rook, bishop);
+        TestJudge baseJudge = new TestJudge(rook);
         Judge squareDeactivationJudge = new SquareDeactivationRule(baseJudge);
 
         baseJudge.throwOnNextMove();
@@ -52,9 +50,7 @@ public class SquareDeactivatingMoveTests {
             squareDeactivationJudge.submitMove(rook, C5);
         });
 
-        assertDoesNotThrow(() -> {
-            squareDeactivationJudge.submitMove(bishop, C5);
-        });
+        assertTrue(squareDeactivationJudge.getSpecialSquareStates().isEmpty());
     }
 
     @Test
@@ -71,8 +67,8 @@ public class SquareDeactivatingMoveTests {
 
         List<SpecialSquareState> results = squareDeactivationJudge.getSpecialSquareStates();
         assertEquals(2, results.size());
-        assertTrue(results.stream().anyMatch(square -> square.coordinates() == C5));
-        assertTrue(results.stream().anyMatch(square -> square.coordinates() == H6));
+        assertTrue(results.stream().anyMatch(square -> square.coordinates() == C3));
+        assertTrue(results.stream().anyMatch(square -> square.coordinates() == E3));
     }
 
     private static Stream<Arguments> oppositeColorPairs() {

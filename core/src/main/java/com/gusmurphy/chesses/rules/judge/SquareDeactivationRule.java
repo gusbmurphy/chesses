@@ -21,8 +21,9 @@ public class SquareDeactivationRule extends JudgeDecorator {
             throw new IllegalMoveException(piece, coordinates);
         }
 
+        Coordinates originalCoordinates = piece.getCoordinates();
         super.submitMove(piece, coordinates);
-        deactivatedCoordinates.add(coordinates);
+        deactivatedCoordinates.add(originalCoordinates);
     }
 
     @Override
