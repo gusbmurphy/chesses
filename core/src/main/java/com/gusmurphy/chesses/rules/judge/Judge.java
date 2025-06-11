@@ -8,6 +8,7 @@ import com.gusmurphy.chesses.rules.piece.movement.move.Move;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: This has too many responsibilities
 public abstract class Judge {
 
     public abstract void subscribeToTurnChange(TurnChangeListener listener);
