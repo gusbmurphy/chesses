@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// TODO: This class is huge!
 @Renderer(text = "color.toString() + \" \" + type.toString() + \" \" + coordinates.toString()")
 public class Piece {
 
