@@ -4,6 +4,9 @@ import com.gusmurphy.chesses.rules.board.BoardState;
 import com.gusmurphy.chesses.rules.board.StartingBoards;
 import com.gusmurphy.chesses.rules.judge.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameVariation {
 
     public final BoardState board;
@@ -14,6 +17,18 @@ public class GameVariation {
         this.board = board;
         this.judge = judge;
         this.displayName = displayName;
+    }
+
+    public static List<GameVariation> all() {
+        ArrayList<GameVariation> variations = new ArrayList<>();
+
+        variations.add(standard());
+        variations.add(singlePlayer());
+        variations.add(oopsAllSomething());
+        variations.add(moveEveryPiece());
+        variations.add(squareDeactivation());
+
+        return variations;
     }
 
     public static GameVariation standard() {

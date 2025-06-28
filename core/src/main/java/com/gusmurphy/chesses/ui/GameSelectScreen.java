@@ -15,11 +15,11 @@ public class GameSelectScreen extends BaseScreen {
         super(game);
 
         List<TextButton> buttons = new ArrayList<>();
-        buttons.add(createSelectButtonFor(GameVariation.standard()));
-        buttons.add(createSelectButtonFor(GameVariation.singlePlayer()));
-        buttons.add(createSelectButtonFor(GameVariation.moveEveryPiece()));
-        buttons.add(createSelectButtonFor(GameVariation.oopsAllSomething()));
-        buttons.add(createSelectButtonFor(GameVariation.squareDeactivation()));
+
+        GameVariation.all().forEach(variation -> {
+            VariantSelectButton button = createSelectButtonFor(variation);
+            buttons.add(button);
+        });
 
         Table table = new Table();
         table.setFillParent(true);
